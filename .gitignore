@@ -1,6 +1,5 @@
 .DS_Store
 prototype/_archive/
-prototype/images/
 tmp/
 node_modules/
 .agents/

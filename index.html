@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Lights Studio</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<style>
+/* ══════════════════════════════════════════════════════════
+   DESIGN TOKENS — Change here, applies everywhere
+   ══════════════════════════════════════════════════════════ */
+:root {
+  --nv: #0f1b2d;
+  --dg: #1B1E29;
+  --wm: #F7F6F3;
+  --cop: #C8956C;
+  --font-h: 'Clash Display', sans-serif;
+  --font-b: 'Satoshi', sans-serif;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur: 0.7s;
+  --clip-offset: 30px;
+  --divider-bg: linear-gradient(to bottom,
+    transparent 2%, rgba(200,149,108,.2) 10%,
+    rgba(200,149,108,.55) 50%, rgba(200,149,108,.2) 90%, transparent 98%);
+  --divider-clip: polygon(
+    calc(50% + 15px) 0, calc(50% + 17px) 0,
+    calc(50% - 13px) 100%, calc(50% - 15px) 100%);
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESET & BASE
+   ══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-b); background: var(--nv); color: white; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.clash { font-family: var(--font-h); }
+
+/* ══════════════════════════════════════════════════════════
+   REUSABLE: Copper label
+   ══════════════════════════════════════════════════════════ */
+.cop-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--cop); margin-bottom: 12px; display: block;
+}
+
+/* ══════════════════════════════════════════════════════════
+   REUSABLE: Copper "/" divider (absolute positioned)
+   Used by: slider, case studies, hero
+   ══════════════════════════════════════════════════════════ */
+.cop-divider {
+  position: absolute;
+  top: -20px; bottom: -20px;
+  width: 40px;
+  z-index: 20;
+  pointer-events: none;
+  background: var(--divider-bg);
+  clip-path: var(--divider-clip);
+}
+
+/* ══════════════════════════════════════════════════════════
+   REUSABLE: Diagonal clip-path panels
+   Used by: slider panels, case study image/text blocks
+   ══════════════════════════════════════════════════════════ */
+.clip-left {
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--clip-offset)) 100%, 0 100%);
+}
+.clip-mid {
+  clip-path: polygon(var(--clip-offset) 0, 100% 0, calc(100% - var(--clip-offset)) 100%, 0 100%);
+  margin-left: calc(-1 * var(--clip-offset));
+}
+.clip-right {
+  clip-path: polygon(var(--clip-offset) 0, 100% 0, 100% 100%, 0 100%);
+  margin-left: calc(-1 * var(--clip-offset));
+}
+
+/* ══════════════════════════════════════════════════════════
+   NAV
+   ══════════════════════════════════════════════════════════ */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; transition: all .5s; }
+nav a { color: white; text-decoration: none; }
+nav.scrolled { background: rgba(247,246,243,.97); backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(27,30,41,.04); }
+nav.scrolled a { color: rgba(27,30,41,.5); }
+nav.scrolled .cta-n { color: var(--cop) !important; }
+.nav-slash { color: var(--cop); opacity: .5; font-size: 15px; font-weight: 300; pointer-events: none; }
+nav.scrolled .nav-slash { opacity: .35; }
+
+/* ══════════════════════════════════════════════════════════
+   HERO — self-contained, only affects #hero
+   ══════════════════════════════════════════════════════════ */
+.hero { height: 100vh; position: relative; overflow: hidden; }
+.hero-img { position: absolute; inset: 0; z-index: 1; }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; }
+.hero-img::after { content: ''; position: absolute; inset: 0; background: rgba(15,27,45,.15); }
+.hero-panel {
+  position: absolute; top: 0; left: 0; bottom: 0; width: 100%; z-index: 2;
+  background: var(--nv);
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  display: flex; align-items: flex-start; padding: 140px 64px 0;
+}
+.hero-panel::before {
+  content: ''; position: absolute; inset: 0; opacity: .03; pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+}
+.hero-content { position: relative; z-index: 2; max-width: 520px; }
+.hero-logo { position: absolute; bottom: 48px; right: 48px; z-index: 4; pointer-events: none; }
+.hero-divider-wrap { position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 10; pointer-events: none; overflow: hidden; }
+.hero-divider-line { position: absolute; width: 3px; transform-origin: top center; background: var(--divider-bg); }
+.h1-line { display: block; overflow: hidden; }
+.h1-line span { display: block; transform: translateY(110%); }
+
+/* ══════════════════════════════════════════════════════════
+   STATEMENT
+   ══════════════════════════════════════════════════════════ */
+.statement { background: var(--wm); padding: 140px 48px; text-align: center; }
+
+/* ══════════════════════════════════════════════════════════
+   SLIDER — self-contained
+   ══════════════════════════════════════════════════════════ */
+.slider { height: 50vh; min-height: 360px; position: relative; overflow: hidden; }
+.slider-panels { display: flex; height: 100%; position: relative; }
+.s-panel { position: relative; overflow: hidden; cursor: pointer; transition: flex var(--dur) var(--ease); }
+.s-panel-img {
+  position: absolute; top: -10px; bottom: -10px; left: -60px; right: -60px;
+  width: calc(100% + 120px); height: calc(100% + 20px); object-fit: cover;
+  transition: transform 1.2s var(--ease), filter .7s; filter: brightness(.55) saturate(.9);
+}
+.s-panel:hover .s-panel-img { transform: scale(1.04); filter: brightness(.35) saturate(1); }
+.s-panel::after {
+  content: ''; position: absolute; bottom: 0; left: -60px; right: -60px; height: 55%;
+  background: linear-gradient(to top, rgba(10,16,28,.82), rgba(10,16,28,.12) 60%, transparent);
+  pointer-events: none; z-index: 1;
+}
+.s-panel-1 { z-index: 3; }
+.s-panel-2 { z-index: 2; }
+.s-panel-3 { z-index: 1; }
+.s-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px 40px; }
+.s-extra {
+  max-height: 0; opacity: 0; overflow: hidden; transform: translateY(6px);
+  transition: max-height .6s var(--ease), opacity .4s ease .08s, transform .4s ease .08s;
+}
+.s-panel:hover .s-extra { max-height: 200px; opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════════════════════
+   CASE STUDIES
+   ══════════════════════════════════════════════════════════ */
+.cases { background: var(--wm); padding: 100px 48px 120px; }
+.cases-grid { display: flex; flex-direction: column; gap: 40px; max-width: 1200px; margin: 0 auto; }
+.case-card { display: flex; border-radius: 16px; overflow: hidden; min-height: 300px; position: relative; }
+.case-img-wrap { position: relative; overflow: hidden; }
+.case-img-wrap img {
+  position: absolute; top: -10px; bottom: -10px; left: -30px; right: -30px;
+  width: calc(100% + 60px); height: calc(100% + 20px); object-fit: cover;
+}
+.case-text { padding: 40px 48px 40px 56px; }
+.case-text-left { padding: 40px 56px 40px 48px; }
+.case-desc { font-size: 14px; font-weight: 300; color: rgba(255,255,255,.35); line-height: 1.65; max-width: 400px; margin-bottom: 20px; }
+.case-link { display: inline-flex; align-items: center; gap: 6px; color: var(--cop); font-size: 13px; font-weight: 700; text-decoration: none; }
+.case-intro { margin-bottom: 64px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+
+/* ══════════════════════════════════════════════════════════
+   STATS + STATEMENT 2
+   ══════════════════════════════════════════════════════════ */
+.stats-section { padding: 120px 48px; background: var(--nv); text-align: center; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto; }
+.stat-val { font-size: clamp(2.8rem,6vw,4.5rem); font-weight: 700; line-height: 1; }
+
+/* ══════════════════════════════════════════════════════════
+   LOGOS
+   ══════════════════════════════════════════════════════════ */
+.logos { padding: 72px 48px; background: var(--wm); border-top: 1px solid rgba(15,27,45,.04); }
+.logos-row { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 48px; }
+.logo-name { font-size: 14px; font-weight: 700; letter-spacing: .15em; color: rgba(15,27,45,.1); }
+
+/* ══════════════════════════════════════════════════════════
+   CTA
+   ══════════════════════════════════════════════════════════ */
+.cta-section { padding: 120px 48px; background: var(--wm); }
+.cta-inner { max-width: 520px; margin: 0 auto; text-align: center; }
+.cta-input { font-family: var(--font-b); background: white; border: 1px solid rgba(27,30,41,.05); border-radius: 10px; padding: 14px 18px; font-size: 14px; outline: none; width: 100%; }
+.cta-btn { font-family: var(--font-b); background: var(--cop); color: var(--nv); font-weight: 700; padding: 16px; border-radius: 10px; border: none; font-size: 14px; cursor: pointer; width: 100%; }
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════ */
+footer { background: var(--dg); padding: 60px 48px 36px; color: rgba(255,255,255,.3); font-size: 13px; }
+.foot-cat { font-size: 10px; font-weight: 700; letter-spacing: .25em; text-transform: uppercase; color: rgba(200,149,108,.25); margin-bottom: 14px; }
+.foot-link { display: block; margin-bottom: 6px; color: rgba(255,255,255,.3); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     NAV
+     ══════════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <a href="#" style="font-weight:900;letter-spacing:.18em;font-size:14px;opacity:0" id="nav-logo">LITTLE LIGHTS</a>
+  <div style="display:flex;gap:28px;align-items:center;opacity:0" id="nav-r">
+    <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Agency</a>
+    <span class="nav-slash">/</span>
+    <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Reels & Stories</a>
+    <span class="nav-slash">/</span>
+    <a href="#" style="font-size:13px;font-weight:500;opacity:.35">Creative Studio</a>
+    <span class="nav-slash">/</span>
+    <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Über uns</a>
+    <span class="nav-slash">/</span>
+    <a href="#" class="cta-n" style="font-size:12px;font-weight:500;color:var(--cop)">Kontakt</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-img"><img src="prototype/images/hero-allianz.png" alt="" id="hero-img-el"></div>
+  <div class="hero-panel" id="hero-panel">
+    <div class="hero-content">
+      <div id="h-tag" style="opacity:0;display:flex;align-items:center;gap:10px;margin-bottom:32px">
+        <div style="width:28px;height:2px;background:var(--cop)"></div>
+        <span class="cop-label" style="margin:0">Brand Film Agentur Wien</span>
+      </div>
+      <h1 class="clash" id="h-h1" style="font-size:clamp(3rem,6.5vw,5.5rem);font-weight:700;line-height:.94;letter-spacing:-.04em;margin-bottom:28px;opacity:0">
+        <span class="h1-line"><span>Filme,</span></span>
+        <span class="h1-line"><span>die ankommen.</span></span>
+      </h1>
+      <p id="h-sub" style="font-size:clamp(1rem,1.3vw,1.1rem);font-weight:400;color:rgba(255,255,255,.4);line-height:1.8;max-width:380px;margin-bottom:36px;opacity:0">Strategische Filmproduktion für Unternehmen, die Bewegtbild als Kommunikationsinstrument verstehen.</p>
+    </div>
+  </div>
+  <div class="hero-divider-wrap"><div class="hero-divider-line" id="hero-div-line"></div></div>
+  <div class="hero-logo" id="hero-logo" style="opacity:0">
+    <img src="prototype/images/ll-logo-white.png" alt="Little Lights" style="height:150px;opacity:.15;filter:drop-shadow(0 2px 12px rgba(0,0,0,.15))">
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     STATEMENT
+     ══════════════════════════════════════════════════════════ -->
+<section class="statement" id="statement">
+  <div style="max-width:1000px;margin:0 auto">
+    <p class="clash" id="stmt-text" style="font-size:clamp(2.4rem,6vw,4.5rem);font-weight:700;line-height:1.06;letter-spacing:-.02em;color:rgba(15,27,45,.75)">Jeder behauptet Storytelling. <span style="color:transparent;-webkit-text-stroke:1.5px rgba(200,149,108,.3)">Wir haben die Beweise.</span></p>
+    <p style="font-size:clamp(.9rem,1.2vw,1rem);font-weight:400;color:rgba(15,27,45,.3);margin-top:20px">Drei Bereiche. Eine Handschrift.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDER
+     ══════════════════════════════════════════════════════════ -->
+<section class="slider" id="slider">
+  <div class="slider-panels" id="slider-panels">
+    <div class="s-panel clip-left s-panel-1" style="flex:4.5" data-base="4.5" data-hover="5.5" data-shrink="2.8">
+      <img class="s-panel-img" src="prototype/images/case-strabag-2.png" alt="">
+      <div class="s-content">
+        <span class="cop-label">Agency</span>
+        <h2 class="clash" style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:700;line-height:1.05;margin-bottom:6px">Films built<br>for impact.</h2>
+        <p style="font-size:13px;font-weight:400;color:rgba(255,255,255,.45);line-height:1.55;max-width:300px">Employer Branding. Imagefilme. Werbespots. Branded Entertainment.</p>
+        <div class="s-extra">
+          <p style="font-size:13px;font-weight:400;color:rgba(255,255,255,.45);line-height:1.55;margin-top:12px;margin-bottom:14px;max-width:280px">Seit 12 Jahren entwickeln wir Filmformate die wachsen.</p>
+          <a class="case-link" href="#">Mehr erfahren <span>→</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="s-panel clip-mid s-panel-2" style="flex:3.5" data-base="3.5" data-hover="5.5" data-shrink="2.8">
+      <img class="s-panel-img" src="prototype/images/rs-jaegertee.png" alt="">
+      <div class="s-content">
+        <span class="cop-label">Reels & Stories</span>
+        <h2 class="clash" style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:700;line-height:1.05;margin-bottom:6px">Formate, die<br>funktionieren.</h2>
+        <p style="font-size:13px;font-weight:400;color:rgba(255,255,255,.45);line-height:1.55;max-width:260px">Social Media Content mit Plan.</p>
+        <div class="s-extra">
+          <p style="font-size:13px;font-weight:400;color:rgba(255,255,255,.45);line-height:1.55;margin-top:12px;margin-bottom:14px;max-width:240px">3 Säulen, 9 Formate. Alles beginnt mit einem Workshop.</p>
+          <a class="case-link" href="#">Mehr erfahren <span>→</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="s-panel clip-right s-panel-3" style="flex:2" data-base="2" data-hover="4" data-shrink="2.8">
+      <img class="s-panel-img" src="prototype/images/helena-flinn-trilogy.png" alt="">
+      <div class="s-content">
+        <span class="cop-label">Creative Studio</span>
+        <h2 class="clash" style="font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:700;line-height:1.05;font-style:italic;margin-bottom:6px">Little Lights<br>in the Dark.</h2>
+        <p style="font-size:13px;font-weight:400;color:rgba(255,255,255,.45);line-height:1.55;max-width:200px"><span style="white-space:nowrap">Bücher. Dokumentarfilme. Kurzfilme.</span></p>
+        <div class="s-extra">
+          <p style="font-size:13px;font-weight:400;color:rgba(255,255,255,.45);line-height:1.55;margin-top:12px;margin-bottom:14px;max-width:200px">Projekte aus eigener Initiative.</p>
+          <a class="case-link" href="#">Entdecken <span>→</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="cop-divider" id="sd1"></div>
+    <div class="cop-divider" id="sd2"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CASE STUDIES
+     ══════════════════════════════════════════════════════════ -->
+<section class="cases" id="cases">
+  <div class="case-intro">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="width:28px;height:2px;background:var(--cop)"></div>
+      <span class="cop-label" style="margin:0">Ausgewählte Arbeiten</span>
+    </div>
+    <p class="clash" style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:rgba(15,27,45,.8);line-height:1.08;letter-spacing:-.02em">Projekte, die zeigen<br>was wir meinen.</p>
+  </div>
+
+  <div class="cases-grid">
+    <!-- Case 1: Strabag — image left -->
+    <div class="case-card">
+      <div class="case-img-wrap clip-left" style="flex:1.2;z-index:2;align-self:stretch">
+        <img src="prototype/images/hero-strabag.png" alt="">
+      </div>
+      <div class="case-text clip-right" style="flex:1;background:var(--nv);z-index:1">
+        <span class="cop-label">Employer Branding · 150+ Episoden</span>
+        <h3 class="clash" style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;line-height:1.05;margin-bottom:10px">Strabag Karrierestories</h3>
+        <p class="case-desc">Das Format, das zeigt wie es wirklich ist bei Strabag zu arbeiten. Über 150 Episoden seit 2023. Eine Partnerschaft seit über 12 Jahren.</p>
+        <a class="case-link" href="#">Case Study lesen <span>→</span></a>
+      </div>
+      <div class="cop-divider case-div"></div>
+    </div>
+
+    <!-- Case 2: Greiner — text left, image right -->
+    <div class="case-card">
+      <div class="case-text-left clip-left" style="flex:1;background:var(--dg);z-index:2">
+        <span class="cop-label">Employer Branding · 24 Episoden</span>
+        <h3 class="clash" style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;line-height:1.05;margin-bottom:10px">Greiner Walks</h3>
+        <p class="case-desc">Mitarbeiter aus der ganzen Welt erzählen beim Gehen ihre Geschichte. Authentisch, dokumentarisch, ohne Drehbuch.</p>
+        <a class="case-link" href="#">Case Study lesen <span>→</span></a>
+      </div>
+      <div class="case-img-wrap clip-right" style="flex:1.2;z-index:1;align-self:stretch">
+        <img src="prototype/images/case-walks-kuehner.png" alt="">
+      </div>
+      <div class="cop-divider case-div"></div>
+    </div>
+
+    <!-- Case 3: Volksbank — image left -->
+    <div class="case-card">
+      <div class="case-img-wrap clip-left" style="flex:1.2;z-index:2;align-self:stretch">
+        <img src="prototype/images/hero-oegig.jpg" alt="">
+      </div>
+      <div class="case-text clip-right" style="flex:1;background:var(--nv);z-index:1">
+        <span class="cop-label">Imagefilm · Generative KI</span>
+        <h3 class="clash" style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;line-height:1.05;margin-bottom:10px">Volksbank — 175 Jahre</h3>
+        <p class="case-desc">Generative KI erweckt den Mann zum Leben, der vor 175 Jahren die Genossenschaften gründete.</p>
+        <a class="case-link" href="#">Case Study lesen <span>→</span></a>
+      </div>
+      <div class="cop-divider case-div"></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:48px">
+    <a class="case-link" href="#" style="font-size:14px">Alle Projekte ansehen <span style="font-size:18px">→</span></a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     LOGOS
+     ══════════════════════════════════════════════════════════ -->
+<section class="logos" id="logos">
+  <div class="logos-row">
+    <span class="logo-name">STRABAG</span>
+    <span class="logo-name">GREINER</span>
+    <span class="logo-name">ALLIANZ</span>
+    <span class="logo-name">VOLKSBANK</span>
+    <span class="logo-name">ÖSTERREICH WERBUNG</span>
+    <span class="logo-name">FERRERO</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     STATS + PARTNERSHIP STATEMENT
+     ══════════════════════════════════════════════════════════ -->
+<section class="stats-section" id="stats">
+  <div style="max-width:1000px;margin:0 auto">
+    <p class="clash" style="font-size:clamp(2.2rem,5.5vw,4rem);font-weight:700;line-height:1.06;letter-spacing:-.02em;color:white;margin-bottom:48px">Kein Projekt. <span style="color:rgba(255,255,255,.15)">Eine Partnerschaft.</span></p>
+    <div class="stats-grid">
+      <div><p class="stat-val clash" style="color:var(--cop)"><span class="counter" data-target="" id="stat-years">0</span>+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Jahre</p></div>
+      <div><p class="stat-val clash" style="color:var(--cop)"><span class="counter" data-target="600">0</span>+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmprojekte</p></div>
+      <div><p class="stat-val clash" style="color:var(--cop)"><span class="counter" data-target="50">0</span>+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Kunden</p></div>
+      <div><p class="stat-val clash" style="color:rgba(255,255,255,.4)"><span class="counter" data-target="7">0</span></p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmemacher</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CTA
+     ══════════════════════════════════════════════════════════ -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner">
+    <h2 class="clash" style="font-size:clamp(2.4rem,5vw,3.5rem);font-weight:700;color:var(--dg);margin-bottom:14px;letter-spacing:-.02em">Lass uns reden.</h2>
+    <p style="font-size:16px;font-weight:300;color:rgba(27,30,41,.3);line-height:1.7;margin-bottom:40px">Kein Pitch. Nur ein ehrliches Kennenlernen.</p>
+    <form style="display:flex;flex-direction:column;gap:12px;text-align:left">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <input class="cta-input" placeholder="Name">
+        <input class="cta-input" placeholder="E-Mail">
+      </div>
+      <textarea class="cta-input" placeholder="Erzähl uns von deiner Idee..." rows="4" style="resize:none"></textarea>
+      <button class="cta-btn">Nachricht senden</button>
+    </form>
+    <div style="margin-top:32px;display:flex;justify-content:center;gap:20px">
+      <a href="mailto:studio@littlelights.studio" style="font-size:13px;color:rgba(27,30,41,.25);text-decoration:none">studio@littlelights.studio</a>
+      <span style="color:rgba(27,30,41,.08)">·</span>
+      <a href="tel:+436763618608" style="font-size:13px;color:rgba(27,30,41,.25);text-decoration:none">+43 676 361 86 08</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════════════ -->
+<footer>
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px">
+      <img src="prototype/images/ll-logo-white.png" alt="LL" style="height:28px;opacity:.15">
+      <div style="display:flex;gap:20px">
+        <a class="foot-link" href="#" style="margin:0">LinkedIn</a>
+        <a class="foot-link" href="#" style="margin:0">Instagram</a>
+        <a class="foot-link" href="#" style="margin:0">Vimeo</a>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:36px;margin-bottom:40px">
+      <div><p class="foot-cat">Agency</p><a class="foot-link" href="#">Employer Branding</a><a class="foot-link" href="#">Imagefilme</a><a class="foot-link" href="#">Werbespots</a><a class="foot-link" href="#">Branded Entertainment</a><a class="foot-link" href="#">Projekte</a></div>
+      <div><p class="foot-cat">Reels & Stories</p><a class="foot-link" href="#">Workshop</a><a class="foot-link" href="#">Projekte</a></div>
+      <div><p class="foot-cat">Studio</p><a class="foot-link" href="#">Über uns</a><a class="foot-link" href="#">Creative Studio</a></div>
+      <div><p class="foot-cat">Kontakt</p><p style="margin-bottom:6px">Lange Gasse 72/5, 1080 Wien</p><a class="foot-link" href="mailto:studio@littlelights.studio">studio@littlelights.studio</a></div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.03);padding-top:16px;display:flex;justify-content:space-between;font-size:10px;opacity:.4">
+      <span style="font-style:italic;opacity:.5">Pretty pictures vs. stories worth telling.</span>
+      <span style="opacity:.5">© 2026 Little Lights Studio GmbH</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT — Each section is its own block.
+     Rule: Never touch code outside your block.
+     ══════════════════════════════════════════════════════════ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ── LENIS (global, touch nothing) ──
+const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// ── SHARED: Divider position function ──
+// Positions an absolute .cop-divider at the right edge of a reference element
+function positionDivider(dividerEl, referenceEl, containerEl) {
+  const cRect = containerEl.getBoundingClientRect();
+  const rRect = referenceEl.getBoundingClientRect();
+  dividerEl.style.left = (rRect.right - cRect.left - 35) + 'px';
+}
+
+// ══════════════════════════════════════════
+// HERO — Self-contained block
+// ══════════════════════════════════════════
+(function() {
+  const panel = document.getElementById('hero-panel');
+  const divLine = document.getElementById('hero-div-line');
+
+  function posHeroDivider() {
+    const cs = getComputedStyle(panel).clipPath;
+    const h = panel.offsetHeight, w = panel.offsetWidth;
+    const matches = cs.match(/polygon\(([^)]+)\)/);
+    if (!matches) return;
+    const points = matches[1].split(',').map(p => p.trim());
+    const topXpct = parseFloat(points[1]);
+    const botXpct = parseFloat(points[2]);
+    if (isNaN(topXpct) || isNaN(botXpct)) return;
+    const topX = topXpct / 100 * w;
+    const botX = botXpct / 100 * w;
+    if (topX === 0 && botX === 0) return;
+    const dx = topX - botX;
+    const len = Math.sqrt(dx * dx + h * h);
+    const ang = Math.atan2(h, -(dx)) * (180 / Math.PI) - 90;
+    divLine.style.height = len + 'px';
+    divLine.style.left = topX + 'px';
+    divLine.style.top = '0px';
+    divLine.style.transform = `rotate(${ang}deg)`;
+  }
+
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  gsap.set('#hero-img-el', { scale: 1.08 });
+  tl.to('#hero-img-el', { scale: 1, duration: 4, ease: 'power2.out' }, 0);
+  tl.to('#nav-logo', { opacity: 1, duration: .8 }, 0.3);
+  tl.to('#nav-r', { opacity: 1, duration: .8 }, 0.5);
+  tl.fromTo('#hero-logo', { opacity: 0 }, { opacity: 1, duration: .8, ease: 'power2.out' }, 0.3);
+  tl.fromTo(panel,
+    { clipPath: 'polygon(0 0, 0% 0, 0% 100%, 0 100%)' },
+    { clipPath: 'polygon(0 0, 60% 0, 10% 100%, 0 100%)', duration: 2.5, ease: 'power4.inOut', onUpdate: posHeroDivider },
+  0.8);
+  tl.fromTo(panel,
+    { backgroundColor: 'rgba(15,27,45,1)' },
+    { backgroundColor: 'rgba(15,27,45,0.78)', duration: 2.5, ease: 'power4.inOut' },
+  0.8);
+  tl.to('#h-tag', { opacity: 1, duration: .6 }, 2.2);
+  tl.set('#h-h1', { opacity: 1 }, 2.4);
+  tl.to('.h1-line span', { y: '0%', duration: .9, stagger: .1, ease: 'power4.out' }, 2.4);
+  tl.fromTo('#h-sub', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .7 }, 3.1);
+  window.addEventListener('resize', posHeroDivider);
+})();
+
+// ══════════════════════════════════════════
+// STATEMENT — Self-contained block
+// ══════════════════════════════════════════
+(function() {
+  gsap.to('#stmt-text span', {
+    color: 'rgba(15,27,45,.75)', webkitTextStrokeColor: 'rgba(15,27,45,.75)',
+    duration: 1, scrollTrigger: { trigger: '#statement', start: 'top 60%', end: 'top 20%', scrub: 1 }
+  });
+})();
+
+// ══════════════════════════════════════════
+// NAV SCROLL STATE — Self-contained block
+// ══════════════════════════════════════════
+(function() {
+  ScrollTrigger.create({
+    trigger: '#statement', start: 'top 80px',
+    onEnter: () => document.getElementById('nav').classList.add('scrolled'),
+    onLeaveBack: () => document.getElementById('nav').classList.remove('scrolled'),
+  });
+})();
+
+// ══════════════════════════════════════════
+// SLIDER — Self-contained block
+// ══════════════════════════════════════════
+(function() {
+  const panels = document.querySelectorAll('.s-panel');
+  const container = document.getElementById('slider-panels');
+  const d1 = document.getElementById('sd1');
+  const d2 = document.getElementById('sd2');
+
+  function pos() {
+    positionDivider(d1, panels[0], container);
+    positionDivider(d2, panels[1], container);
+  }
+
+  panels.forEach(p => {
+    p.addEventListener('mouseenter', () => {
+      panels.forEach(q => { q.style.flex = q === p ? q.dataset.hover : q.dataset.shrink; });
+    });
+  });
+  container.addEventListener('mouseleave', () => {
+    panels.forEach(p => { p.style.flex = p.dataset.base; });
+  });
+
+  let tracking = false;
+  function track() { pos(); if (tracking) requestAnimationFrame(track); }
+  container.addEventListener('mouseenter', () => { tracking = true; track(); });
+  container.addEventListener('mouseleave', () => { setTimeout(() => { tracking = false; }, 800); });
+
+  window.addEventListener('load', () => { pos(); setTimeout(pos, 200); });
+  window.addEventListener('resize', pos);
+})();
+
+// ══════════════════════════════════════════
+// CASE STUDY DIVIDERS — Self-contained block
+// ══════════════════════════════════════════
+(function() {
+  document.querySelectorAll('.case-div').forEach(divEl => {
+    const card = divEl.closest('.case-card');
+    const firstChild = card.querySelector(':scope > div:not(.cop-divider)');
+    if (!firstChild) return;
+    function pos() { positionDivider(divEl, firstChild, card); }
+    window.addEventListener('load', () => { pos(); setTimeout(pos, 200); });
+    window.addEventListener('resize', pos);
+    setTimeout(pos, 150);
+  });
+})();
+
+// ══════════════════════════════════════════
+// STATS — Counter animation, self-contained
+// ══════════════════════════════════════════
+(function() {
+  // Set dynamic years target
+  document.getElementById('stat-years').dataset.target = new Date().getFullYear() - 2014;
+
+  // Animate counters when they enter viewport
+  document.querySelectorAll('.counter').forEach(el => {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting || el.__done) return;
+        el.__done = true;
+        const target = parseInt(el.dataset.target);
+        const duration = 2000;
+        const start = performance.now();
+        (function tick(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(2, -10 * t);
+          el.textContent = Math.floor(eased * target);
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = target;
+        })(start);
+      });
+    }, { threshold: 0.5 }).observe(el);
+  });
+})();
+
+// ══════════════════════════════════════════
+// B-EGG STICKY STACKING — Self-contained block
+// ══════════════════════════════════════════
+(function() {
+  // Sections that stick while the next one slides over
+  ['#hero', '#statement', '#slider', '#logos'].forEach((sel, i) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    el.style.position = 'sticky';
+    el.style.top = '0';
+    el.style.zIndex = i + 1;
+    if (i > 0) el.style.boxShadow = '0 -30px 80px rgba(0,0,0,.2)';
+  });
+
+  // Cases scrolls normally but above the sticky stack
+  const cases = document.querySelector('#cases');
+  cases.style.position = 'relative';
+  cases.style.zIndex = '8';
+  cases.style.boxShadow = '0 -30px 80px rgba(0,0,0,.2)';
+
+  // Stats and CTA scroll normally
+  const stats = document.querySelector('#stats');
+  const cta = document.querySelector('#cta');
+  stats.style.zIndex = '10';
+  stats.style.position = 'relative';
+
+  // Footer reveal: footer is fixed at bottom, hidden behind everything.
+  // CTA has margin-bottom = footer height so there's scroll space.
+  // All sections above have solid backgrounds that cover the footer.
+  const footer = document.querySelector('footer');
+  const footerH = footer.offsetHeight;
+
+  footer.style.position = 'fixed';
+  footer.style.bottom = '0';
+  footer.style.left = '0';
+  footer.style.right = '0';
+  footer.style.zIndex = '0';
+
+  cta.style.position = 'relative';
+  cta.style.zIndex = '12';
+  cta.style.marginBottom = footerH + 'px';
+
+  // Ensure all sections have solid background to cover the fixed footer
+  document.querySelectorAll('#hero, #statement, #slider, #cases, #logos, #stats, #cta').forEach(el => {
+    // Only set if not already set via CSS
+    const bg = getComputedStyle(el).backgroundColor;
+    if (bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') {
+      el.style.backgroundColor = 'var(--nv)';
+    }
+  });
+})();
+</script>
+</body>
+</html>
