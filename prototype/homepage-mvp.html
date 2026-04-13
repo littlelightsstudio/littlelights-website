@@ -147,7 +147,7 @@ nav.scrolled .nav-slash { opacity: .35; }
 /* ══════════════════════════════════════════════════════════
    CASE STUDIES
    ══════════════════════════════════════════════════════════ */
-.cases { background: var(--wm); padding: 100px 48px 220px; }
+.cases { background: var(--wm); padding: 100px 48px 120px; }
 .cases-grid { display: flex; flex-direction: column; gap: 40px; max-width: 1200px; margin: 0 auto; }
 .case-card { display: flex; border-radius: 16px; overflow: hidden; min-height: 300px; position: relative; }
 .case-img-wrap { position: relative; overflow: hidden; }
@@ -373,10 +373,10 @@ footer { background: var(--dg); padding: 60px 48px 36px; color: rgba(255,255,255
   <div style="max-width:1000px;margin:0 auto">
     <p class="clash" style="font-size:clamp(2.2rem,5.5vw,4rem);font-weight:700;line-height:1.06;letter-spacing:-.02em;color:white;margin-bottom:48px">Kein Projekt. <span style="color:rgba(255,255,255,.15)">Eine Partnerschaft.</span></p>
     <div class="stats-grid">
-      <div><p class="stat-val clash" style="color:var(--cop)"><span id="stat-years">12</span>+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Jahre</p></div>
-      <div><p class="stat-val clash" style="color:var(--cop)">600+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmprojekte</p></div>
-      <div><p class="stat-val clash" style="color:var(--cop)">50+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Kunden</p></div>
-      <div><p class="stat-val clash" style="color:rgba(255,255,255,.4)">7</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmemacher</p></div>
+      <div><p class="stat-val clash" style="color:var(--cop)"><span class="counter" data-target="" id="stat-years">0</span>+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Jahre</p></div>
+      <div><p class="stat-val clash" style="color:var(--cop)"><span class="counter" data-target="600">0</span>+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmprojekte</p></div>
+      <div><p class="stat-val clash" style="color:var(--cop)"><span class="counter" data-target="50">0</span>+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Kunden</p></div>
+      <div><p class="stat-val clash" style="color:rgba(255,255,255,.4)"><span class="counter" data-target="7">0</span></p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmemacher</p></div>
     </div>
   </div>
 </section>
@@ -569,9 +569,32 @@ function positionDivider(dividerEl, referenceEl, containerEl) {
 })();
 
 // ══════════════════════════════════════════
-// STATS — Auto-calculate years
+// STATS — Counter animation, self-contained
 // ══════════════════════════════════════════
-document.getElementById('stat-years').textContent = new Date().getFullYear() - 2014;
+(function() {
+  // Set dynamic years target
+  document.getElementById('stat-years').dataset.target = new Date().getFullYear() - 2014;
+
+  // Animate counters when they enter viewport
+  document.querySelectorAll('.counter').forEach(el => {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting || el.__done) return;
+        el.__done = true;
+        const target = parseInt(el.dataset.target);
+        const duration = 2000;
+        const start = performance.now();
+        (function tick(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(2, -10 * t);
+          el.textContent = Math.floor(eased * target);
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = target;
+        })(start);
+      });
+    }, { threshold: 0.5 }).observe(el);
+  });
+})();
 
 // ══════════════════════════════════════════
 // B-EGG STICKY STACKING — Self-contained block
