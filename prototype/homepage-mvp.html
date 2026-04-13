@@ -58,27 +58,13 @@ nav.scrolled .nav-slash{opacity:.35}
 }
 .hero-content{position:relative;z-index:2;max-width:520px}
 
-/* Divider: lives ON the panel as ::after. Moves with it automatically.
-   It's a full-size overlay clipped to a thin diagonal strip
-   matching the panel's own clip-path edge (60% top, 10% bottom). */
-.hero-panel::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  z-index:20;
-  pointer-events:none;
-  background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,.2) 10%,rgba(200,149,108,.55) 50%,rgba(200,149,108,.2) 90%,transparent 98%);
-  /* Clip to a thin parallelogram along the diagonal edge */
-  clip-path:polygon(60% 0%, calc(60% + 3px) 0%, calc(10% + 3px) 100%, 10% 100%);
-}
-
 
 /* Logo bottom-right */
 .hero-logo{position:absolute;bottom:48px;right:48px;z-index:4;pointer-events:none}
 
 /* Text entrance */
-/* H1 chars for typewriter effect */
-.h1-char{display:inline-block;opacity:0}
+.h1-line{display:block;overflow:hidden}
+.h1-line span{display:block;transform:translateY(110%)}
 
 /* ══════════════════════════════════════════
    STATEMENT
@@ -131,17 +117,24 @@ nav.scrolled .nav-slash{opacity:.35}
     <div class="hero-content">
       <div id="h-tag" style="display:flex;align-items:center;gap:10px;margin-bottom:32px;opacity:0">
         <div style="width:28px;height:2px;background:var(--cop)"></div>
-        <span style="font-size:10px;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--cop);opacity:.8">Brand Film Agentur Wien</span>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--cop);opacity:.8">Filmproduktion Wien</span>
       </div>
-      <h1 class="clash" id="h-h1" style="font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:700;line-height:1;letter-spacing:-.04em;margin-bottom:28px;opacity:0">Filme,<br>die ankommen.</h1>
-      <p id="h-sub" style="font-size:clamp(1rem,1.3vw,1.1rem);font-weight:400;color:rgba(255,255,255,.4);line-height:1.8;max-width:380px;margin-bottom:36px;opacity:0">Strategische Filmproduktion für Unternehmen, die Bewegtbild als Kommunikationsinstrument verstehen.</p>
+      <h1 class="clash" id="h-h1" style="font-size:clamp(3rem,6.5vw,5.5rem);font-weight:700;line-height:.94;letter-spacing:-.04em;margin-bottom:28px;opacity:0">
+        <span class="h1-line"><span>Filme,</span></span>
+        <span class="h1-line"><span>die ankommen.</span></span>
+      </h1>
+      <p id="h-sub" style="font-size:clamp(1rem,1.3vw,1.1rem);font-weight:300;color:rgba(255,255,255,.3);line-height:1.8;max-width:380px;margin-bottom:36px;opacity:0">Strategische Filmproduktion für Unternehmen, die Bewegtbild als Kommunikationsinstrument verstehen.</p>
     </div>
   </div>
 
+  <!-- Layer 3: Divider — container + line, same approach as hero-isolated -->
+  <div style="position:absolute;top:0;bottom:0;left:0;right:0;z-index:10;pointer-events:none;overflow:hidden" id="hero-div-wrap">
+    <div id="hero-div-line" style="position:absolute;width:3px;transform-origin:top center;background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,.2) 10%,rgba(200,149,108,.55) 50%,rgba(200,149,108,.2) 90%,transparent 98%)"></div>
+  </div>
 
   <!-- Layer 4: Logo bottom-right -->
   <div class="hero-logo" id="hero-logo" style="opacity:0">
-    <img src="images/ll-logo-white.png" alt="Little Lights" style="height:150px;opacity:.15;filter:drop-shadow(0 2px 12px rgba(0,0,0,.15))">
+    <img src="images/ll-logo-white.png" alt="Little Lights" style="height:150px;opacity:.2;filter:drop-shadow(0 2px 12px rgba(0,0,0,.15))">
   </div>
 </section>
 
@@ -280,20 +273,20 @@ nav.scrolled .nav-slash{opacity:.35}
     <p class="clash" style="font-size:clamp(2.2rem,5.5vw,4rem);font-weight:700;line-height:1.06;letter-spacing:-.02em;color:white;margin-bottom:48px">Kein Projekt. <span style="color:rgba(255,255,255,.15)">Eine Partnerschaft.</span></p>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:40px">
       <div style="text-align:center">
-        <p class="clash" style="font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;color:var(--cop);line-height:1"><span id="stat-years">12</span>+</p>
+        <p class="clash" style="font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;color:var(--cop);line-height:1">12+</p>
         <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Jahre</p>
       </div>
       <div style="text-align:center">
-        <p class="clash" style="font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;color:var(--cop);line-height:1">600+</p>
-        <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmprojekte</p>
+        <p class="clash" style="font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;color:var(--cop);line-height:1">200+</p>
+        <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Projekte</p>
       </div>
       <div style="text-align:center">
         <p class="clash" style="font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;color:var(--cop);line-height:1">30+</p>
         <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Kunden</p>
       </div>
       <div style="text-align:center">
-        <p class="clash" style="font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;color:rgba(255,255,255,.4);line-height:1">7</p>
-        <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmemacher</p>
+        <p class="clash" style="font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;color:rgba(255,255,255,.4);line-height:1">8</p>
+        <p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Köpfe</p>
       </div>
     </div>
   </div>
@@ -360,7 +353,29 @@ gsap.ticker.lagSmoothing(0);
 // HERO ANIMATION
 // ══════════════════════════════════════════
 const heroPanel = document.getElementById('hero-panel');
-// Divider is now ::after on the panel itself — no JS positioning needed
+const heroDivLine = document.getElementById('hero-div-line');
+
+// Copied from hero-isolated (the version that worked)
+function positionHeroDivider() {
+  const cs = getComputedStyle(heroPanel).clipPath;
+  const h = heroPanel.offsetHeight;
+  const w = heroPanel.offsetWidth;
+  const matches = cs.match(/polygon\(([^)]+)\)/);
+  if (!matches) return;
+  const points = matches[1].split(',').map(p => p.trim());
+  const topXpct = parseFloat(points[1]);
+  const botXpct = parseFloat(points[2]);
+  if (isNaN(topXpct) || isNaN(botXpct)) return;
+  const topX = topXpct / 100 * w;
+  const botX = botXpct / 100 * w;
+  const dx = topX - botX;
+  const lineLength = Math.sqrt(dx * dx + h * h);
+  const angle = Math.atan2(h, -(dx)) * (180 / Math.PI) - 90;
+  heroDivLine.style.height = lineLength + 'px';
+  heroDivLine.style.left = topX + 'px';
+  heroDivLine.style.top = '0px';
+  heroDivLine.style.transform = `rotate(${angle}deg)`;
+}
 
 // Timeline
 const htl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -378,17 +393,20 @@ htl.fromTo('#hero-logo', { opacity: 0 }, { opacity: 1, duration: .8, ease: 'powe
 htl.to('#nav-logo', { opacity: 1, duration: .8 }, 0.3);
 htl.to('#nav-r', { opacity: 1, duration: .8 }, 0.5);
 
-// 0.8s: Panel slides in — starts as thin strip at left, expands to diagonal.
-// Using safe values (no negatives) to avoid browser glitches.
+// 0.8s: Dark panel slides in from left.
+// Start: zero width along left edge.
+// End: diagonal shape. Both edges move together (not tipping).
+// Using keyframes to control the movement more organically.
 htl.fromTo(heroPanel,
   { clipPath: 'polygon(0 0, 0% 0, 0% 100%, 0 100%)' },
   { clipPath: 'polygon(0 0, 60% 0, 10% 100%, 0 100%)',
     duration: 2.5,
     ease: 'power4.inOut',
+    onUpdate: positionHeroDivider,
   },
 0.8);
 
-// Transparency builds as panel settles
+// Transparency: panel starts solid, becomes slightly see-through
 htl.fromTo(heroPanel,
   { backgroundColor: 'rgba(15,27,45,1)' },
   { backgroundColor: 'rgba(15,27,45,0.78)',
@@ -397,34 +415,15 @@ htl.fromTo(heroPanel,
   },
 0.8);
 
-// 2.5s: H1 typewriter — each char fades in with slight upward motion
-const h1El = document.getElementById('h-h1');
-h1El.innerHTML = h1El.textContent.split('').map(c =>
-  c === ' ' ? ' ' : `<span class="h1-char">${c}</span>`
-).join('');
-htl.set('#h-h1', { opacity: 1 }, 2.5);
-htl.to('.h1-char', {
-  opacity: 1,
-  y: 0,
-  duration: .15,
-  stagger: .04,
-  ease: 'power2.out',
-}, 2.5);
-// Set initial state for chars
-gsap.set('.h1-char', { y: 8 });
 
-// 3.5s: Tag slides up from below
-htl.fromTo('#h-tag', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .7, ease: 'power3.out' }, 3.5);
-
-// 3.7s: Subtext slides down from above
-htl.fromTo('#h-sub', { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: .7, ease: 'power3.out' }, 3.7);
+// 2.2s: Text builds
+htl.to('#h-tag', { opacity: 1, duration: .6 }, 2.2);
+htl.set('#h-h1', { opacity: 1 }, 2.4);
+htl.to('.h1-line span', { y: '0%', duration: .9, stagger: .1, ease: 'power4.out' }, 2.4);
+htl.fromTo('#h-sub', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .7 }, 3.1);
 
 
 // ══════════════════════════════════════════
-// Auto-calculate years since 2014
-document.getElementById('stat-years').textContent = new Date().getFullYear() - 2014;
-
-
 // STATEMENT — Ghost text fills on scroll
 // ══════════════════════════════════════════
 gsap.to('#stmt-text span', {
