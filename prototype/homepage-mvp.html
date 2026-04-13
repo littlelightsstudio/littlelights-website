@@ -147,7 +147,7 @@ nav.scrolled .nav-slash { opacity: .35; }
 /* ══════════════════════════════════════════════════════════
    CASE STUDIES
    ══════════════════════════════════════════════════════════ */
-.cases { background: var(--wm); padding: 100px 48px 160px; }
+.cases { background: var(--wm); padding: 100px 48px 220px; }
 .cases-grid { display: flex; flex-direction: column; gap: 40px; max-width: 1200px; margin: 0 auto; }
 .case-card { display: flex; border-radius: 16px; overflow: hidden; min-height: 300px; position: relative; }
 .case-img-wrap { position: relative; overflow: hidden; }
@@ -593,14 +593,30 @@ document.getElementById('stat-years').textContent = new Date().getFullYear() - 2
   stats.style.zIndex = '10';
   stats.style.position = 'relative';
 
-  // Footer reveal: CTA sticks while footer scrolls up behind it.
-  cta.style.position = 'sticky';
-  cta.style.top = '0';
-  cta.style.zIndex = '12';
-  cta.style.boxShadow = '0 30px 80px rgba(0,0,0,.15)';
+  // Footer reveal: footer is fixed at bottom, hidden behind everything.
+  // CTA has margin-bottom = footer height so there's scroll space.
+  // All sections above have solid backgrounds that cover the footer.
+  const footer = document.querySelector('footer');
+  const footerH = footer.offsetHeight;
 
-  document.querySelector('footer').style.position = 'relative';
-  document.querySelector('footer').style.zIndex = '13';
+  footer.style.position = 'fixed';
+  footer.style.bottom = '0';
+  footer.style.left = '0';
+  footer.style.right = '0';
+  footer.style.zIndex = '0';
+
+  cta.style.position = 'relative';
+  cta.style.zIndex = '12';
+  cta.style.marginBottom = footerH + 'px';
+
+  // Ensure all sections have solid background to cover the fixed footer
+  document.querySelectorAll('#hero, #statement, #slider, #cases, #logos, #stats, #cta').forEach(el => {
+    // Only set if not already set via CSS
+    const bg = getComputedStyle(el).backgroundColor;
+    if (bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') {
+      el.style.backgroundColor = 'var(--nv)';
+    }
+  });
 })();
 </script>
 </body>
