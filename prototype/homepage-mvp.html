@@ -206,46 +206,51 @@ nav.scrolled .nav-slash{opacity:.35}
     <!-- Case Cards — generous spacing, image + text side by side -->
     <div style="display:flex;flex-direction:column;gap:40px">
 
-      <!-- Case 1: Strabag -->
-      <div style="display:flex;align-items:center;border-radius:16px;overflow:hidden;background:var(--nv);min-height:300px">
-        <div style="flex:1.2;position:relative;overflow:hidden;align-self:stretch">
-          <img src="images/hero-strabag.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      <!-- Case 1: Strabag — image left, text right. Same technique as slider. -->
+      <div style="display:flex;border-radius:16px;overflow:hidden;min-height:300px;position:relative">
+        <!-- Image panel: clip-path cuts diagonal right edge -->
+        <div style="flex:1.2;position:relative;overflow:hidden;clip-path:polygon(0 0,100% 0,calc(100% - 30px) 100%,0 100%);z-index:2">
+          <img src="images/hero-strabag.png" alt="" style="position:absolute;top:-10px;bottom:-10px;left:-30px;right:-30px;width:calc(100% + 60px);height:calc(100% + 20px);object-fit:cover">
         </div>
-        <div style="width:3px;align-self:stretch;margin:0 -1px;background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,.2) 10%,rgba(200,149,108,.55) 50%,rgba(200,149,108,.2) 90%,transparent 98%);transform:skewX(-3deg);flex-shrink:0;z-index:5"></div>
-        <div style="flex:1;padding:40px 48px 40px 32px">
+        <!-- Text panel: clip-path cuts diagonal left edge, overlaps image by 30px -->
+        <div style="flex:1;background:var(--nv);clip-path:polygon(30px 0,100% 0,100% 100%,0 100%);margin-left:-30px;z-index:1;padding:40px 48px 40px 56px">
           <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cop);margin-bottom:12px;display:block">Employer Branding · 150+ Episoden</span>
           <h3 class="clash" style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:white;line-height:1.05;margin-bottom:10px">Strabag Karrierestories</h3>
           <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,.35);line-height:1.65;max-width:400px;margin-bottom:20px">Das Format, das zeigt wie es wirklich ist bei Strabag zu arbeiten. Über 150 Episoden seit 2023. Eine Partnerschaft seit über 12 Jahren.</p>
           <a href="#" style="display:inline-flex;align-items:center;gap:6px;color:var(--cop);font-size:13px;font-weight:700;text-decoration:none">Case Study lesen <span>→</span></a>
         </div>
+        <!-- Divider: same technique as slider — absolute, clip-path parallelogram -->
+        <div class="case-div" style="position:absolute;top:0;bottom:0;z-index:10;pointer-events:none;width:40px;background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,.2) 10%,rgba(200,149,108,.55) 50%,rgba(200,149,108,.2) 90%,transparent 98%);clip-path:polygon(calc(50% + 15px) 0,calc(50% + 17px) 0,calc(50% - 13px) 100%,calc(50% - 15px) 100%)"></div>
       </div>
 
-      <!-- Case 2: Greiner Walks — image right -->
-      <div style="display:flex;align-items:center;border-radius:16px;overflow:hidden;background:var(--dg);min-height:300px">
-        <div style="flex:1;padding:40px 32px 40px 48px">
+      <!-- Case 2: Greiner Walks — text left, image right -->
+      <div style="display:flex;border-radius:16px;overflow:hidden;min-height:300px;position:relative">
+        <!-- Text panel: clip-path cuts diagonal right edge -->
+        <div style="flex:1;background:var(--dg);clip-path:polygon(0 0,100% 0,calc(100% - 30px) 100%,0 100%);z-index:2;padding:40px 56px 40px 48px">
           <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cop);margin-bottom:12px;display:block">Employer Branding · 24 Episoden</span>
           <h3 class="clash" style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:white;line-height:1.05;margin-bottom:10px">Greiner Walks</h3>
           <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,.35);line-height:1.65;max-width:400px;margin-bottom:20px">Mitarbeiter aus der ganzen Welt erzählen beim Gehen ihre Geschichte. Authentisch, dokumentarisch, ohne Drehbuch.</p>
           <a href="#" style="display:inline-flex;align-items:center;gap:6px;color:var(--cop);font-size:13px;font-weight:700;text-decoration:none">Case Study lesen <span>→</span></a>
         </div>
-        <div style="width:3px;align-self:stretch;margin:0 -1px;background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,.2) 10%,rgba(200,149,108,.55) 50%,rgba(200,149,108,.2) 90%,transparent 98%);transform:skewX(-3deg);flex-shrink:0;z-index:5"></div>
-        <div style="flex:1.2;position:relative;overflow:hidden;align-self:stretch">
-          <img src="images/case-walks-kuehner.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <!-- Image panel: clip-path cuts diagonal left edge, overlaps text by 30px -->
+        <div style="flex:1.2;position:relative;overflow:hidden;clip-path:polygon(30px 0,100% 0,100% 100%,0 100%);margin-left:-30px;z-index:1">
+          <img src="images/case-walks-kuehner.png" alt="" style="position:absolute;top:-10px;bottom:-10px;left:-30px;right:-30px;width:calc(100% + 60px);height:calc(100% + 20px);object-fit:cover">
         </div>
+        <div class="case-div" style="position:absolute;top:0;bottom:0;z-index:10;pointer-events:none;width:40px;background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,.2) 10%,rgba(200,149,108,.55) 50%,rgba(200,149,108,.2) 90%,transparent 98%);clip-path:polygon(calc(50% + 15px) 0,calc(50% + 17px) 0,calc(50% - 13px) 100%,calc(50% - 15px) 100%)"></div>
       </div>
 
-      <!-- Case 3: Volksbank -->
-      <div style="display:flex;align-items:center;border-radius:16px;overflow:hidden;background:var(--nv);min-height:300px">
-        <div style="flex:1.2;position:relative;overflow:hidden;align-self:stretch">
-          <img src="images/hero-oegig.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      <!-- Case 3: Volksbank — image left, text right -->
+      <div style="display:flex;border-radius:16px;overflow:hidden;min-height:300px;position:relative">
+        <div style="flex:1.2;position:relative;overflow:hidden;clip-path:polygon(0 0,100% 0,calc(100% - 30px) 100%,0 100%);z-index:2">
+          <img src="images/hero-oegig.jpg" alt="" style="position:absolute;top:-10px;bottom:-10px;left:-30px;right:-30px;width:calc(100% + 60px);height:calc(100% + 20px);object-fit:cover">
         </div>
-        <div style="width:3px;align-self:stretch;margin:0 -1px;background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,.2) 10%,rgba(200,149,108,.55) 50%,rgba(200,149,108,.2) 90%,transparent 98%);transform:skewX(-3deg);flex-shrink:0;z-index:5"></div>
-        <div style="flex:1;padding:40px 48px 40px 32px">
+        <div style="flex:1;background:var(--nv);clip-path:polygon(30px 0,100% 0,100% 100%,0 100%);margin-left:-30px;z-index:1;padding:40px 48px 40px 56px">
           <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cop);margin-bottom:12px;display:block">Imagefilm · Generative KI</span>
           <h3 class="clash" style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:white;line-height:1.05;margin-bottom:10px">Volksbank — 175 Jahre</h3>
           <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,.35);line-height:1.65;max-width:400px;margin-bottom:20px">Generative KI erweckt den Mann zum Leben, der vor 175 Jahren die Genossenschaften gründete.</p>
           <a href="#" style="display:inline-flex;align-items:center;gap:6px;color:var(--cop);font-size:13px;font-weight:700;text-decoration:none">Case Study lesen <span>→</span></a>
         </div>
+        <div class="case-div" style="position:absolute;top:0;bottom:0;z-index:10;pointer-events:none;width:40px;background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,.2) 10%,rgba(200,149,108,.55) 50%,rgba(200,149,108,.2) 90%,transparent 98%);clip-path:polygon(calc(50% + 15px) 0,calc(50% + 17px) 0,calc(50% - 13px) 100%,calc(50% - 15px) 100%)"></div>
       </div>
 
     </div>
@@ -479,6 +484,26 @@ sPanelsContainer.addEventListener('mouseleave', () => { setTimeout(() => { slide
 
 window.addEventListener('load', () => { positionSliderDividers(); setTimeout(positionSliderDividers, 200); });
 window.addEventListener('resize', positionSliderDividers);
+
+// ══════════════════════════════════════════
+// CASE STUDY DIVIDERS — same technique as slider
+// ══════════════════════════════════════════
+document.querySelectorAll('.case-div').forEach(divEl => {
+  const card = divEl.parentElement;
+  // Find the first flex child (either image or text panel)
+  const firstChild = card.querySelector(':scope > div:not(.case-div)');
+  if (!firstChild) return;
+
+  function posCase() {
+    const cardRect = card.getBoundingClientRect();
+    const firstRect = firstChild.getBoundingClientRect();
+    divEl.style.left = (firstRect.right - cardRect.left - 35) + 'px';
+  }
+
+  window.addEventListener('load', () => { posCase(); setTimeout(posCase, 200); });
+  window.addEventListener('resize', posCase);
+  setTimeout(posCase, 150);
+});
 
 // ══════════════════════════════════════════
 // B-EGG EFFECT: CSS sticky stacking
