@@ -578,7 +578,7 @@ document.getElementById('stat-years').textContent = new Date().getFullYear() - 2
 // ══════════════════════════════════════════
 (function() {
   // Sections that stick while the next one slides over
-  ['#hero', '#statement', '#slider', '#cases', '#logos'].forEach((sel, i) => {
+  ['#hero', '#statement', '#slider', '#logos'].forEach((sel, i) => {
     const el = document.querySelector(sel);
     if (!el) return;
     el.style.position = 'sticky';
@@ -586,6 +586,12 @@ document.getElementById('stat-years').textContent = new Date().getFullYear() - 2
     el.style.zIndex = i + 1;
     if (i > 0) el.style.boxShadow = '0 -30px 80px rgba(0,0,0,.2)';
   });
+
+  // Cases scrolls normally but above the sticky stack
+  const cases = document.querySelector('#cases');
+  cases.style.position = 'relative';
+  cases.style.zIndex = '8';
+  cases.style.boxShadow = '0 -30px 80px rgba(0,0,0,.2)';
 
   // Stats and CTA scroll normally
   const stats = document.querySelector('#stats');
