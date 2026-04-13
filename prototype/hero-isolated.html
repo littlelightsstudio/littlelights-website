@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero — Cinematic Reveal</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<style>
+:root { --nv:#0f1b2d; --cop:#C8956C; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Satoshi',sans-serif;background:var(--nv);color:white;overflow:hidden;-webkit-font-smoothing:antialiased}
+.clash{font-family:'Clash Display',sans-serif}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 48px;display:flex;justify-content:space-between;align-items:center}
+nav a{color:white;text-decoration:none}
+nav .nav-r{display:flex;gap:28px;align-items:center}
+
+.hero{height:100vh;position:relative;overflow:hidden}
+
+/* LAYER 1: Full image — visible from the start */
+.hero-img{position:absolute;inset:0;z-index:1}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center}
+
+/* Gentle dim so text is readable when panel is transparent */
+.hero-img::after{content:'';position:absolute;inset:0;background:rgba(15,27,45,0.2);z-index:1}
+
+/*
+  LAYER 2: Dark panel
+  Starts OFF SCREEN (clip-path showing nothing).
+  Slides in diagonally to frame the text.
+*/
+.hero-panel{
+  position:absolute;top:0;left:0;bottom:0;width:100%;z-index:3;
+  background:var(--nv);
+  /* Start: nothing visible */
+  clip-path:polygon(0 0, 0 0, 0 100%, 0 100%);
+  display:flex;align-items:flex-start;
+  padding:140px 64px 0;
+}
+
+.hero-panel::before{
+  content:'';position:absolute;inset:0;opacity:.03;pointer-events:none;
+  background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+}
+
+.hero-content{position:relative;z-index:2;max-width:520px}
+
+/* LAYER 3: Divider */
+.hero-divider{position:absolute;top:0;bottom:0;left:0;right:0;z-index:10;pointer-events:none;overflow:hidden}
+.hero-divider-line{position:absolute;width:3px;transform-origin:top center;
+  background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,0.2) 10%,rgba(200,149,108,0.55) 50%,rgba(200,149,108,0.2) 90%,transparent 98%);
+}
+
+/* Text animation states */
+.h1-line{display:block;overflow:hidden}
+.h1-line span{display:block;transform:translateY(110%)}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" style="font-weight:900;letter-spacing:.18em;font-size:14px;opacity:0" id="nav-logo">LITTLE LIGHTS</a>
+  <div class="nav-r" id="nav-r" style="opacity:0">
+    <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Agency</a>
+    <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Reels & Stories</a>
+    <a href="#" style="font-size:13px;font-weight:500;opacity:.35">Creative Studio</a>
+    <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Über uns</a>
+    <a href="#" style="font-size:12px;font-weight:700;background:var(--cop);color:var(--nv);padding:10px 24px;border-radius:50px">Lass uns reden</a>
+  </div>
+</nav>
+
+<section class="hero">
+
+  <!-- LAYER 1: Image — immediately visible, the first thing you see -->
+  <div class="hero-img" id="hero-img">
+    <img src="images/hero-allianz.png" alt="" id="hero-img-el">
+  </div>
+
+  <!-- LAYER 2: Dark panel — slides in over the image -->
+  <div class="hero-panel" id="hero-panel">
+    <div class="hero-content">
+
+      <div id="h-tag" style="display:flex;align-items:center;gap:10px;margin-bottom:32px;opacity:0">
+        <div style="width:28px;height:2px;background:var(--cop)"></div>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--cop);opacity:.8">Filmproduktion Wien</span>
+      </div>
+
+      <h1 class="clash" id="h-h1" style="font-size:clamp(3rem,6.5vw,5.5rem);font-weight:700;line-height:.94;letter-spacing:-.04em;margin-bottom:28px;opacity:0">
+        <span class="h1-line"><span>Filme,</span></span>
+        <span class="h1-line"><span>die ankommen.</span></span>
+      </h1>
+
+      <p id="h-sub" style="font-size:clamp(1rem,1.3vw,1.1rem);font-weight:300;color:rgba(255,255,255,.3);line-height:1.8;max-width:380px;margin-bottom:36px;opacity:0">
+        Strategische Filmproduktion für Unternehmen, die Bewegtbild als Kommunikationsinstrument verstehen.
+      </p>
+
+      <a id="h-cta" href="#" style="display:inline-flex;align-items:center;gap:10px;background:var(--cop);color:var(--nv);font-weight:700;padding:15px 34px;border-radius:50px;font-size:13px;text-decoration:none;letter-spacing:.02em;opacity:0">
+        Lass uns reden <span>→</span>
+      </a>
+
+      <p id="h-brand" style="font-size:11px;font-weight:300;color:rgba(255,255,255,.08);margin-top:48px;line-height:1.7;font-style:italic;max-width:300px;opacity:0">
+        We make films for companies who understand the difference between pretty pictures and stories worth telling.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- LAYER 3: Divider -->
+  <div class="hero-divider" id="hero-divider">
+    <div class="hero-divider-line" id="hero-divider-line"></div>
+  </div>
+
+</section>
+
+<script>
+const panel = document.getElementById('hero-panel');
+const dividerLine = document.getElementById('hero-divider-line');
+const heroImg = document.getElementById('hero-img-el');
+
+function positionDivider() {
+  const cs = getComputedStyle(panel).clipPath;
+  const h = panel.offsetHeight;
+  const w = panel.offsetWidth;
+  const matches = cs.match(/polygon\(([^)]+)\)/);
+  if (!matches) return;
+  const points = matches[1].split(',').map(p => p.trim());
+  // Top-right point (index 1)
+  const topXpct = parseFloat(points[1]);
+  // Bottom-right point (index 2)
+  const botXpct = parseFloat(points[2]);
+  if (isNaN(topXpct) || isNaN(botXpct)) return;
+
+  const topX = topXpct / 100 * w;
+  const botX = botXpct / 100 * w;
+  const dx = topX - botX;
+  const lineLength = Math.sqrt(dx * dx + h * h);
+  const angle = Math.atan2(h, -(dx)) * (180 / Math.PI) - 90;
+
+  dividerLine.style.height = lineLength + 'px';
+  dividerLine.style.left = topX + 'px';
+  dividerLine.style.top = '0px';
+  dividerLine.style.transform = `rotate(${angle}deg)`;
+}
+
+// ═══════════════════════════════════
+// TIMELINE
+// ═══════════════════════════════════
+
+const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+// Phase 1 (0-1s): Image is full screen, subtle zoom, pure cinema moment
+gsap.set(heroImg, { scale: 1.08 });
+tl.to(heroImg, { scale: 1, duration: 4, ease: 'power2.out' }, 0);
+
+// Nav fades in early
+tl.to('#nav-logo', { opacity: 1, duration: .8 }, 0.3);
+tl.to('#nav-r', { opacity: 1, duration: .8 }, 0.5);
+
+// Phase 2 (1-3.5s): Dark panel slides in + goes transparent together
+tl.fromTo(panel,
+  { clipPath: 'polygon(0 0, 0% 0, 0% 100%, 0 100%)' },
+  { clipPath: 'polygon(0 0, 60% 0, 10% 100%, 0 100%)',
+    duration: 2.5,
+    ease: 'power4.inOut',
+    onUpdate: positionDivider,
+  },
+1);
+
+// Transparency runs in parallel with the slide, same timing
+tl.fromTo(panel,
+  { backgroundColor: 'rgba(15,27,45,1)' },
+  { backgroundColor: 'rgba(15,27,45,0.8)',
+    duration: 2.5,
+    ease: 'power4.inOut',
+  },
+1);
+
+// Phase 3 (2-4s): Text builds up inside the dark panel
+tl.to('#h-tag', { opacity: 1, duration: .6 }, 2);
+
+tl.set('#h-h1', { opacity: 1 }, 2.2);
+tl.to('.h1-line span', {
+  y: '0%', duration: .9, stagger: .1, ease: 'power4.out',
+}, 2.2);
+
+tl.fromTo('#h-sub',
+  { opacity: 0, y: 12 },
+  { opacity: 1, y: 0, duration: .7 },
+2.8);
+
+tl.fromTo('#h-cta',
+  { opacity: 0, y: 12 },
+  { opacity: 1, y: 0, duration: .6 },
+3);
+
+tl.to('#h-brand', { opacity: 1, duration: 1 }, 3.5);
+
+// Initial
+positionDivider();
+window.addEventListener('resize', positionDivider);
+</script>
+
+</body>
+</html>
