@@ -593,20 +593,14 @@ document.getElementById('stat-years').textContent = new Date().getFullYear() - 2
   stats.style.zIndex = '10';
   stats.style.position = 'relative';
 
-  // Footer reveal: footer is behind CTA.
-  // CTA has enough bottom margin to create scroll space for the footer to appear.
-  const footer = document.querySelector('footer');
-  const footerH = footer.offsetHeight;
-
-  cta.style.position = 'relative';
+  // Footer reveal: CTA sticks while footer scrolls up behind it.
+  cta.style.position = 'sticky';
+  cta.style.top = '0';
   cta.style.zIndex = '12';
-  cta.style.marginBottom = footerH + 'px';
+  cta.style.boxShadow = '0 30px 80px rgba(0,0,0,.15)';
 
-  footer.style.position = 'fixed';
-  footer.style.bottom = '0';
-  footer.style.left = '0';
-  footer.style.right = '0';
-  footer.style.zIndex = '1';
+  document.querySelector('footer').style.position = 'relative';
+  document.querySelector('footer').style.zIndex = '13';
 })();
 </script>
 </body>
