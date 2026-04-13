@@ -147,7 +147,7 @@ nav.scrolled .nav-slash { opacity: .35; }
 /* ══════════════════════════════════════════════════════════
    CASE STUDIES
    ══════════════════════════════════════════════════════════ */
-.cases { background: var(--wm); padding: 100px 48px; }
+.cases { background: var(--wm); padding: 100px 48px 160px; }
 .cases-grid { display: flex; flex-direction: column; gap: 40px; max-width: 1200px; margin: 0 auto; }
 .case-card { display: flex; border-radius: 16px; overflow: hidden; min-height: 300px; position: relative; }
 .case-img-wrap { position: relative; overflow: hidden; }
@@ -375,7 +375,7 @@ footer { background: var(--dg); padding: 60px 48px 36px; color: rgba(255,255,255
     <div class="stats-grid">
       <div><p class="stat-val clash" style="color:var(--cop)"><span id="stat-years">12</span>+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Jahre</p></div>
       <div><p class="stat-val clash" style="color:var(--cop)">600+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmprojekte</p></div>
-      <div><p class="stat-val clash" style="color:var(--cop)">30+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Kunden</p></div>
+      <div><p class="stat-val clash" style="color:var(--cop)">50+</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Kunden</p></div>
       <div><p class="stat-val clash" style="color:rgba(255,255,255,.4)">7</p><p style="font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:6px">Filmemacher</p></div>
     </div>
   </div>
@@ -593,14 +593,20 @@ document.getElementById('stat-years').textContent = new Date().getFullYear() - 2
   stats.style.zIndex = '10';
   stats.style.position = 'relative';
 
-  // CTA is sticky for footer reveal
-  cta.style.position = 'sticky';
-  cta.style.top = '0';
-  cta.style.zIndex = '12';
-  cta.style.boxShadow = '0 30px 80px rgba(0,0,0,.15)';
+  // Footer reveal: footer is behind CTA.
+  // CTA has enough bottom margin to create scroll space for the footer to appear.
+  const footer = document.querySelector('footer');
+  const footerH = footer.offsetHeight;
 
-  document.querySelector('footer').style.position = 'relative';
-  document.querySelector('footer').style.zIndex = '11';
+  cta.style.position = 'relative';
+  cta.style.zIndex = '12';
+  cta.style.marginBottom = footerH + 'px';
+
+  footer.style.position = 'fixed';
+  footer.style.bottom = '0';
+  footer.style.left = '0';
+  footer.style.right = '0';
+  footer.style.zIndex = '1';
 })();
 </script>
 </body>
