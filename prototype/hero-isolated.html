@@ -152,9 +152,9 @@ nav a { color: white; text-decoration: none; }
 .hero-logo-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--cop) 0%, #D4A574 30%, #7EB8C9 60%, #9B8EC4 100%);
-  background-size: 250% 250%;
-  background-position: 100% 100%;
+  background: linear-gradient(135deg, #C9A87C 0%, #CB7B6A 33%, #8BA4B4 55%, #C9A87C 80%, #CB7B6A 100%);
+  background-size: 400% 400%;
+  background-position: 0% 0%;
   -webkit-mask: url('images/ll-logo-white.png') center / contain no-repeat;
   mask: url('images/ll-logo-white.png') center / contain no-repeat;
   opacity: 0;
@@ -167,11 +167,11 @@ nav a { color: white; text-decoration: none; }
 .hero-logo:hover .hero-logo-gradient {
   opacity: 1;
   transition: opacity .2s ease;
-  animation: logoSweep 1.5s ease forwards;
+  animation: heroLogoLoop 3s linear infinite;
 }
-@keyframes logoSweep {
-  0%   { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
+@keyframes heroLogoLoop {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
 }
 
 /* Text animation helpers */

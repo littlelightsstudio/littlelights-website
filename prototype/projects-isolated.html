@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects - Isolated Component</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ══════════════════════════════════════════════════════════ */
+:root {
+  --nv: #0f1b2d;
+  --dg: #1B1E29;
+  --wm: #F7F6F3;
+  --cop: #C8956C;
+  --col-agency: #C9A87C;
+  --col-rs: #CB7B6A;
+  --col-creative: #8BA4B4;
+  --font-h: 'Clash Display', sans-serif;
+  --font-b: 'Satoshi', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-b);
+  background: var(--wm);
+  color: var(--dg);
+  -webkit-font-smoothing: antialiased;
+}
+.clash { font-family: var(--font-h); }
+.cop-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--cop); display: block;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PROJECTS
+   ══════════════════════════════════════════════════════════ */
+.projects {
+  padding: 100px 48px 120px;
+  background: var(--wm);
+}
+
+.projects-header {
+  max-width: 1200px;
+  margin: 0 auto 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.projects-header-text { flex: 1; min-width: 280px; }
+
+/* ══════════════════════════════════════════════════════════
+   PILL TOGGLE
+   ══════════════════════════════════════════════════════════ */
+.pill-toggle {
+  display: flex;
+  align-items: center;
+  background: rgba(15,27,45,.04);
+  border-radius: 50px;
+  padding: 4px;
+  position: relative;
+  gap: 0;
+}
+
+.pill-btn {
+  position: relative;
+  z-index: 2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-b);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: rgba(15,27,45,.35);
+  padding: 10px 20px;
+  border-radius: 50px;
+  white-space: nowrap;
+  transition: color .3s ease;
+}
+.pill-btn.active {
+  color: white;
+}
+.pill-btn:hover:not(.active) {
+  color: rgba(15,27,45,.6);
+}
+
+/* The sliding background */
+.pill-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: calc(100% - 8px);
+  border-radius: 50px;
+  z-index: 1;
+  transition: left .4s cubic-bezier(0.25, 1, 0.5, 1),
+              width .4s cubic-bezier(0.25, 1, 0.5, 1),
+              background-color .4s ease;
+  background: var(--cop);
+}
+
+/* Random button */
+.pill-random {
+  position: relative;
+  z-index: 2;
+  background: none;
+  border: none;
+  border-left: 1px solid rgba(15,27,45,.06);
+  cursor: pointer;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .3s ease;
+  opacity: .3;
+}
+.pill-random:hover {
+  opacity: .7;
+}
+.pill-random svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--dg);
+  stroke-width: 1.5;
+  fill: none;
+  transition: transform .1s ease;
+}
+.pill-random.spinning svg {
+  animation: spinShuffle .5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@keyframes spinShuffle {
+  0%   { transform: rotate(0deg) scale(1); }
+  30%  { transform: rotate(180deg) scale(.85); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PROJECT GRID
+   ══════════════════════════════════════════════════════════ */
+.projects-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.projects-row-1 { display: grid; grid-template-columns: 1fr; }
+.projects-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.projects-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* ── Project card ── */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow .6s ease, opacity .4s ease;
+}
+.project-card::before {
+  content: '';
+  display: block;
+  padding-top: 50%;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(15,27,45,.15), 0 8px 20px rgba(15,27,45,.08);
+}
+
+/* Fade out non-matching cards when filtering */
+.project-card.dimmed {
+  opacity: .15;
+  transform: scale(.98);
+  pointer-events: none;
+}
+
+.project-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.project-card:hover img {
+  transform: scale(1.03);
+}
+
+/* Diagonal gradient overlay */
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top right,
+    rgba(15,27,45,.92) 0%,
+    rgba(15,27,45,.7) 30%,
+    rgba(15,27,45,.2) 55%,
+    transparent 72%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transition: all .6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.project-card:hover::after {
+  background: linear-gradient(
+    to top right,
+    rgba(15,27,45,.95) 0%,
+    rgba(15,27,45,.8) 35%,
+    rgba(15,27,45,.35) 60%,
+    rgba(15,27,45,.08) 82%
+  );
+}
+
+/* Copper divider line */
+.project-divider {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 120%;
+  height: 1px;
+  background: linear-gradient(to right,
+    rgba(200,149,108,.4) 0%,
+    rgba(200,149,108,.15) 30%,
+    transparent 55%
+  );
+  transform-origin: bottom left;
+  transform: rotate(-26deg);
+  z-index: 2;
+  pointer-events: none;
+  opacity: .4;
+  transition: opacity .6s ease;
+}
+.project-card:hover .project-divider {
+  opacity: .8;
+}
+
+/* Text overlay */
+.project-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 28px 32px;
+  z-index: 3;
+  color: white;
+}
+
+/* Category label - color varies by area */
+.project-category {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.project-card[data-area="agency"] .project-category { color: var(--col-agency); }
+.project-card[data-area="rs"] .project-category { color: var(--col-rs); }
+.project-card[data-area="creative"] .project-category { color: var(--col-creative); }
+
+/* Case Study badge - positioned top-right of card */
+.project-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 4;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--cop);
+  opacity: .75;
+  background: rgba(15,27,45,.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(200,149,108,.2);
+  border-radius: 4px;
+  padding: 5px 10px;
+  transition: opacity .4s ease;
+}
+.project-card:hover .project-badge {
+  opacity: 1;
+}
+
+.project-title {
+  font-family: var(--font-h);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+}
+.project-client {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,.6);
+  margin-top: 4px;
+}
+
+/* Hover CTA */
+.project-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .4s ease, transform .4s ease, gap .3s ease;
+  margin-top: 8px;
+}
+.project-card[data-area="agency"] .project-cta { color: var(--col-agency); }
+.project-card[data-area="rs"] .project-cta { color: var(--col-rs); }
+.project-card[data-area="creative"] .project-cta { color: var(--col-creative); }
+.project-card:hover .project-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Size variants */
+.project-card.size-hero .project-title { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+.project-card.size-medium .project-title { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+.project-card.size-medium .project-info { padding: 24px 28px; }
+.project-card.size-small .project-title { font-size: clamp(1rem, 1.5vw, 1.3rem); }
+.project-card.size-small .project-info { padding: 20px 24px; }
+.project-card.size-small .project-client { font-size: 12px; }
+
+/* "Alle Projekte" link */
+.projects-more {
+  text-align: center;
+  margin-top: 48px;
+}
+.projects-more a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cop);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: gap .3s ease;
+}
+.projects-more a:hover { gap: 10px; }
+
+/* ══════════════════════════════════════════════════════════
+   SHUFFLE ANIMATION
+   ══════════════════════════════════════════════════════════ */
+@keyframes shuffleFade {
+  0%   { opacity: 1; transform: scale(1); }
+  40%  { opacity: 0; transform: scale(.97); }
+  60%  { opacity: 0; transform: scale(.97); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.project-card.shuffling {
+  animation: shuffleFade .6s ease;
+}
+</style>
+</head>
+<body>
+
+<section class="projects" id="projects">
+  <div class="projects-header">
+    <div class="projects-header-text">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="width:28px;height:2px;background:var(--cop)"></div>
+        <span class="cop-label" style="margin:0">Ausgewählte Arbeiten</span>
+      </div>
+      <p class="clash" style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:rgba(15,27,45,.8);line-height:1.08;letter-spacing:-.02em">Projekte, die zeigen<br>was wir meinen.</p>
+    </div>
+
+    <!-- Pill Toggle -->
+    <div class="pill-toggle" id="pill-toggle">
+      <div class="pill-slider" id="pill-slider"></div>
+      <button class="pill-btn active" data-filter="all" data-color="#C8956C">Alle</button>
+      <button class="pill-btn" data-filter="agency" data-color="#C9A87C">Agency</button>
+      <button class="pill-btn" data-filter="rs" data-color="#CB7B6A">Reels & Stories</button>
+      <button class="pill-btn" data-filter="casestudy" data-color="#C8956C">Case Studies</button>
+      <button class="pill-random" id="random-btn" title="Zufällige Auswahl">
+        <svg viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="projects-grid" id="projects-grid">
+    <div class="projects-row-1">
+      <div class="project-card size-hero" data-area="agency" data-casestudy="true">
+        <img src="images/hero-strabag.png" alt="">
+        <div class="project-divider"></div>
+        <span class="project-badge">Case Study</span>
+        <div class="project-info">
+          <p class="project-category">Employer Branding · 150+ Episoden</p>
+          <h3 class="project-title">Strabag Karrierestories</h3>
+          <p class="project-client">Strabag SE</p>
+          <a class="project-cta" href="#">Case Study lesen <span>→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="projects-row-2">
+      <div class="project-card size-medium" data-area="agency" data-casestudy="true">
+        <img src="images/hero-oegig.jpg" alt="">
+        <div class="project-divider"></div>
+        <span class="project-badge">Case Study</span>
+        <div class="project-info">
+          <p class="project-category">Imagefilm · Generative KI</p>
+          <h3 class="project-title">175 Jahre Volksbank</h3>
+          <p class="project-client">Volksbank Wien</p>
+          <a class="project-cta" href="#">Case Study lesen <span>→</span></a>
+        </div>
+      </div>
+      <div class="project-card size-medium" data-area="agency" data-casestudy="true">
+        <img src="images/case-walks-kuehner.png" alt="">
+        <div class="project-divider"></div>
+        <span class="project-badge">Case Study</span>
+        <div class="project-info">
+          <p class="project-category">Employer Branding · 24 Episoden</p>
+          <h3 class="project-title">Greiner Walks</h3>
+          <p class="project-client">Greiner AG</p>
+          <a class="project-cta" href="#">Case Study lesen <span>→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="projects-row-3">
+      <div class="project-card size-small" data-area="agency">
+        <img src="images/hero-allianz.png" alt="">
+        <div class="project-divider"></div>
+        <div class="project-info">
+          <p class="project-category">Branded Entertainment</p>
+          <h3 class="project-title">Kinder Surprise</h3>
+          <p class="project-client">Ferrero</p>
+          <a class="project-cta" href="#">Projekt ansehen <span>→</span></a>
+        </div>
+      </div>
+      <div class="project-card size-small" data-area="rs">
+        <img src="images/rs-jaegertee.png" alt="">
+        <div class="project-divider"></div>
+        <div class="project-info">
+          <p class="project-category">Reels & Stories</p>
+          <h3 class="project-title">Social Content</h3>
+          <p class="project-client">Jägertee</p>
+          <a class="project-cta" href="#">Mehr erfahren <span>→</span></a>
+        </div>
+      </div>
+      <div class="project-card size-small" data-area="creative">
+        <img src="images/helena-flinn-trilogy.png" alt="">
+        <div class="project-divider"></div>
+        <div class="project-info">
+          <p class="project-category">Creative Studio</p>
+          <h3 class="project-title">Helena Flinn Trilogy</h3>
+          <p class="project-client">Little Lights Publishing</p>
+          <a class="project-cta" href="#">Entdecken <span>→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="projects-more">
+    <a href="#">Alle Projekte ansehen <span style="font-size:18px">→</span></a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT
+     ══════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  const pills   = document.querySelectorAll('.pill-btn');
+  const slider   = document.getElementById('pill-slider');
+  const cards    = document.querySelectorAll('.project-card');
+  const randomBtn = document.getElementById('random-btn');
+
+  // ── Position the slider behind the active pill ──
+  function moveSlider(btn) {
+    slider.style.left = btn.offsetLeft + 'px';
+    slider.style.width = btn.offsetWidth + 'px';
+
+    // Color changes based on the active filter
+    const color = getComputedStyle(btn).getPropertyValue('--pill-color') ||
+                  btn.dataset.color || 'var(--cop)';
+    slider.style.background = color;
+  }
+
+  // Initialize slider position
+  const activePill = document.querySelector('.pill-btn.active');
+  if (activePill) moveSlider(activePill);
+
+  // ── Filter logic ──
+  function filterCards(filter) {
+    cards.forEach(card => {
+      const area = card.dataset.area;
+      const isCasestudy = card.dataset.casestudy === 'true';
+
+      let match = false;
+      if (filter === 'all') match = true;
+      else if (filter === 'casestudy') match = isCasestudy;
+      else match = (area === filter);
+
+      card.classList.toggle('dimmed', !match);
+    });
+  }
+
+  // ── Pill click handler ──
+  pills.forEach(btn => {
+    btn.addEventListener('click', () => {
+      pills.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      moveSlider(btn);
+      filterCards(btn.dataset.filter);
+    });
+  });
+
+  // ── Random shuffle ──
+  randomBtn.addEventListener('click', () => {
+    // Spin the icon
+    randomBtn.classList.remove('spinning');
+    void randomBtn.offsetHeight;
+    randomBtn.classList.add('spinning');
+    setTimeout(() => randomBtn.classList.remove('spinning'), 550);
+
+    // Reset to "Alle" first
+    pills.forEach(b => b.classList.remove('active'));
+    pills[0].classList.add('active');
+    moveSlider(pills[0]);
+    filterCards('all');
+
+    // Shuffle animation on each card with stagger
+    cards.forEach((card, i) => {
+      card.classList.remove('shuffling');
+      void card.offsetHeight;
+      card.style.animationDelay = (i * 80) + 'ms';
+      card.classList.add('shuffling');
+    });
+
+    setTimeout(() => {
+      cards.forEach(card => {
+        card.classList.remove('shuffling');
+        card.style.animationDelay = '';
+      });
+    }, 800);
+  });
+
+  // Recalculate slider on resize
+  window.addEventListener('resize', () => {
+    const active = document.querySelector('.pill-btn.active');
+    if (active) moveSlider(active);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Lights Studio - Design System</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --nv: #0f1b2d;
+  --dg: #1B1E29;
+  --wm: #F7F6F3;
+  --cop: #C8956C;
+  --cop-dark: #A87A55;
+  --col-agency: #C9A87C;
+  --col-rs: #CB7B6A;
+  --col-creative: #8BA4B4;
+  --font-h: 'Clash Display', sans-serif;
+  --font-b: 'Satoshi', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-b); background: var(--wm); color: var(--dg); -webkit-font-smoothing: antialiased; }
+.clash { font-family: var(--font-h); }
+
+/* Layout */
+.section { padding: 60px 48px; max-width: 1200px; margin: 0 auto; }
+.dark { background: var(--nv); color: white; }
+.divider { height: 1px; background: linear-gradient(to right, transparent 0%, rgba(200,149,108,.15) 20%, rgba(200,149,108,.3) 50%, rgba(200,149,108,.15) 80%, transparent 100%); margin: 0 48px; }
+.section-label { font-size: 10px; font-weight: 700; letter-spacing: .35em; text-transform: uppercase; color: var(--cop); margin-bottom: 32px; display: flex; align-items: center; gap: 10px; }
+.section-label::before { content: ''; width: 24px; height: 2px; background: var(--cop); }
+.dark .section-label { color: rgba(200,149,108,.6); }
+.dark .section-label::before { background: rgba(200,149,108,.4); }
+
+/* Swatches */
+.swatches { display: flex; gap: 12px; flex-wrap: wrap; }
+.swatch {
+  width: 100px; height: 100px; border-radius: 12px;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  padding: 10px;
+}
+.swatch-name { font-size: 9px; font-weight: 700; letter-spacing: .05em; }
+.swatch-hex { font-size: 8px; font-weight: 400; opacity: .6; }
+.swatch-sep { width: 1px; height: 100px; background: rgba(15,27,45,.06); align-self: center; }
+
+/* Chips */
+.chip {
+  display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; padding: 6px 14px; border-radius: 6px;
+}
+
+/* Typo scale */
+.typo-row { margin-bottom: 32px; }
+.typo-meta { font-size: 10px; font-weight: 500; color: rgba(15,27,45,.25); margin-bottom: 6px; letter-spacing: .02em; }
+.dark .typo-meta { color: rgba(255,255,255,.2); }
+
+/* Component preview */
+.preview-card {
+  border-radius: 12px; padding: 28px; position: relative;
+}
+.preview-card.on-dark { background: rgba(255,255,255,.04); }
+.preview-card.on-light { background: white; border: 1px solid rgba(15,27,45,.05); }
+
+/* Header bar */
+.guide-header {
+  background: var(--nv);
+  padding: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.guide-header p { font-size: 12px; color: rgba(255,255,255,.2); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     HEADER
+     ══════════════════════════════════════════════════════════ -->
+<div class="guide-header">
+  <div>
+    <p style="font-weight:900;letter-spacing:.18em;font-size:14px;color:white;margin-bottom:8px">LITTLE LIGHTS</p>
+    <p class="clash" style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:white;letter-spacing:-.02em">Design System</p>
+  </div>
+  <p>Stand: 14. April 2026 - Gelockte Elemente</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     1. FARBPALETTE
+     ══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Farbpalette</div>
+
+  <p style="font-size:14px;font-weight:600;margin-bottom:16px">Basis</p>
+  <div class="swatches" style="margin-bottom:32px">
+    <div class="swatch" style="background:#F7F6F3;border:1px solid rgba(0,0,0,.08)">
+      <span class="swatch-name" style="color:var(--dg)">Warm Cream</span>
+      <span class="swatch-hex" style="color:var(--dg)">#F7F6F3</span>
+    </div>
+    <div class="swatch" style="background:#1B1E29">
+      <span class="swatch-name" style="color:white">Dark Grey</span>
+      <span class="swatch-hex" style="color:white">#1B1E29</span>
+    </div>
+    <div class="swatch" style="background:#0f1b2d">
+      <span class="swatch-name" style="color:white">Navy</span>
+      <span class="swatch-hex" style="color:white">#0f1b2d</span>
+    </div>
+    <div class="swatch-sep"></div>
+    <div class="swatch" style="background:#C8956C">
+      <span class="swatch-name" style="color:white">Copper</span>
+      <span class="swatch-hex" style="color:white">#C8956C</span>
+    </div>
+    <div class="swatch" style="background:#A87A55">
+      <span class="swatch-name" style="color:white">Copper Dark</span>
+      <span class="swatch-hex" style="color:white">#A87A55</span>
+    </div>
+  </div>
+
+  <p style="font-size:14px;font-weight:600;margin-bottom:16px">Disziplinen</p>
+  <div class="swatches" style="margin-bottom:24px">
+    <div class="swatch" style="background:#C9A87C">
+      <span class="swatch-name" style="color:white">Agency</span>
+      <span class="swatch-hex" style="color:white">#C9A87C</span>
+    </div>
+    <div class="swatch" style="background:#CB7B6A">
+      <span class="swatch-name" style="color:white">Reels & Stories</span>
+      <span class="swatch-hex" style="color:white">#CB7B6A</span>
+    </div>
+    <div class="swatch" style="background:#8BA4B4">
+      <span class="swatch-name" style="color:white">Creative Studio</span>
+      <span class="swatch-hex" style="color:white">#8BA4B4</span>
+    </div>
+  </div>
+  <p style="font-size:12px;color:rgba(15,27,45,.35);line-height:1.6;max-width:600px">Copper bleibt die Master-Markenfarbe (CTAs, Navigation, "Alle"-Filter). Die Disziplin-Farben sind Akzente fur Labels, Kategorie-Tags und den Pill-Toggle. Agency = warmes Gold, R&S = lebendiges Koralle, Creative = kuhles Blaugrau.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     2. TYPOGRAFIE
+     ══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Typografie</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:48px">
+    <div>
+      <p style="font-size:14px;font-weight:600;margin-bottom:16px">Clash Display - Headlines</p>
+      <div class="typo-row">
+        <p class="typo-meta">H1 - clamp(2.4rem, 5.5vw, 5.2rem) / 700 / -0.04em</p>
+        <p class="clash" style="font-size:clamp(2.4rem,5.5vw,4rem);font-weight:700;line-height:.94;letter-spacing:-.04em">Filme, die ankommen.</p>
+      </div>
+      <div class="typo-row">
+        <p class="typo-meta">H2 - clamp(1.8rem, 4vw, 2.8rem) / 700 / -0.02em</p>
+        <p class="clash" style="font-size:clamp(1.8rem,4vw,2.4rem);font-weight:700;line-height:1.06;letter-spacing:-.02em">Projekte, die zeigen was wir meinen.</p>
+      </div>
+      <div class="typo-row">
+        <p class="typo-meta">H3 - clamp(1.2rem, 2vw, 1.6rem) / 700</p>
+        <p class="clash" style="font-size:1.5rem;font-weight:700;line-height:1.05;letter-spacing:-.02em">Strabag Karrierestories</p>
+      </div>
+      <div class="typo-row">
+        <p class="typo-meta">Bold Statement - clamp(2.4rem, 6vw, 4.5rem) / 700</p>
+        <p class="clash" style="font-size:clamp(2rem,5vw,3.5rem);font-weight:700;line-height:1.06;letter-spacing:-.02em;color:rgba(15,27,45,.75)">Jeder behauptet Storytelling.<br><span style="color:transparent;-webkit-text-stroke:1.5px rgba(200,149,108,.3)">Wir leben es.</span></p>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:14px;font-weight:600;margin-bottom:16px">Satoshi - Body & UI</p>
+      <div class="typo-row">
+        <p class="typo-meta">Body - clamp(1rem, 1.3vw, 1.1rem) / 300 / 1.75 line-height</p>
+        <p style="font-size:16px;font-weight:300;line-height:1.75;color:rgba(15,27,45,.5);max-width:400px">Strategische Filmproduktion fur Unternehmen, die Bewegtbild als Kommunikationsinstrument verstehen.</p>
+      </div>
+      <div class="typo-row">
+        <p class="typo-meta">Label - 10px / 700 / 0.3em tracking / uppercase</p>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cop)">Employer Branding</span>
+      </div>
+      <div class="typo-row">
+        <p class="typo-meta">Small - 12-13px / 300-400</p>
+        <p style="font-size:13px;font-weight:300;color:rgba(15,27,45,.4)">Strabag SE - seit 2014</p>
+      </div>
+      <div class="typo-row">
+        <p class="typo-meta">CTA Button - 13px / 700 / Copper BG / Pill shape</p>
+        <span style="font-size:13px;font-weight:700;background:var(--cop);color:var(--nv);padding:12px 28px;border-radius:50px;display:inline-block">Lass uns reden →</span>
+      </div>
+      <div class="typo-row">
+        <p class="typo-meta">Link - 12-14px / 700 / Bereichsfarbe</p>
+        <a style="font-size:13px;font-weight:700;color:var(--cop);text-decoration:none;display:inline-flex;align-items:center;gap:6px">Case Study lesen <span>→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     3. DESIGNSPRACHE
+     ══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Designsprache</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+    <div>
+      <p style="font-size:14px;font-weight:600;margin-bottom:12px">Leitmotiv: "/"</p>
+      <p style="font-size:13px;color:rgba(15,27,45,.4);line-height:1.6">Die Diagonale als durchgangiges Markenelement. Im Hero als Bildteiler, im Slider als Panel-Trenner, bei Testimonials als Wipe, bei Projekten als Gradient-Kante. Nie erzwungen, immer funktional.</p>
+    </div>
+    <div>
+      <p style="font-size:14px;font-weight:600;margin-bottom:12px">Hell als Basis</p>
+      <p style="font-size:13px;color:rgba(15,27,45,.4);line-height:1.6">Warm Cream als Standard-Hintergrund. Dunkle Sektionen (Navy) fur filmische Momente und Rhythmus. Horizontale Copper-Divider wo gleichfarbige Sektionen aufeinandertreffen.</p>
+    </div>
+    <div>
+      <p style="font-size:14px;font-weight:600;margin-bottom:12px">Substanz vor Effekt</p>
+      <p style="font-size:13px;color:rgba(15,27,45,.4);line-height:1.6">Jede Animation hat einen Grund. Subtile Grain-Textur auf dunklen Flachen. Lenis Smooth Scroll. 2-3 Wow-Momente pro Seite, nicht 50. Charmant, nicht flashy.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     4. FARBEN IM KONTEXT
+     ══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Farben im Kontext - Hell</div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+    <span class="chip" style="background:rgba(201,168,124,.12);color:#C9A87C">Agency</span>
+    <span class="chip" style="background:rgba(203,123,106,.12);color:#CB7B6A">Reels & Stories</span>
+    <span class="chip" style="background:rgba(139,164,180,.12);color:#7A93A3">Creative Studio</span>
+    <span class="chip" style="background:rgba(200,149,108,.1);color:#A87A55;border:1px solid rgba(200,149,108,.2)">Case Study</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div class="preview-card on-light">
+      <p style="font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#C9A87C;margin-bottom:10px">Employer Branding</p>
+      <p class="clash" style="font-size:1.2rem;font-weight:700;margin-bottom:6px">Strabag Karrierestories</p>
+      <p style="font-size:12px;color:rgba(15,27,45,.35)">Strabag SE</p>
+      <a style="font-size:12px;font-weight:700;color:#C9A87C;margin-top:12px;display:inline-block;text-decoration:none">Case Study lesen →</a>
+    </div>
+    <div class="preview-card on-light">
+      <p style="font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#CB7B6A;margin-bottom:10px">Reels & Stories</p>
+      <p class="clash" style="font-size:1.2rem;font-weight:700;margin-bottom:6px">Social Content</p>
+      <p style="font-size:12px;color:rgba(15,27,45,.35)">Jagertee</p>
+      <a style="font-size:12px;font-weight:700;color:#CB7B6A;margin-top:12px;display:inline-block;text-decoration:none">Mehr erfahren →</a>
+    </div>
+    <div class="preview-card on-light">
+      <p style="font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#8BA4B4;margin-bottom:10px">Creative Studio</p>
+      <p class="clash" style="font-size:1.2rem;font-weight:700;margin-bottom:6px">Helena Flinn Trilogy</p>
+      <p style="font-size:12px;color:rgba(15,27,45,.35)">Little Lights Publishing</p>
+      <a style="font-size:12px;font-weight:700;color:#8BA4B4;margin-top:12px;display:inline-block;text-decoration:none">Entdecken →</a>
+    </div>
+  </div>
+</div>
+
+<!-- On dark -->
+<div class="dark" style="padding:60px 48px">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-label">Farben im Kontext - Dunkel</div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+      <span class="chip" style="background:rgba(201,168,124,.15);color:#C9A87C">Agency</span>
+      <span class="chip" style="background:rgba(203,123,106,.15);color:#CB7B6A">Reels & Stories</span>
+      <span class="chip" style="background:rgba(139,164,180,.15);color:#8BA4B4">Creative Studio</span>
+      <span class="chip" style="background:rgba(200,149,108,.1);color:#C8956C;border:1px solid rgba(200,149,108,.25)">Case Study</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <div class="preview-card on-dark">
+        <p style="font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#C9A87C;margin-bottom:10px">Employer Branding</p>
+        <p class="clash" style="font-size:1.2rem;font-weight:700;color:white;margin-bottom:6px">Strabag Karrierestories</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.35)">Strabag SE</p>
+        <a style="font-size:12px;font-weight:700;color:#C9A87C;margin-top:12px;display:inline-block;text-decoration:none">Case Study lesen →</a>
+      </div>
+      <div class="preview-card on-dark">
+        <p style="font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#CB7B6A;margin-bottom:10px">Reels & Stories</p>
+        <p class="clash" style="font-size:1.2rem;font-weight:700;color:white;margin-bottom:6px">Social Content</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.35)">Jagertee</p>
+        <a style="font-size:12px;font-weight:700;color:#CB7B6A;margin-top:12px;display:inline-block;text-decoration:none">Mehr erfahren →</a>
+      </div>
+      <div class="preview-card on-dark">
+        <p style="font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#8BA4B4;margin-bottom:10px">Creative Studio</p>
+        <p class="clash" style="font-size:1.2rem;font-weight:700;color:white;margin-bottom:6px">Helena Flinn Trilogy</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.35)">Little Lights Publishing</p>
+        <a style="font-size:12px;font-weight:700;color:#8BA4B4;margin-top:12px;display:inline-block;text-decoration:none">Entdecken →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     5. GELOCKTE ELEMENTE
+     ══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Gelockte Entscheidungen</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px">
+    <div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Fonts</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">Clash Display (Headlines) + Satoshi (Body, UI)</p>
+      </div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Palette</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">Navy #0f1b2d, Warm Cream #F7F6F3, Copper #C8956C</p>
+      </div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Disziplin-Farben</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">Agency #C9A87C, R&S #CB7B6A, Creative #8BA4B4</p>
+      </div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Leitmotiv</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">Diagonale "/" als Markenelement, nie erzwungen</p>
+      </div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Tagline</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">"Drei Disziplinen. Eine Handschrift."</p>
+      </div>
+    </div>
+    <div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Brand Statement (EN)</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6;font-style:italic">"We make films for companies who understand the difference between content and stories worth telling."</p>
+      </div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Bold Statement</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">"Jeder behauptet Storytelling. Wir leben es."</p>
+      </div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Tonalitat</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">Professionelles Du. Charmanter Humor. Beweis vor Behauptung. Keine Em Dashes.</p>
+      </div>
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Sections-Trenner</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">Horizontaler Copper-Gradient-Divider bei gleichfarbigen Sektionen. Keine diagonalen Section-Divider (Ausnahme: Footer).</p>
+      </div>
+      <div>
+        <p style="font-size:13px;font-weight:600;margin-bottom:4px">Animation</p>
+        <p style="font-size:12px;color:rgba(15,27,45,.4);line-height:1.6">Hero: Darkness-Reveal. Testimonials: Diagonal-Wipe. Projekte: Lift + Gradient-Reveal. Lenis Smooth Scroll + GSAP ScrollTrigger.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="height:60px;background:var(--wm)"></div>
+
+</body>
+</html>
