@@ -3,203 +3,417 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hero — Cinematic Reveal</title>
+<title>Hero - Isolated Component</title>
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
 <style>
-:root { --nv:#0f1b2d; --cop:#C8956C; }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Satoshi',sans-serif;background:var(--nv);color:white;overflow:hidden;-webkit-font-smoothing:antialiased}
-.clash{font-family:'Clash Display',sans-serif}
+/* ══════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ══════════════════════════════════════════════════════════ */
+:root {
+  --nv: #0f1b2d;
+  --dg: #1B1E29;
+  --wm: #F7F6F3;
+  --cop: #C8956C;
+  --cop-dark: #A87A55;
+  --font-h: 'Clash Display', sans-serif;
+  --font-b: 'Satoshi', sans-serif;
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 48px;display:flex;justify-content:space-between;align-items:center}
-nav a{color:white;text-decoration:none}
-nav .nav-r{display:flex;gap:28px;align-items:center}
-
-.hero{height:100vh;position:relative;overflow:hidden}
-
-/* LAYER 1: Full image — visible from the start */
-.hero-img{position:absolute;inset:0;z-index:1}
-.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center}
-
-/* Gentle dim so text is readable when panel is transparent */
-.hero-img::after{content:'';position:absolute;inset:0;background:rgba(15,27,45,0.2);z-index:1}
-
-/*
-  LAYER 2: Dark panel
-  Starts OFF SCREEN (clip-path showing nothing).
-  Slides in diagonally to frame the text.
-*/
-.hero-panel{
-  position:absolute;top:0;left:0;bottom:0;width:100%;z-index:3;
-  background:var(--nv);
-  /* Start: nothing visible */
-  clip-path:polygon(0 0, 0 0, 0 100%, 0 100%);
-  display:flex;align-items:flex-start;
-  padding:140px 64px 0;
+  /* Hero diagonal: final resting values are computed by JS
+     based on viewport width for smooth resizing. */
+  --hero-top-right: 68;
+  --hero-bot-right: 5;
 }
 
-.hero-panel::before{
-  content:'';position:absolute;inset:0;opacity:.03;pointer-events:none;
-  background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-b);
+  background: var(--nv);
+  color: white;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.clash { font-family: var(--font-h); }
+
+/* ══════════════════════════════════════════════════════════
+   NAV
+   ══════════════════════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 24px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+nav a { color: white; text-decoration: none; }
+.nav-slash {
+  color: var(--cop); opacity: .5; font-size: 15px;
+  font-weight: 300; pointer-events: none;
 }
 
-.hero-content{position:relative;z-index:2;max-width:520px}
-
-/* LAYER 3: Divider */
-.hero-divider{position:absolute;top:0;bottom:0;left:0;right:0;z-index:10;pointer-events:none;overflow:hidden}
-.hero-divider-line{position:absolute;width:3px;transform-origin:top center;
-  background:linear-gradient(to bottom,transparent 2%,rgba(200,149,108,0.2) 10%,rgba(200,149,108,0.55) 50%,rgba(200,149,108,0.2) 90%,transparent 98%);
+/* ══════════════════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════════════════ */
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Text animation states */
-.h1-line{display:block;overflow:hidden}
-.h1-line span{display:block;transform:translateY(110%)}
+/* Layer 1: Full image - visible from the start */
+.hero-img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.hero-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(15,27,45,.15);
+  z-index: 1;
+}
+
+/* Layer 2: Dark panel - slides in diagonally */
+.hero-panel {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 100%;
+  z-index: 3;
+  background: var(--nv);
+  /* Start: nothing visible - set by JS */
+  clip-path: polygon(0 0, 0% 0, 0% 100%, 0 100%);
+  display: flex;
+  align-items: flex-start;
+  padding: 22vh 64px 0;
+}
+.hero-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .03;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  /* Safe zone: text must stay well inside the diagonal.
+     At 68% top-right on a 1400px screen, the diagonal is at ~950px.
+     With 64px padding, max-width of 480px puts the text edge at 544px - plenty of margin. */
+  max-width: 480px;
+}
+
+/* Layer 3: Copper divider line riding the diagonal edge */
+.hero-divider-wrap {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  z-index: 10;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-divider-line {
+  position: absolute;
+  width: 3px;
+  transform-origin: top center;
+  background: linear-gradient(to bottom,
+    transparent 2%,
+    rgba(200,149,108,.2) 10%,
+    rgba(200,149,108,.55) 50%,
+    rgba(200,149,108,.2) 90%,
+    transparent 98%
+  );
+}
+
+/* Logo bottom-right */
+.hero-logo {
+  position: absolute;
+  bottom: 48px;
+  right: 48px;
+  z-index: 4;
+  width: 128px;
+  height: 128px;
+  cursor: pointer;
+}
+.hero-logo-base {
+  position: absolute;
+  inset: 0;
+  background: var(--cop);
+  opacity: .3;
+  -webkit-mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  transition: opacity .3s ease;
+}
+.hero-logo-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--cop) 0%, #D4A574 30%, #7EB8C9 60%, #9B8EC4 100%);
+  background-size: 250% 250%;
+  background-position: 100% 100%;
+  -webkit-mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.hero-logo:hover .hero-logo-base {
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.hero-logo:hover .hero-logo-gradient {
+  opacity: 1;
+  transition: opacity .2s ease;
+  animation: logoSweep 1.5s ease forwards;
+}
+@keyframes logoSweep {
+  0%   { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Text animation helpers */
+.h1-line { display: block; overflow: hidden; }
+.h1-line span { display: block; transform: translateY(110%); }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE: Adjust diagonal angle for narrower viewports
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .hero-panel { padding: 18vh 40px 0; }
+  .hero-content { max-width: 400px; }
+}
+@media (max-width: 600px) {
+  .hero-panel { padding: 16vh 24px 0; }
+}
 </style>
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════════════════════
+     NAV
+     ══════════════════════════════════════════════════════════ -->
 <nav>
   <a href="#" style="font-weight:900;letter-spacing:.18em;font-size:14px;opacity:0" id="nav-logo">LITTLE LIGHTS</a>
-  <div class="nav-r" id="nav-r" style="opacity:0">
+  <div style="display:flex;gap:28px;align-items:center;opacity:0" id="nav-r">
     <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Agency</a>
+    <span class="nav-slash">/</span>
     <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Reels & Stories</a>
+    <span class="nav-slash">/</span>
     <a href="#" style="font-size:13px;font-weight:500;opacity:.35">Creative Studio</a>
+    <span class="nav-slash">/</span>
     <a href="#" style="font-size:13px;font-weight:500;opacity:.7">Über uns</a>
-    <a href="#" style="font-size:12px;font-weight:700;background:var(--cop);color:var(--nv);padding:10px 24px;border-radius:50px">Lass uns reden</a>
+    <span class="nav-slash">/</span>
+    <a href="#" style="font-size:12px;font-weight:500;color:var(--cop)">Kontakt</a>
   </div>
 </nav>
 
-<section class="hero">
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
 
-  <!-- LAYER 1: Image — immediately visible, the first thing you see -->
-  <div class="hero-img" id="hero-img">
+  <!-- Layer 1: Image -->
+  <div class="hero-img">
     <img src="images/hero-allianz.png" alt="" id="hero-img-el">
   </div>
 
-  <!-- LAYER 2: Dark panel — slides in over the image -->
+  <!-- Layer 2: Dark panel -->
   <div class="hero-panel" id="hero-panel">
     <div class="hero-content">
 
       <div id="h-tag" style="display:flex;align-items:center;gap:10px;margin-bottom:32px;opacity:0">
         <div style="width:28px;height:2px;background:var(--cop)"></div>
-        <span style="font-size:10px;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--cop);opacity:.8">Filmproduktion Wien</span>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--cop)">Brand Film Agentur Wien</span>
       </div>
 
-      <h1 class="clash" id="h-h1" style="font-size:clamp(3rem,6.5vw,5.5rem);font-weight:700;line-height:.94;letter-spacing:-.04em;margin-bottom:28px;opacity:0">
+      <h1 class="clash" id="h-h1" style="font-size:clamp(2.4rem,5.5vw,5.2rem);font-weight:700;line-height:.94;letter-spacing:-.04em;margin-bottom:28px;opacity:0">
         <span class="h1-line"><span>Filme,</span></span>
         <span class="h1-line"><span>die ankommen.</span></span>
       </h1>
 
-      <p id="h-sub" style="font-size:clamp(1rem,1.3vw,1.1rem);font-weight:300;color:rgba(255,255,255,.3);line-height:1.8;max-width:380px;margin-bottom:36px;opacity:0">
+      <p id="h-sub" style="font-size:clamp(1.05rem,1.5vw,1.2rem);font-weight:300;color:rgba(255,255,255,.4);line-height:1.75;max-width:400px;opacity:0">
         Strategische Filmproduktion für Unternehmen, die Bewegtbild als Kommunikationsinstrument verstehen.
-      </p>
-
-      <a id="h-cta" href="#" style="display:inline-flex;align-items:center;gap:10px;background:var(--cop);color:var(--nv);font-weight:700;padding:15px 34px;border-radius:50px;font-size:13px;text-decoration:none;letter-spacing:.02em;opacity:0">
-        Lass uns reden <span>→</span>
-      </a>
-
-      <p id="h-brand" style="font-size:11px;font-weight:300;color:rgba(255,255,255,.08);margin-top:48px;line-height:1.7;font-style:italic;max-width:300px;opacity:0">
-        We make films for companies who understand the difference between pretty pictures and stories worth telling.
       </p>
 
     </div>
   </div>
 
-  <!-- LAYER 3: Divider -->
-  <div class="hero-divider" id="hero-divider">
-    <div class="hero-divider-line" id="hero-divider-line"></div>
+  <!-- Layer 3: Copper divider -->
+  <div class="hero-divider-wrap">
+    <div class="hero-divider-line" id="hero-div-line"></div>
   </div>
+
+  <!-- Logo (bottom-right, fades in later) -->
+  <div class="hero-logo" id="hero-logo" style="opacity:0">
+    <div class="hero-logo-base"></div>
+    <div class="hero-logo-gradient"></div>
+  </div>
+
 
 </section>
 
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT — Hero, self-contained
+     ══════════════════════════════════════════════════════════ -->
 <script>
-const panel = document.getElementById('hero-panel');
-const dividerLine = document.getElementById('hero-divider-line');
-const heroImg = document.getElementById('hero-img-el');
+(function() {
+  const panel   = document.getElementById('hero-panel');
+  const divLine = document.getElementById('hero-div-line');
+  const heroImg = document.getElementById('hero-img-el');
 
-function positionDivider() {
-  const cs = getComputedStyle(panel).clipPath;
-  const h = panel.offsetHeight;
-  const w = panel.offsetWidth;
-  const matches = cs.match(/polygon\(([^)]+)\)/);
-  if (!matches) return;
-  const points = matches[1].split(',').map(p => p.trim());
-  // Top-right point (index 1)
-  const topXpct = parseFloat(points[1]);
-  // Bottom-right point (index 2)
-  const botXpct = parseFloat(points[2]);
-  if (isNaN(topXpct) || isNaN(botXpct)) return;
+  // ── Smooth diagonal based on viewport width ──
+  // Both points shift by the SAME amount as the viewport narrows.
+  // This keeps the "/" angle constant - the shape just slides right.
+  //
+  // Wide (>=1400px): top=68, bot=5 (angle locked)
+  // Narrow (550px):  top=100, bot=37 (same angle, shifted right)
+  // Mobile (<550px): bot lerps from 37 → 100 (transition to full overlay)
 
-  const topX = topXpct / 100 * w;
-  const botX = botXpct / 100 * w;
-  const dx = topX - botX;
-  const lineLength = Math.sqrt(dx * dx + h * h);
-  const angle = Math.atan2(h, -(dx)) * (180 / Math.PI) - 90;
+  // Anchor values at widest viewport (>=1400px)
+  const BASE_TOP = 68;
+  const BASE_BOT = 5;
+  const WIDE_VW = 1400;
+  const NARROW_VW = 320;
+  const MAX_SHIFT = 50; // both points shift max 50% right
 
-  dividerLine.style.height = lineLength + 'px';
-  dividerLine.style.left = topX + 'px';
-  dividerLine.style.top = '0px';
-  dividerLine.style.transform = `rotate(${angle}deg)`;
-}
+  function getTargets() {
+    const vw = window.innerWidth;
 
-// ═══════════════════════════════════
-// TIMELINE
-// ═══════════════════════════════════
+    // Both points shift by the same amount (constant angle).
+    const t = Math.max(0, Math.min(1, (WIDE_VW - vw) / (WIDE_VW - NARROW_VW)));
+    const shift = t * MAX_SHIFT;
 
-const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    return {
+      topRight: BASE_TOP + shift, // can exceed 100% - that's intentional
+      botRight: BASE_BOT + shift,
+    };
+  }
 
-// Phase 1 (0-1s): Image is full screen, subtle zoom, pure cinema moment
-gsap.set(heroImg, { scale: 1.08 });
-tl.to(heroImg, { scale: 1, duration: 4, ease: 'power2.out' }, 0);
+  // Update clip-path from a slide offset (0 = final position, negative = off-screen left)
+  function updateClipPath(slideOffset) {
+    const t = getTargets();
+    const topR = t.topRight + slideOffset;
+    const botR = t.botRight + slideOffset;
 
-// Nav fades in early
-tl.to('#nav-logo', { opacity: 1, duration: .8 }, 0.3);
-tl.to('#nav-r', { opacity: 1, duration: .8 }, 0.5);
+    if (topR <= 100) {
+      // Normal 4-point polygon: diagonal fully visible
+      panel.style.clipPath = `polygon(0 0, ${topR}% 0, ${botR}% 100%, 0 100%)`;
+      positionDivider(topR, 0, botR, 100);
+    } else {
+      // 5-point polygon: diagonal hits the right edge, wraps around the corner.
+      // Calculate where the "/" line crosses x=100%
+      const hitY = (100 - topR) / (botR - topR) * 100;
+      panel.style.clipPath = `polygon(0 0, 100% 0, 100% ${hitY}%, ${botR}% 100%, 0 100%)`;
+      positionDivider(100, hitY, botR, 100);
+    }
+  }
 
-// Phase 2 (1-3.5s): Dark panel slides in + goes transparent together
-tl.fromTo(panel,
-  { clipPath: 'polygon(0 0, 0% 0, 0% 100%, 0 100%)' },
-  { clipPath: 'polygon(0 0, 60% 0, 10% 100%, 0 100%)',
+  // Position the copper divider line along the visible diagonal edge.
+  // Takes start point (x%, y%) and end point (x%, y%).
+  function positionDivider(x1pct, y1pct, x2pct, y2pct) {
+    const h = panel.offsetHeight;
+    const w = panel.offsetWidth;
+    const startX = (x1pct / 100) * w;
+    const startY = (y1pct / 100) * h;
+    const endX   = (x2pct / 100) * w;
+    const endY   = (y2pct / 100) * h;
+
+    // Don't render if off-screen
+    if (startX <= 0 && endX <= 0) {
+      divLine.style.opacity = '0';
+      return;
+    }
+    divLine.style.opacity = '1';
+
+    const dx = endX - startX;
+    const dy = endY - startY;
+    const lineLength = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx) * (180 / Math.PI) - 90;
+
+    divLine.style.height = lineLength + 'px';
+    divLine.style.left = startX + 'px';
+    divLine.style.top = startY + 'px';
+    divLine.style.transform = `rotate(${angle}deg)`;
+  }
+
+  // ── ANIMATION TIMELINE ──
+  //
+  // Concept: "Darkness parts to reveal the scene"
+  //
+  // Phase 0: Full dark screen. Silence. Image hidden.
+  // Phase 1: Image appears through the panel becoming transparent.
+  //          Subtle zoom on the image gives it life.
+  // Phase 2: The diagonal pulls back - the dark panel recedes from
+  //          a full rectangle to its final "/" shape, revealing
+  //          the image on the right. The copper divider rides the edge.
+  // Phase 3: Text builds up inside the dark panel.
+  //
+  // The reveal feels like a curtain opening, not a panel sliding in.
+
+  // slideOffset: how far RIGHT of the final position.
+  // +100 = panel covers 100% width at top AND bottom (full rectangle)
+  //  0   = final diagonal position
+  let slideProgress = { value: 100 };
+  let animDone = false;
+
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+  // Set initial state: full dark rectangle, nothing visible
+  panel.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+  gsap.set(heroImg, { scale: 1.12 });
+  gsap.set(panel, { backgroundColor: 'rgba(15,27,45,1)' });
+
+  // ── Phase 0 (0-0.3s): Brief darkness. A cinematic breath. ──
+
+  // Image zoom starts immediately - gives life to the dark frame
+  tl.to(heroImg, { scale: 1, duration: 5, ease: 'power1.out' }, 0);
+
+  // ── Phase 1 (0.3s): Reveal begins ──
+  // Image breathes through the dark panel
+  tl.to(panel, {
+    backgroundColor: 'rgba(15,27,45,0.82)',
+    duration: 1.2,
+    ease: 'power2.inOut',
+  }, 0.3);
+
+  // Diagonal pulls back - the curtain opens
+  tl.to(slideProgress, {
+    value: 0,
     duration: 2.5,
-    ease: 'power4.inOut',
-    onUpdate: positionDivider,
-  },
-1);
+    ease: 'power3.inOut',
+    onUpdate: () => updateClipPath(slideProgress.value),
+  }, 0.5);
 
-// Transparency runs in parallel with the slide, same timing
-tl.fromTo(panel,
-  { backgroundColor: 'rgba(15,27,45,1)' },
-  { backgroundColor: 'rgba(15,27,45,0.8)',
-    duration: 2.5,
-    ease: 'power4.inOut',
-  },
-1);
+  // Nav fades in
+  tl.to('#nav-logo', { opacity: 1, duration: .8 }, 0.8);
+  tl.to('#nav-r',    { opacity: 1, duration: .8 }, 1);
 
-// Phase 3 (2-4s): Text builds up inside the dark panel
-tl.to('#h-tag', { opacity: 1, duration: .6 }, 2);
+  // Panel settles to final transparency
+  tl.to(panel, {
+    backgroundColor: 'rgba(15,27,45,0.78)',
+    duration: 1.5,
+    ease: 'power2.out',
+  }, 2);
 
-tl.set('#h-h1', { opacity: 1 }, 2.2);
-tl.to('.h1-line span', {
-  y: '0%', duration: .9, stagger: .1, ease: 'power4.out',
-}, 2.2);
+  // Logo (bottom-right) fades in
+  tl.fromTo('#hero-logo', { opacity: 0 }, { opacity: 1, duration: 1 }, 1.8);
 
-tl.fromTo('#h-sub',
-  { opacity: 0, y: 12 },
-  { opacity: 1, y: 0, duration: .7 },
-2.8);
+  // ── Phase 2 (1.8s): Text builds up ──
+  tl.to('#h-tag', { opacity: 1, duration: .6 }, 1.8);
+  tl.set('#h-h1', { opacity: 1 }, 2);
+  tl.to('.h1-line span', { y: '0%', duration: .9, stagger: .12, ease: 'power4.out' }, 2);
+  tl.fromTo('#h-sub', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .8 }, 2.8);
 
-tl.fromTo('#h-cta',
-  { opacity: 0, y: 12 },
-  { opacity: 1, y: 0, duration: .6 },
-3);
+  tl.add(() => { animDone = true; }, 3.5);
 
-tl.to('#h-brand', { opacity: 1, duration: 1 }, 3.5);
-
-// Initial
-positionDivider();
-window.addEventListener('resize', positionDivider);
+  // Resize: only update when animation is done
+  window.addEventListener('resize', () => {
+    if (animDone) updateClipPath(0);
+  });
+})();
 </script>
-
 </body>
 </html>

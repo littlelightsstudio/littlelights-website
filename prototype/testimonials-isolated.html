@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testimonials - Isolated Component</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<style>
+/* ══════════════════════════════════════════════════════════
+   DESIGN TOKENS — Same as homepage-mvp.html
+   ══════════════════════════════════════════════════════════ */
+:root {
+  --nv: #0f1b2d;
+  --dg: #1B1E29;
+  --wm: #F7F6F3;
+  --cop: #C8956C;
+  --cop-dark: #A87A55;
+  --font-h: 'Clash Display', sans-serif;
+  --font-b: 'Satoshi', sans-serif;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur: 0.7s;
+  --clip-offset: 30px;
+  --divider-bg: linear-gradient(to bottom,
+    transparent 2%, rgba(200,149,108,.2) 10%,
+    rgba(200,149,108,.55) 50%, rgba(200,149,108,.2) 90%, transparent 98%);
+  --divider-clip: polygon(
+    calc(50% + 15px) 0, calc(50% + 17px) 0,
+    calc(50% - 13px) 100%, calc(50% - 15px) 100%);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-b);
+  background: var(--nv);
+  color: white;
+  -webkit-font-smoothing: antialiased;
+}
+.clash { font-family: var(--font-h); }
+.cop-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--cop); display: block;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CONTEXT SECTIONS (simulating what comes before/after)
+   ══════════════════════════════════════════════════════════ */
+.context-before {
+  background: var(--nv);
+  padding: 120px 48px;
+  text-align: center;
+}
+.context-after {
+  background: var(--wm);
+  padding: 120px 48px;
+  text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════════
+   TESTIMONIALS — Self-contained component
+   ══════════════════════════════════════════════════════════ */
+.testimonials {
+  position: relative;
+  background: var(--nv);
+  padding: 0 48px 120px;
+  overflow: hidden;
+}
+
+/* ── Horizontal divider at top (thin copper line) ── */
+.testimonials-divider {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right,
+    transparent 0%,
+    rgba(200,149,108,.1) 15%,
+    rgba(200,149,108,.3) 50%,
+    rgba(200,149,108,.1) 85%,
+    transparent 100%
+  );
+}
+
+/* ── Section header ── */
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 64px;
+  padding-top: 24px;
+}
+
+/* ── Carousel container ── */
+.testimonials-stage {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── Individual testimonial slide ── */
+.testimonial-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  /* Diagonal wipe: hidden state */
+  clip-path: polygon(
+    calc(100% + var(--clip-offset)) 0,
+    calc(100% + var(--clip-offset)) 0,
+    100% 100%,
+    100% 100%
+  );
+}
+.testimonial-slide.active {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--clip-offset)) 100%, 0 100%);
+}
+.testimonial-slide.exiting {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ── Copper quotation marks: opening top-left, closing bottom-right ── */
+.testimonial-quotes {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 56px 40px;
+}
+.testimonial-quote-open,
+.testimonial-quote-close {
+  font-family: var(--font-h);
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
+  font-weight: 700;
+  color: var(--cop);
+  opacity: .2;
+  line-height: .6;
+  user-select: none;
+  position: absolute;
+}
+.testimonial-quote-open {
+  top: 0;
+  left: 0;
+}
+.testimonial-quote-close {
+  bottom: 0;
+  right: 0;
+  transform: scaleX(-1);
+}
+
+/* ── Quote text ── */
+.testimonial-quote {
+  font-family: var(--font-b);
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255,255,255,.75);
+  letter-spacing: .01em;
+  margin: 0;
+  text-align: center;
+}
+.testimonial-quotes + .testimonial-author {
+  margin-top: 40px;
+}
+
+/* ── Author block ── */
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.testimonial-photo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(200,149,108,.15);
+  border: 2px solid rgba(200,149,108,.2);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cop);
+  font-weight: 700;
+  font-size: 16px;
+}
+.testimonial-meta {
+  text-align: left;
+}
+.testimonial-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(255,255,255,.85);
+  margin-bottom: 2px;
+}
+.testimonial-role {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255,255,255,.3);
+}
+.testimonial-company {
+  color: var(--cop);
+  opacity: .6;
+}
+
+/* ── Navigation ── */
+.testimonials-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 56px;
+}
+.testimonials-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .3s;
+}
+.testimonials-nav button:hover { opacity: 1; }
+.testimonials-nav button svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--cop);
+  stroke-width: 1.5;
+  fill: none;
+  opacity: .5;
+  transition: opacity .3s;
+}
+.testimonials-nav button:hover svg { opacity: 1; }
+
+/* ── Progress dots ── */
+.testimonials-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.testimonials-dot {
+  width: 32px;
+  height: 2px;
+  background: rgba(255,255,255,.1);
+  border-radius: 1px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background .3s;
+}
+.testimonials-dot::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--cop);
+  border-radius: 1px;
+  transition: none;
+}
+.testimonials-dot.active::after {
+  width: 100%;
+  transition: width var(--auto-duration, 6s) linear;
+}
+.testimonials-dot.filled::after {
+  width: 100%;
+  transition: none;
+}
+.testimonials-dot:hover {
+  background: rgba(255,255,255,.15);
+}
+
+/* ── Copper "/" wipe line that rides the diagonal edge ── */
+.testimonial-wipe-line {
+  position: absolute;
+  top: -20px;
+  bottom: -20px;
+  width: 40px;
+  z-index: 10;
+  pointer-events: none;
+  background: var(--divider-bg);
+  clip-path: var(--divider-clip);
+  opacity: 0;
+}
+
+/* ── Subtle grain on dark bg ── */
+.testimonials::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .03;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     CONTEXT: Simulates Stats section above
+     ══════════════════════════════════════════════════════════ -->
+<section class="context-before">
+  <p class="clash" style="font-size:clamp(2rem,5vw,3.5rem);font-weight:700;line-height:1.06;letter-spacing:-.02em;color:white;margin-bottom:16px">Kein Projekt. <span style="color:rgba(255,255,255,.15)">Eine Partnerschaft.</span></p>
+  <p style="font-size:13px;color:rgba(255,255,255,.2)">↓ Stats section ends here ↓</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     TESTIMONIALS — Self-contained component
+     ══════════════════════════════════════════════════════════ -->
+<div class="testimonials-divider"></div>
+
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header">
+    <span class="cop-label" style="margin-bottom:16px">Was unsere Partner sagen</span>
+  </div>
+
+  <div class="testimonials-stage" id="testimonials-stage">
+    <!-- Copper wipe line -->
+    <div class="testimonial-wipe-line" id="wipe-line"></div>
+
+    <!-- Slide 1: Strabag — Marianne Jakl -->
+    <div class="testimonial-slide active" data-index="0">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Little Lights ist nicht unsere Filmproduktion - sie sind Teil unseres Teams. Seit über zwölf Jahren verstehen sie nicht nur was wir brauchen, sondern warum. Das merkt man in jedem einzelnen Projekt.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">MJ</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Marianne Jakl</p>
+          <p class="testimonial-role">Konzernkommunikation · <span class="testimonial-company">Strabag</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Greiner — Alexander Berth -->
+    <div class="testimonial-slide" data-index="1">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Die Greiner Walks sind mehr als Employer Branding Videos. Little Lights hat ein Format entwickelt, das unsere Unternehmenskultur auf eine Art zeigt, die wir selbst nicht für möglich gehalten hätten.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">AB</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Alexander Berth</p>
+          <p class="testimonial-role">Unternehmenskommunikation · <span class="testimonial-company">Greiner</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Volksbank — Sonja Schörgenhofer -->
+    <div class="testimonial-slide" data-index="2">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">175 Jahre Genossenschaft - wie erzählt man das? Little Lights hat mit generativer KI einen Weg gefunden, der uns selbst überrascht hat. Mutig, modern, und trotzdem respektvoll gegenüber unserer Geschichte.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">SS</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Sonja Schörgenhofer</p>
+          <p class="testimonial-role">Marketing · <span class="testimonial-company">Volksbank</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Strabag EB — Michael Sagmeister -->
+    <div class="testimonial-slide" data-index="3">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Über 150 Karrierestories - und jede einzelne fühlt sich frisch an. Little Lights hat verstanden, dass Employer Branding kein einmaliges Projekt ist, sondern ein laufendes Gespräch mit zukünftigen Kolleginnen und Kollegen.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">MS</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Michael Sagmeister</p>
+          <p class="testimonial-role">Employer Branding · <span class="testimonial-company">Strabag</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: R&S — Arthur Real -->
+    <div class="testimonial-slide" data-index="4">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Der Workshop hat mir die Augen geöffnet. Ich wusste, dass ich Video-Content brauche - aber nicht, welche Formate für mein Business funktionieren. Jetzt habe ich einen Plan und Content, der tatsächlich Ergebnisse bringt.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">RB</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Raoul-Arthur Bilan</p>
+          <p class="testimonial-role">Gründer · <span class="testimonial-company">Arthur Real</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: R&S — Dima Sterz -->
+    <div class="testimonial-slide" data-index="5">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Als Osteopath dachte ich, professioneller Video-Content wäre nur etwas für große Unternehmen. Little Lights hat mir gezeigt, dass es vor allem um die richtige Strategie geht - nicht um große Budgets.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">DS</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Dima Sterz</p>
+          <p class="testimonial-role">Gesundheitscoach & Osteopath</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="testimonials-nav" id="testimonials-nav">
+    <button id="prev-btn" aria-label="Vorheriges Testimonial">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+
+    <div class="testimonials-dots" id="testimonials-dots">
+      <div class="testimonials-dot" data-index="0"></div>
+      <div class="testimonials-dot" data-index="1"></div>
+      <div class="testimonials-dot" data-index="2"></div>
+      <div class="testimonials-dot" data-index="3"></div>
+      <div class="testimonials-dot" data-index="4"></div>
+      <div class="testimonials-dot" data-index="5"></div>
+    </div>
+
+    <button id="next-btn" aria-label="Nächstes Testimonial">
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CONTEXT: Simulates CTA section below
+     ══════════════════════════════════════════════════════════ -->
+<section class="context-after">
+  <p class="clash" style="font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:var(--dg);letter-spacing:-.02em;margin-bottom:16px">Lass uns reden.</p>
+  <p style="font-size:13px;color:rgba(27,30,41,.25)">↑ CTA section starts here ↑</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT — Testimonials, self-contained
+     ══════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  const stage      = document.getElementById('testimonials-stage');
+  const slides     = stage.querySelectorAll('.testimonial-slide');
+  const dots       = document.querySelectorAll('.testimonials-dot');
+  const prevBtn    = document.getElementById('prev-btn');
+  const nextBtn    = document.getElementById('next-btn');
+  const wipeLine   = document.getElementById('wipe-line');
+  const total      = slides.length;
+
+  let current      = 0;
+  let isAnimating  = false;
+  let autoTimer    = null;
+  let isInView     = false;
+  let hasTriggered = false; // first wipe on scroll-in
+
+  const AUTO_DELAY = 6000; // ms per slide
+  const WIPE_DURATION = 800; // ms for diagonal wipe
+
+  // Set CSS variable for dot progress bar duration
+  document.documentElement.style.setProperty('--auto-duration', AUTO_DELAY + 'ms');
+
+  // ── Diagonal wipe transition ──
+  function goTo(nextIndex, direction) {
+    if (isAnimating || nextIndex === current) return;
+    isAnimating = true;
+
+    const currentSlide = slides[current];
+    const nextSlide    = slides[nextIndex];
+    const isForward    = direction === 'next';
+
+    // Reset dots
+    dots.forEach(d => d.classList.remove('active', 'filled'));
+    for (let i = 0; i < nextIndex; i++) dots[i].classList.add('filled');
+
+    // ── Set up next slide at starting position ──
+    // Forward: wipe comes from right with diagonal edge
+    // Backward: wipe comes from left with diagonal edge
+    if (isForward) {
+      nextSlide.style.clipPath = 'polygon(calc(100% + 30px) 0, calc(100% + 30px) 0, 100% 100%, 100% 100%)';
+    } else {
+      nextSlide.style.clipPath = 'polygon(0 0, 0 0, -30px 100%, -30px 100%)';
+    }
+    // Both slides must be absolute during the wipe animation
+    currentSlide.style.position = 'absolute';
+    nextSlide.style.position = 'absolute';
+    nextSlide.style.opacity = '1';
+    nextSlide.style.pointerEvents = 'none';
+    nextSlide.style.transition = 'none';
+    nextSlide.classList.remove('active');
+
+    // Show wipe line
+    wipeLine.style.opacity = '1';
+    wipeLine.style.transition = 'none';
+
+    // Force reflow
+    nextSlide.offsetHeight;
+
+    // ── Animate ──
+    const startTime = performance.now();
+
+    function animate(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / WIPE_DURATION, 1);
+
+      // Ease: cubic out
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      // Calculate clip-path positions
+      const stageWidth = stage.offsetWidth;
+      const offset = 30; // diagonal offset in px
+
+      if (isForward) {
+        // Next slide reveals from right to left
+        const rightEdge = stageWidth;
+        const x = rightEdge - (eased * (rightEdge + offset));
+        nextSlide.style.clipPath = `polygon(${x + offset}px 0, calc(100% + 30px) 0, 100% 100%, ${x}px 100%)`;
+
+        // Current slide hides from right to left
+        const cx = rightEdge - (eased * (rightEdge + offset));
+        currentSlide.style.clipPath = `polygon(0 0, ${cx + offset}px 0, ${cx}px 100%, 0 100%)`;
+
+        // Wipe line follows the leading edge
+        wipeLine.style.left = (x + offset / 2 - 20) + 'px';
+      } else {
+        // Next slide reveals from left to right
+        const x = eased * (stageWidth + offset);
+        nextSlide.style.clipPath = `polygon(-30px 0, ${x + offset}px 0, ${x}px 100%, 0 100%)`;
+
+        // Current slide hides from left to right
+        currentSlide.style.clipPath = `polygon(${x + offset}px 0, calc(100% + 30px) 0, 100% 100%, ${x}px 100%)`;
+
+        // Wipe line follows the leading edge
+        wipeLine.style.left = (x + offset / 2 - 20) + 'px';
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        // Clean up
+        currentSlide.classList.remove('active');
+        currentSlide.style.opacity = '0';
+        currentSlide.style.clipPath = '';
+        currentSlide.style.pointerEvents = 'none';
+        currentSlide.style.position = '';
+
+        nextSlide.classList.add('active');
+        nextSlide.style.clipPath = '';
+        nextSlide.style.pointerEvents = 'auto';
+        nextSlide.style.position = '';
+
+        // Hide wipe line
+        wipeLine.style.transition = 'opacity .3s';
+        wipeLine.style.opacity = '0';
+
+        current = nextIndex;
+        isAnimating = false;
+
+        // Start dot progress
+        dots[current].classList.add('active');
+
+        // Restart auto-advance
+        startAuto();
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  // ── Auto-advance (only when in viewport) ──
+  function startAuto() {
+    clearTimeout(autoTimer);
+    if (!isInView) return;
+    autoTimer = setTimeout(() => {
+      if (isInView) goTo((current + 1) % total, 'next');
+    }, AUTO_DELAY);
+  }
+
+  function stopAuto() {
+    clearTimeout(autoTimer);
+  }
+
+  // ── Viewport detection via IntersectionObserver ──
+  const section = document.getElementById('testimonials');
+
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        isInView = true;
+
+        // First time scrolling in: trigger the first wipe after a short pause
+        if (!hasTriggered) {
+          hasTriggered = true;
+          // Show first slide's dot progress, then auto-advance kicks in
+          dots[0].classList.remove('active');
+          void dots[0].offsetHeight; // force reflow to restart CSS transition
+          dots[0].classList.add('active');
+          startAuto();
+        } else {
+          // Resuming after scrolling away
+          dots[current].classList.remove('active');
+          void dots[current].offsetHeight;
+          dots[current].classList.add('active');
+          startAuto();
+        }
+      } else {
+        isInView = false;
+        stopAuto();
+        // Freeze dot progress when out of view
+        dots[current].classList.remove('active');
+        dots[current].classList.add('filled');
+      }
+    });
+  }, { threshold: 0.3 }).observe(section);
+
+  // ── Controls ──
+  nextBtn.addEventListener('click', () => {
+    stopAuto();
+    goTo((current + 1) % total, 'next');
+  });
+
+  prevBtn.addEventListener('click', () => {
+    stopAuto();
+    goTo((current - 1 + total) % total, 'prev');
+  });
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.index);
+      if (idx === current) return;
+      stopAuto();
+      goTo(idx, idx > current ? 'next' : 'prev');
+    });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { stopAuto(); goTo((current + 1) % total, 'next'); }
+    if (e.key === 'ArrowLeft') { stopAuto(); goTo((current - 1 + total) % total, 'prev'); }
+  });
+})();
+</script>
+</body>
+</html>

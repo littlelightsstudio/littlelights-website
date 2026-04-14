@@ -93,24 +93,54 @@ nav.scrolled .nav-slash { opacity: .35; }
    ══════════════════════════════════════════════════════════ */
 .hero { height: 100vh; position: relative; overflow: hidden; }
 .hero-img { position: absolute; inset: 0; z-index: 1; }
-.hero-img img { width: 100%; height: 100%; object-fit: cover; }
-.hero-img::after { content: ''; position: absolute; inset: 0; background: rgba(15,27,45,.15); }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.hero-img::after { content: ''; position: absolute; inset: 0; background: rgba(15,27,45,.15); z-index: 1; }
 .hero-panel {
-  position: absolute; top: 0; left: 0; bottom: 0; width: 100%; z-index: 2;
+  position: absolute; top: 0; left: 0; bottom: 0; width: 100%; z-index: 3;
   background: var(--nv);
-  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  display: flex; align-items: flex-start; padding: 140px 64px 0;
+  clip-path: polygon(0 0, 0% 0, 0% 100%, 0 100%);
+  display: flex; align-items: flex-start; padding: 22vh 64px 0;
 }
 .hero-panel::before {
   content: ''; position: absolute; inset: 0; opacity: .03; pointer-events: none;
   background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
 }
-.hero-content { position: relative; z-index: 2; max-width: 520px; }
-.hero-logo { position: absolute; bottom: 48px; right: 48px; z-index: 4; pointer-events: none; }
+.hero-content { position: relative; z-index: 2; max-width: 480px; }
+.hero-logo {
+  position: absolute; bottom: 48px; right: 48px; z-index: 4;
+  width: 128px; height: 128px; cursor: pointer;
+}
+.hero-logo-base {
+  position: absolute; inset: 0; background: var(--cop); opacity: .3;
+  -webkit-mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  transition: opacity .3s ease;
+}
+.hero-logo-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--cop) 0%, #D4A574 30%, #7EB8C9 60%, #9B8EC4 100%);
+  background-size: 250% 250%; background-position: 100% 100%;
+  -webkit-mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  opacity: 0; transition: opacity 1.2s ease;
+}
+.hero-logo:hover .hero-logo-base { opacity: 0; transition: opacity .2s ease; }
+.hero-logo:hover .hero-logo-gradient { opacity: 1; transition: opacity .2s ease; animation: logoSweep 1.5s ease forwards; }
+@keyframes logoSweep { 0% { background-position: 100% 100%; } 100% { background-position: 0% 0%; } }
 .hero-divider-wrap { position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 10; pointer-events: none; overflow: hidden; }
-.hero-divider-line { position: absolute; width: 3px; transform-origin: top center; background: var(--divider-bg); }
+.hero-divider-line {
+  position: absolute; width: 3px; transform-origin: top center;
+  background: linear-gradient(to bottom, transparent 2%, rgba(200,149,108,.2) 10%, rgba(200,149,108,.55) 50%, rgba(200,149,108,.2) 90%, transparent 98%);
+}
 .h1-line { display: block; overflow: hidden; }
 .h1-line span { display: block; transform: translateY(110%); }
+@media (max-width: 900px) {
+  .hero-panel { padding: 18vh 40px 0; }
+  .hero-content { max-width: 400px; }
+}
+@media (max-width: 600px) {
+  .hero-panel { padding: 16vh 24px 0; }
+}
 
 /* ══════════════════════════════════════════════════════════
    STATEMENT
@@ -176,6 +206,93 @@ nav.scrolled .nav-slash { opacity: .35; }
 .logo-name { font-size: 14px; font-weight: 700; letter-spacing: .15em; color: rgba(15,27,45,.1); }
 
 /* ══════════════════════════════════════════════════════════
+   TESTIMONIALS — Self-contained component
+   ══════════════════════════════════════════════════════════ */
+.testimonials {
+  position: relative;
+  background: var(--nv);
+  padding: 80px 48px 100px;
+  overflow: hidden;
+}
+/* Copper divider as pseudo-element at the top of the section */
+.testimonials::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right,
+    transparent 0%, rgba(200,149,108,.1) 15%,
+    rgba(200,149,108,.3) 50%, rgba(200,149,108,.1) 85%, transparent 100%);
+  z-index: 1;
+}
+.testimonials::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .03;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+}
+.testimonials-header { text-align: center; margin-bottom: 48px; }
+.testimonials-stage { position: relative; max-width: 900px; margin: 0 auto; height: 340px; }
+.testimonial-slide {
+  position: absolute; top: 0; left: 0; right: 0; text-align: center;
+  opacity: 0; pointer-events: none;
+  clip-path: polygon(calc(100% + var(--clip-offset)) 0, calc(100% + var(--clip-offset)) 0, 100% 100%, 100% 100%);
+}
+.testimonial-slide.active {
+  opacity: 1; pointer-events: auto;
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--clip-offset)) 100%, 0 100%);
+}
+.testimonial-quotes { position: relative; max-width: 700px; margin: 0 auto; padding: 40px 48px 32px; }
+.testimonial-quote-open,
+.testimonial-quote-close {
+  font-family: var(--font-h); font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 700;
+  color: var(--cop); opacity: .2; line-height: .6; user-select: none; position: absolute;
+}
+.testimonial-quote-open { top: 0; left: 0; }
+.testimonial-quote-close { bottom: 0; right: 0; transform: scaleX(-1); }
+.testimonial-quote {
+  font-family: var(--font-b); font-size: clamp(1.05rem, 1.8vw, 1.25rem); font-weight: 300;
+  line-height: 1.7; color: rgba(255,255,255,.7); letter-spacing: .01em; margin: 0; text-align: center;
+}
+.testimonial-quotes + .testimonial-author { margin-top: 32px; }
+.testimonial-author { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.testimonial-photo {
+  width: 52px; height: 52px; border-radius: 50%; background: rgba(200,149,108,.15);
+  border: 2px solid rgba(200,149,108,.2); overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; color: var(--cop); font-weight: 700; font-size: 16px;
+}
+.testimonial-meta { text-align: left; }
+.testimonial-name { font-weight: 700; font-size: 14px; color: rgba(255,255,255,.85); margin-bottom: 2px; }
+.testimonial-role { font-size: 12px; font-weight: 400; color: rgba(255,255,255,.3); }
+.testimonial-company { color: var(--cop); opacity: .6; }
+.testimonials-nav { display: flex; align-items: center; justify-content: center; gap: 32px; margin-top: 56px; }
+.testimonials-nav button {
+  background: none; border: none; cursor: pointer; padding: 8px;
+  display: flex; align-items: center; justify-content: center; transition: opacity .3s;
+}
+.testimonials-nav button:hover { opacity: 1; }
+.testimonials-nav button svg { width: 20px; height: 20px; stroke: var(--cop); stroke-width: 1.5; fill: none; opacity: .5; transition: opacity .3s; }
+.testimonials-nav button:hover svg { opacity: 1; }
+.testimonials-dots { display: flex; gap: 8px; align-items: center; }
+.testimonials-dot {
+  width: 32px; height: 2px; background: rgba(255,255,255,.1);
+  border-radius: 1px; cursor: pointer; position: relative; overflow: hidden; transition: background .3s;
+}
+.testimonials-dot::after {
+  content: ''; position: absolute; top: 0; left: 0; height: 100%;
+  width: 0%; background: var(--cop); border-radius: 1px; transition: none;
+}
+.testimonials-dot.active::after { width: 100%; transition: width var(--auto-duration, 6s) linear; }
+.testimonials-dot.filled::after { width: 100%; transition: none; }
+.testimonials-dot:hover { background: rgba(255,255,255,.15); }
+.testimonial-wipe-line {
+  position: absolute; top: -20px; bottom: -20px; width: 40px; z-index: 10;
+  pointer-events: none; background: var(--divider-bg); clip-path: var(--divider-clip); opacity: 0;
+}
+
+/* ══════════════════════════════════════════════════════════
    CTA
    ══════════════════════════════════════════════════════════ */
 .cta-section { padding: 120px 48px; background: var(--wm); }
@@ -218,20 +335,21 @@ footer { background: var(--dg); padding: 60px 48px 36px; color: rgba(255,255,255
   <div class="hero-img"><img src="images/hero-allianz.png" alt="" id="hero-img-el"></div>
   <div class="hero-panel" id="hero-panel">
     <div class="hero-content">
-      <div id="h-tag" style="opacity:0;display:flex;align-items:center;gap:10px;margin-bottom:32px">
+      <div id="h-tag" style="display:flex;align-items:center;gap:10px;margin-bottom:32px;opacity:0">
         <div style="width:28px;height:2px;background:var(--cop)"></div>
-        <span class="cop-label" style="margin:0">Brand Film Agentur Wien</span>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--cop)">Brand Film Agentur Wien</span>
       </div>
-      <h1 class="clash" id="h-h1" style="font-size:clamp(3rem,6.5vw,5.5rem);font-weight:700;line-height:.94;letter-spacing:-.04em;margin-bottom:28px;opacity:0">
+      <h1 class="clash" id="h-h1" style="font-size:clamp(2.4rem,5.5vw,5.2rem);font-weight:700;line-height:.94;letter-spacing:-.04em;margin-bottom:28px;opacity:0">
         <span class="h1-line"><span>Filme,</span></span>
         <span class="h1-line"><span>die ankommen.</span></span>
       </h1>
-      <p id="h-sub" style="font-size:clamp(1rem,1.3vw,1.1rem);font-weight:400;color:rgba(255,255,255,.4);line-height:1.8;max-width:380px;margin-bottom:36px;opacity:0">Strategische Filmproduktion für Unternehmen, die Bewegtbild als Kommunikationsinstrument verstehen.</p>
+      <p id="h-sub" style="font-size:clamp(1.05rem,1.5vw,1.2rem);font-weight:300;color:rgba(255,255,255,.4);line-height:1.75;max-width:400px;opacity:0">Strategische Filmproduktion für Unternehmen, die Bewegtbild als Kommunikationsinstrument verstehen.</p>
     </div>
   </div>
   <div class="hero-divider-wrap"><div class="hero-divider-line" id="hero-div-line"></div></div>
   <div class="hero-logo" id="hero-logo" style="opacity:0">
-    <img src="images/ll-logo-white.png" alt="Little Lights" style="height:150px;opacity:.15;filter:drop-shadow(0 2px 12px rgba(0,0,0,.15))">
+    <div class="hero-logo-base"></div>
+    <div class="hero-logo-gradient"></div>
   </div>
 </section>
 
@@ -382,6 +500,126 @@ footer { background: var(--dg); padding: 60px 48px 36px; color: rgba(255,255,255
 </section>
 
 <!-- ══════════════════════════════════════════════════════════
+     TESTIMONIALS
+     ══════════════════════════════════════════════════════════ -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header">
+    <span class="cop-label" style="margin-bottom:16px">Was unsere Partner sagen</span>
+  </div>
+
+  <div class="testimonials-stage" id="testimonials-stage">
+    <div class="testimonial-wipe-line" id="wipe-line"></div>
+
+    <div class="testimonial-slide active" data-index="0">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Little Lights ist nicht unsere Filmproduktion - sie sind Teil unseres Teams. Seit über zwölf Jahren verstehen sie nicht nur was wir brauchen, sondern warum. Das merkt man in jedem einzelnen Projekt.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">MJ</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Marianne Jakl</p>
+          <p class="testimonial-role">Konzernkommunikation · <span class="testimonial-company">Strabag</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-index="1">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Die Greiner Walks sind mehr als Employer Branding Videos. Little Lights hat ein Format entwickelt, das unsere Unternehmenskultur auf eine Art zeigt, die wir selbst nicht für möglich gehalten hätten.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">AB</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Alexander Berth</p>
+          <p class="testimonial-role">Unternehmenskommunikation · <span class="testimonial-company">Greiner</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-index="2">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">175 Jahre Genossenschaft - wie erzählt man das? Little Lights hat mit generativer KI einen Weg gefunden, der uns selbst überrascht hat. Mutig, modern, und trotzdem respektvoll gegenüber unserer Geschichte.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">SS</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Sonja Schörgenhofer</p>
+          <p class="testimonial-role">Marketing · <span class="testimonial-company">Volksbank</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-index="3">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Über 150 Karrierestories - und jede einzelne fühlt sich frisch an. Little Lights hat verstanden, dass Employer Branding kein einmaliges Projekt ist, sondern ein laufendes Gespräch mit zukünftigen Kolleginnen und Kollegen.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">MS</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Michael Sagmeister</p>
+          <p class="testimonial-role">Employer Branding · <span class="testimonial-company">Strabag</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-index="4">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Der Workshop hat mir die Augen geöffnet. Ich wusste, dass ich Video-Content brauche - aber nicht, welche Formate für mein Business funktionieren. Jetzt habe ich einen Plan und Content, der tatsächlich Ergebnisse bringt.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">RB</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Raoul-Arthur Bilan</p>
+          <p class="testimonial-role">Gründer · <span class="testimonial-company">Arthur Real</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slide" data-index="5">
+      <div class="testimonial-quotes">
+        <span class="testimonial-quote-open">"</span>
+        <span class="testimonial-quote-close">"</span>
+        <p class="testimonial-quote">Als Osteopath dachte ich, professioneller Video-Content wäre nur etwas für große Unternehmen. Little Lights hat mir gezeigt, dass es vor allem um die richtige Strategie geht - nicht um große Budgets.</p>
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-photo">DS</div>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Dima Sterz</p>
+          <p class="testimonial-role">Gesundheitscoach & Osteopath</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonials-nav" id="testimonials-nav">
+    <button id="prev-btn" aria-label="Vorheriges Testimonial">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="testimonials-dots" id="testimonials-dots">
+      <div class="testimonials-dot" data-index="0"></div>
+      <div class="testimonials-dot" data-index="1"></div>
+      <div class="testimonials-dot" data-index="2"></div>
+      <div class="testimonials-dot" data-index="3"></div>
+      <div class="testimonials-dot" data-index="4"></div>
+      <div class="testimonials-dot" data-index="5"></div>
+    </div>
+    <button id="next-btn" aria-label="Nächstes Testimonial">
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
      CTA
      ══════════════════════════════════════════════════════════ -->
 <section class="cta-section" id="cta">
@@ -455,49 +693,76 @@ function positionDivider(dividerEl, referenceEl, containerEl) {
 // HERO — Self-contained block
 // ══════════════════════════════════════════
 (function() {
-  const panel = document.getElementById('hero-panel');
+  const panel   = document.getElementById('hero-panel');
   const divLine = document.getElementById('hero-div-line');
+  const heroImg = document.getElementById('hero-img-el');
 
-  function posHeroDivider() {
-    const cs = getComputedStyle(panel).clipPath;
-    const h = panel.offsetHeight, w = panel.offsetWidth;
-    const matches = cs.match(/polygon\(([^)]+)\)/);
-    if (!matches) return;
-    const points = matches[1].split(',').map(p => p.trim());
-    const topXpct = parseFloat(points[1]);
-    const botXpct = parseFloat(points[2]);
-    if (isNaN(topXpct) || isNaN(botXpct)) return;
-    const topX = topXpct / 100 * w;
-    const botX = botXpct / 100 * w;
-    if (topX === 0 && botX === 0) return;
-    const dx = topX - botX;
-    const len = Math.sqrt(dx * dx + h * h);
-    const ang = Math.atan2(h, -(dx)) * (180 / Math.PI) - 90;
-    divLine.style.height = len + 'px';
-    divLine.style.left = topX + 'px';
-    divLine.style.top = '0px';
-    divLine.style.transform = `rotate(${ang}deg)`;
+  // Smooth diagonal based on viewport width
+  const BASE_TOP = 68, BASE_BOT = 5, WIDE_VW = 1400, NARROW_VW = 320, MAX_SHIFT = 50;
+
+  function getTargets() {
+    const vw = window.innerWidth;
+    const t = Math.max(0, Math.min(1, (WIDE_VW - vw) / (WIDE_VW - NARROW_VW)));
+    const shift = t * MAX_SHIFT;
+    return { topRight: BASE_TOP + shift, botRight: BASE_BOT + shift };
   }
 
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  gsap.set('#hero-img-el', { scale: 1.08 });
-  tl.to('#hero-img-el', { scale: 1, duration: 4, ease: 'power2.out' }, 0);
-  tl.to('#nav-logo', { opacity: 1, duration: .8 }, 0.3);
-  tl.to('#nav-r', { opacity: 1, duration: .8 }, 0.5);
-  tl.fromTo('#hero-logo', { opacity: 0 }, { opacity: 1, duration: .8, ease: 'power2.out' }, 0.3);
-  tl.fromTo(panel,
-    { clipPath: 'polygon(0 0, 0% 0, 0% 100%, 0 100%)' },
-    { clipPath: 'polygon(0 0, 60% 0, 10% 100%, 0 100%)', duration: 2.5, ease: 'power4.inOut', onUpdate: posHeroDivider },
-  0.8);
-  tl.fromTo(panel,
-    { backgroundColor: 'rgba(15,27,45,1)' },
-    { backgroundColor: 'rgba(15,27,45,0.78)', duration: 2.5, ease: 'power4.inOut' },
-  0.8);
-  tl.to('#h-tag', { opacity: 1, duration: .6 }, 2.2);
-  tl.set('#h-h1', { opacity: 1 }, 2.4);
-  tl.to('.h1-line span', { y: '0%', duration: .9, stagger: .1, ease: 'power4.out' }, 2.4);
-  tl.fromTo('#h-sub', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .7 }, 3.1);
-  window.addEventListener('resize', posHeroDivider);
+  function updateClipPath(slideOffset) {
+    const t = getTargets();
+    const topR = t.topRight + slideOffset;
+    const botR = t.botRight + slideOffset;
+    if (topR <= 100) {
+      panel.style.clipPath = `polygon(0 0, ${topR}% 0, ${botR}% 100%, 0 100%)`;
+      posHeroDivider(topR, 0, botR, 100);
+    } else {
+      const hitY = (100 - topR) / (botR - topR) * 100;
+      panel.style.clipPath = `polygon(0 0, 100% 0, 100% ${hitY}%, ${botR}% 100%, 0 100%)`;
+      posHeroDivider(100, hitY, botR, 100);
+    }
+  }
+
+  function posHeroDivider(x1pct, y1pct, x2pct, y2pct) {
+    const h = panel.offsetHeight, w = panel.offsetWidth;
+    const startX = (x1pct / 100) * w, startY = (y1pct / 100) * h;
+    const endX = (x2pct / 100) * w, endY = (y2pct / 100) * h;
+    if (startX <= 0 && endX <= 0) { divLine.style.opacity = '0'; return; }
+    divLine.style.opacity = '1';
+    const dx = endX - startX, dy = endY - startY;
+    const lineLength = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx) * (180 / Math.PI) - 90;
+    divLine.style.height = lineLength + 'px';
+    divLine.style.left = startX + 'px';
+    divLine.style.top = startY + 'px';
+    divLine.style.transform = `rotate(${angle}deg)`;
+  }
+
+  // Animation: Darkness parts to reveal the scene
+  let slideProgress = { value: 100 };
+  let heroAnimDone = false;
+
+  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+  panel.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+  gsap.set(heroImg, { scale: 1.12 });
+  gsap.set(panel, { backgroundColor: 'rgba(15,27,45,1)' });
+
+  heroTl.to(heroImg, { scale: 1, duration: 5, ease: 'power1.out' }, 0);
+  heroTl.to(panel, { backgroundColor: 'rgba(15,27,45,0.82)', duration: 1.2, ease: 'power2.inOut' }, 0.3);
+  heroTl.to(slideProgress, {
+    value: 0, duration: 2.5, ease: 'power3.inOut',
+    onUpdate: () => updateClipPath(slideProgress.value),
+  }, 0.5);
+  heroTl.to('#nav-logo', { opacity: 1, duration: .8 }, 0.8);
+  heroTl.to('#nav-r', { opacity: 1, duration: .8 }, 1);
+  heroTl.to(panel, { backgroundColor: 'rgba(15,27,45,0.78)', duration: 1.5, ease: 'power2.out' }, 2);
+  heroTl.fromTo('#hero-logo', { opacity: 0 }, { opacity: 1, duration: 1 }, 1.8);
+  heroTl.to('#h-tag', { opacity: 1, duration: .6 }, 1.8);
+  heroTl.set('#h-h1', { opacity: 1 }, 2);
+  heroTl.to('.h1-line span', { y: '0%', duration: .9, stagger: .12, ease: 'power4.out' }, 2);
+  heroTl.fromTo('#h-sub', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .8 }, 2.8);
+  heroTl.add(() => { heroAnimDone = true; }, 3.5);
+
+  window.addEventListener('resize', () => { if (heroAnimDone) updateClipPath(0); });
 })();
 
 // ══════════════════════════════════════════
@@ -597,6 +862,154 @@ function positionDivider(dividerEl, referenceEl, containerEl) {
 })();
 
 // ══════════════════════════════════════════
+// TESTIMONIALS — Self-contained block
+// ══════════════════════════════════════════
+(function() {
+  const stage      = document.getElementById('testimonials-stage');
+  const slides     = stage.querySelectorAll('.testimonial-slide');
+  const dots       = document.querySelectorAll('.testimonials-dot');
+  const prevBtn    = document.getElementById('prev-btn');
+  const nextBtn    = document.getElementById('next-btn');
+  const wipeLine   = document.getElementById('wipe-line');
+  const total      = slides.length;
+
+  let current      = 0;
+  let isAnimating  = false;
+  let autoTimer    = null;
+  let isInView     = false;
+  let hasTriggered = false;
+
+  const AUTO_DELAY = 6000;
+  const WIPE_DURATION = 800;
+
+  document.documentElement.style.setProperty('--auto-duration', AUTO_DELAY + 'ms');
+
+  function goTo(nextIndex, direction) {
+    if (isAnimating || nextIndex === current) return;
+    isAnimating = true;
+
+    const currentSlide = slides[current];
+    const nextSlide    = slides[nextIndex];
+    const isForward    = direction === 'next';
+
+    dots.forEach(d => d.classList.remove('active', 'filled'));
+    for (let i = 0; i < nextIndex; i++) dots[i].classList.add('filled');
+
+    if (isForward) {
+      nextSlide.style.clipPath = 'polygon(calc(100% + 30px) 0, calc(100% + 30px) 0, 100% 100%, 100% 100%)';
+    } else {
+      nextSlide.style.clipPath = 'polygon(0 0, 0 0, -30px 100%, -30px 100%)';
+    }
+    nextSlide.style.opacity = '1';
+    nextSlide.style.pointerEvents = 'none';
+    nextSlide.style.transition = 'none';
+    nextSlide.classList.remove('active');
+
+    wipeLine.style.opacity = '1';
+    wipeLine.style.transition = 'none';
+    nextSlide.offsetHeight;
+
+    const startTime = performance.now();
+
+    function animate(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / WIPE_DURATION, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const stageWidth = stage.offsetWidth;
+      const offset = 30;
+
+      if (isForward) {
+        const rightEdge = stageWidth;
+        const x = rightEdge - (eased * (rightEdge + offset));
+        nextSlide.style.clipPath = `polygon(${x + offset}px 0, calc(100% + 30px) 0, 100% 100%, ${x}px 100%)`;
+        currentSlide.style.clipPath = `polygon(0 0, ${x + offset}px 0, ${x}px 100%, 0 100%)`;
+        wipeLine.style.left = (x + offset / 2 - 20) + 'px';
+      } else {
+        const x = eased * (stageWidth + offset);
+        nextSlide.style.clipPath = `polygon(-30px 0, ${x + offset}px 0, ${x}px 100%, 0 100%)`;
+        currentSlide.style.clipPath = `polygon(${x + offset}px 0, calc(100% + 30px) 0, 100% 100%, ${x}px 100%)`;
+        wipeLine.style.left = (x + offset / 2 - 20) + 'px';
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        currentSlide.classList.remove('active');
+        currentSlide.style.opacity = '0';
+        currentSlide.style.clipPath = '';
+        currentSlide.style.pointerEvents = 'none';
+
+        nextSlide.classList.add('active');
+        nextSlide.style.clipPath = '';
+        nextSlide.style.pointerEvents = 'auto';
+
+        wipeLine.style.transition = 'opacity .3s';
+        wipeLine.style.opacity = '0';
+
+        current = nextIndex;
+        isAnimating = false;
+        dots[current].classList.add('active');
+        startAuto();
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  function startAuto() {
+    clearTimeout(autoTimer);
+    if (!isInView) return;
+    autoTimer = setTimeout(() => {
+      if (isInView) goTo((current + 1) % total, 'next');
+    }, AUTO_DELAY);
+  }
+
+  function stopAuto() { clearTimeout(autoTimer); }
+
+  const section = document.getElementById('testimonials');
+
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        isInView = true;
+        if (!hasTriggered) {
+          hasTriggered = true;
+          dots[0].classList.remove('active');
+          void dots[0].offsetHeight;
+          dots[0].classList.add('active');
+          startAuto();
+        } else {
+          dots[current].classList.remove('active');
+          void dots[current].offsetHeight;
+          dots[current].classList.add('active');
+          startAuto();
+        }
+      } else {
+        isInView = false;
+        stopAuto();
+        dots[current].classList.remove('active');
+        dots[current].classList.add('filled');
+      }
+    });
+  }, { threshold: 0.3 }).observe(section);
+
+  nextBtn.addEventListener('click', () => { stopAuto(); goTo((current + 1) % total, 'next'); });
+  prevBtn.addEventListener('click', () => { stopAuto(); goTo((current - 1 + total) % total, 'prev'); });
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.index);
+      if (idx === current) return;
+      stopAuto();
+      goTo(idx, idx > current ? 'next' : 'prev');
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { stopAuto(); goTo((current + 1) % total, 'next'); }
+    if (e.key === 'ArrowLeft') { stopAuto(); goTo((current - 1 + total) % total, 'prev'); }
+  });
+})();
+
+// ══════════════════════════════════════════
 // B-EGG STICKY STACKING — Self-contained block
 // ══════════════════════════════════════════
 (function() {
@@ -616,15 +1029,17 @@ function positionDivider(dividerEl, referenceEl, containerEl) {
   cases.style.zIndex = '8';
   cases.style.boxShadow = '0 -30px 80px rgba(0,0,0,.2)';
 
-  // Stats and CTA scroll normally
+  // Stats, Testimonials, CTA scroll normally with ascending z-index
   const stats = document.querySelector('#stats');
+  const testimonials = document.querySelector('#testimonials');
   const cta = document.querySelector('#cta');
   stats.style.zIndex = '10';
   stats.style.position = 'relative';
+  testimonials.style.zIndex = '11';
+  testimonials.style.position = 'relative';
 
   // Footer reveal: footer is fixed at bottom, hidden behind everything.
   // CTA has margin-bottom = footer height so there's scroll space.
-  // All sections above have solid backgrounds that cover the footer.
   const footer = document.querySelector('footer');
   const footerH = footer.offsetHeight;
 
@@ -639,8 +1054,7 @@ function positionDivider(dividerEl, referenceEl, containerEl) {
   cta.style.marginBottom = footerH + 'px';
 
   // Ensure all sections have solid background to cover the fixed footer
-  document.querySelectorAll('#hero, #statement, #slider, #cases, #logos, #stats, #cta').forEach(el => {
-    // Only set if not already set via CSS
+  document.querySelectorAll('#hero, #statement, #slider, #cases, #logos, #stats, #testimonials, #cta').forEach(el => {
     const bg = getComputedStyle(el).backgroundColor;
     if (bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') {
       el.style.backgroundColor = 'var(--nv)';

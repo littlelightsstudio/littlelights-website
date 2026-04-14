@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Hover Test</title>
+<style>
+:root {
+  --nv: #0f1b2d;
+  --cop: #C8956C;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--nv);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Satoshi', sans-serif;
+  color: white;
+}
+
+.test-card { text-align: center; }
+.test-card p {
+  margin-top: 16px;
+  font-size: 11px;
+  opacity: .3;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════
+   LOGO HOVER
+   ══════════════════════════════════════════════════════════ */
+.logo-hover {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  cursor: pointer;
+}
+
+/* Base: solid copper, always present */
+.logo-base {
+  position: absolute;
+  inset: 0;
+  background: var(--cop);
+  opacity: .3;
+  -webkit-mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  transition: opacity .3s ease;
+}
+
+/* Gradient: hidden by default, fades in on hover */
+.logo-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--cop) 0%,
+    #D4A574 30%,
+    #7EB8C9 60%,
+    #9B8EC4 100%
+  );
+  background-size: 250% 250%;
+  background-position: 100% 100%;
+  -webkit-mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  mask: url('images/ll-logo-white.png') center / contain no-repeat;
+  opacity: 0;
+  transition: opacity 1.2s ease; /* slow fade OUT */
+}
+
+/* Hover states */
+.logo-hover:hover .logo-base {
+  opacity: 0;
+  transition: opacity .2s ease; /* fast fade out */
+}
+.logo-hover:hover .logo-gradient {
+  opacity: 1;
+  transition: opacity .2s ease; /* fast fade in */
+  animation: sweep 1.5s ease forwards;
+}
+
+@keyframes sweep {
+  0%   { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+</style>
+</head>
+<body>
+
+<div class="test-card">
+  <div class="logo-hover">
+    <div class="logo-base"></div>
+    <div class="logo-gradient"></div>
+  </div>
+  <p>Hover me</p>
+</div>
+
+</body>
+</html>
