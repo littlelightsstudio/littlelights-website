@@ -290,6 +290,56 @@ A brand film that makes Strabag's ambition visible without having to spell it ou
 
 ---
 
+### Strabag I am Progress [CASE STUDY]
+- **Client:** Strabag
+- **Slug:** strabag-i-am-progress
+- **Area:** Agency
+- **Kategorien:** imagefilm, employer-branding
+- **Zeitraum:** 2025
+- **Case Study:** Ja
+- **Thumbnail:** (tba)
+- **Agency:** Jung von Matt Wien
+
+**DE:**
+Gemeinsam mit Jung von Matt Wien haben wir die "I am Progress"-Kampagne für Strabag produziert. Ein Imagefilm und sieben Proof Clips, in denen echte Mitarbeitende aus allen Bereichen des Konzerns erzählen, was Fortschritt für sie persönlich bedeutet. Eine rote Schaufel wandert als verbindendes Element von Szene zu Szene, von Baustelle zu Labor, von Bagger zu Vorstand. Acht Drehtage in Österreich und Deutschland, ein intensiver Post-Produktionsprozess und ein Ergebnis, das visuell und inhaltlich auf höchstem Niveau überzeugt.
+
+**EN:**
+Together with Jung von Matt Wien, we produced the "I am Progress" campaign for Strabag. One hero film and seven proof clips featuring real employees from across the corporation, sharing what progress means to them personally. A red shovel travels as a connecting element from scene to scene, from construction site to laboratory, from excavator to boardroom. Eight shooting days across Austria and Germany, an intensive post-production process, and a result that delivers on both visual and narrative excellence.
+
+**Challenge DE:**
+15 Protagonist:innen, sieben eigenständige Proof Clips, ein übergreifender Imagefilm, drei Formate pro Deliverable, Untertitel in Deutsch und Englisch. Und das Ganze mit echten Mitarbeitenden, die keine Schauspieler sind. Die kreative Herausforderung: eine Schnittmechanik, die den gesamten Konzern verbindet, ohne dass es inszeniert wirkt.
+
+**Challenge EN:**
+15 protagonists, seven standalone proof clips, one overarching hero film, three formats per deliverable, subtitles in German and English. All with real employees who aren't actors. The creative challenge: a cutting mechanic that connects the entire corporation without feeling staged.
+
+**Approach DE:**
+Die rote Schaufel als Staffel: sie wird von Mitarbeiter:in zu Mitarbeiter:in weitergegeben, quer durch alle Arbeitsbereiche der Strabag. Jede:r blickt in die Kamera und erzählt, was ihr oder sein persönlicher Beitrag zum Fortschritt ist. Wir haben in zwei Drehblöcken an acht Tagen in Österreich und Deutschland gedreht, mit einem Team, das gross genug war, um jede Szene professionell auszuleuchten, aber flexibel genug, um auf echte Momente zu reagieren. Die Postproduktion war der eigentliche Marathon: Schnitt aller Clips, Farbkorrektur, Sound Design, Sprachaufnahmen, Motion Graphics und Formatausspielungen in 16:9, 1:1 und 9:16.
+
+**Approach EN:**
+The red shovel as a relay baton: passed from employee to employee across every division of Strabag. Each person looks into the camera and shares their personal contribution to progress. We shot in two blocks over eight days across Austria and Germany, with a crew large enough to professionally light every scene, yet flexible enough to capture authentic moments. Post-production was the real marathon: editing all clips, color grading, sound design, voice recording, motion graphics, and format deliveries in 16:9, 1:1, and 9:16.
+
+**Result DE:**
+Ein Imagefilm, sieben Proof Clips mit jeweils drei Cutdowns, alle in drei Formaten mit deutschen und englischen Untertiteln. Ein Kampagnen-Paket, das Strabags Claim "Work on Progress" nicht nur behauptet, sondern durch die Geschichten seiner Mitarbeitenden beweist.
+
+**Result EN:**
+One hero film, seven proof clips with three cutdowns each, all in three formats with German and English subtitles. A campaign package that doesn't just claim Strabag's "Work on Progress" tagline, but proves it through the stories of its people.
+
+**Credits:**
+- Director: Dinko Draganovic
+- DOP: David Höller
+- A.C.: Stefan Pausa
+- Gaffer: Max Stapelfeldt
+- Ton: Peter Priemer, Dino von Wintersdorff, Kilian Riegert
+- Maske: Barbara Neundlinger, Josefine Winter, Lea Mauser
+- PA: Daniel Ifkovits, Tobias Hollinetz
+- Beleuchter: Istvan Pajor
+- Producer: Michael Sokolar
+- Produktionsleitung: Julia Wertheimer, Lukas Rosatti
+- Agency: Jung von Matt Wien
+- Client: Strabag
+
+---
+
 ### 11. 7Drops Brand Film
 - **Client:** 7Drops
 - **Slug:** 7drops-brand-film
@@ -1079,22 +1129,43 @@ Behind the scenes of the construction of the floating gardens in Vienna.
 
 ## Creative Studio
 
-### 39. Helena Flinn and the Secrets of the Night
+### 39. Helena Flinn Chronicles [CASE STUDY]
 - **Client:** Little Lights Publishing
 - **Slug:** helena-flinn
 - **Area:** Creative Studio
 - **Kategorien:** -
-- **Zeitraum:** -
-- **Case Study:** Nein
+- **Zeitraum:** 2018 - laufend
+- **Case Study:** Ja
+- **Case Study Style:** Creative (Der Funke / Die Reise / Das Werk)
 - **Thumbnail:** creativestudio/helena-flinn-trilogy.png
+- **Link:** helenaflinn.com
 
 **DE:**
-Jede Nacht kämpfte Helena Flinn mit furchtbaren Schlafstörungen. Bis in einer Nacht eine geheime Welt unter den belebten Strassen Wiens zum Leben erwachte. Eine Geschichte über ein mutiges, fantasievolles Mädchen, das ein verborgenes Reich voller ungewöhnlicher Energie und bizarrer Erfindungen entdeckt.
+Was als Kurzgeschichte über Goblins begann, wurde zu einer Fantasy-Trilogie, einer eigenen Storyworld und einer interaktiven Website. Die Helena Flinn Chronicles sind die persönliche Leidenschaft von Miso und ein Beispiel für den kreativen Freiraum, den Little Lights sich bewusst einräumt.
 
 **EN:**
-Every night, Helena Flinn struggled with terrible sleeping disorders, until the night a secret world sprang to life beneath the bustling streets of Vienna. A story about a brave, imaginative girl who discovers a hidden realm of unusual energy and bizarre gadgets.
+What started as a short story about goblins became a fantasy trilogy, an entire storyworld, and an interactive website. The Helena Flinn Chronicles are Miso's personal passion project and an example of the creative freedom that Little Lights deliberately carves out for itself.
+
+**Der Funke. DE:**
+Ich habe eine Kurzgeschichte geschrieben. Über Goblins, die unter Wien leben und Träume bauen. Das war 2018, spätabends, eigentlich nur für mich. Aber die Geschichte hat nicht aufgehört. Die Figuren wollten weiter erzählt werden, die Welt wollte grösser werden. Also habe ich mir ein Ziel gesetzt: daraus ein richtiges Buch machen. Kein Nebenprojekt, kein "irgendwann mal". Ein Buch, das veröffentlicht wird und seine Leser findet. Fünf Jahre, hunderte Abende und unzählige Überarbeitungen später hielt ich es in der Hand. Und plötzlich war ich Autor.
+
+**Der Funke. EN:**
+I wrote a short story. About goblins who live beneath Vienna and build dreams. It was 2018, late at night, really just for myself. But the story didn't stop. The characters wanted to keep being told, the world wanted to grow. So I set myself a goal: turn this into a real book. Not a side project, not a "someday." A book that gets published and finds its readers. Five years, hundreds of evenings, and countless revisions later, I held it in my hands. And suddenly, I was an author.
+
+**Die Reise. DE:**
+Nach dem ersten Band war klar: Schreiben und ich, das passt zusammen. Jeden Abend konsequent eine Stunde, egal was der Tag gebracht hat. Innerhalb eines Jahres war "Helena Flinn and the Flickering Realms" fertig. Parallel zu den Büchern wuchs etwas, das ich nicht geplant hatte: eine eigene Welt jenseits der Seiten. Ich habe helenaflinn.com gebaut, eine interaktive Storyworld mit dem Nocturne Codex, einer Enzyklopädie der verborgenen Welt unter Wien, einem Bureau-Klassifizierungsquiz und einem Dream-Science-Archiv. Die Website ist kein Marketing-Tool. Sie ist Teil der Geschichte.
+
+**Die Reise. EN:**
+After the first book, it was clear: writing and I, we belong together. Every evening, one dedicated hour, no matter what the day had brought. Within a year, "Helena Flinn and the Flickering Realms" was finished. Alongside the books, something I hadn't planned grew: a world beyond the pages. I built helenaflinn.com, an interactive storyworld with the Nocturne Codex, an encyclopedia of the hidden world beneath Vienna, a Bureau classification quiz, and a Dream Science archive. The website isn't a marketing tool. It's part of the story.
+
+**Das Werk. DE:**
+Eine Middle-Grade Fantasy-Trilogie im verborgenen Wien. Zwei Bände veröffentlicht, das epische Finale erscheint Ende 2026. Selbstverlegt über Amazon KDP und IngramSpark, mit Hardcover, Paperback und eBook. Dazu eine digitale Storyworld, die junge und alte Fans einlädt, die Welt auf eigene Faust zu erkunden. Und das Gefühl, dass manche Geschichten einfach erzählt werden müssen.
+
+**Das Werk. EN:**
+A middle-grade fantasy trilogy set in the hidden Vienna. Two volumes published, the epic finale due late 2026. Self-published via Amazon KDP and IngramSpark, available as hardcover, paperback, and eBook. Plus a digital storyworld that invites young and old fans alike to explore the world on their own. And the conviction that some stories simply need to be told.
 
 **Credits:**
 - Author: Michael Sokolar
 - Publisher: Little Lights Studio
-- Genre: Middle Grade Fantasy (Book 1 of trilogy)
+- Storyworld & Website: helenaflinn.com
+- Genre: Middle Grade Fantasy (Trilogy)
