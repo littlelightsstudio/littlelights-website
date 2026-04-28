@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tech Stack — Little Lights Studio</title>
+  <style>
+    :root {
+      --color-navy: #0F1B2D;
+      --color-cream: #F5EFE6;
+      --color-cream-warm: #EBDFCC;
+      --color-copper: #C8956C;
+      --color-grey-text: #4A4A4A;
+      --color-grey-muted: #8A8472;
+
+      --font-display: "Clash Display", system-ui, sans-serif;
+      --font-body: "Satoshi", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-cream);
+      color: var(--color-navy);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    .label-copper {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--color-copper);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 0 1.25rem;
+    }
+
+    h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: 0 0 0.5rem;
+    }
+
+    .subline {
+      color: var(--color-grey-text);
+      max-width: 50ch;
+      margin-bottom: 2rem;
+    }
+
+    .meta {
+      color: var(--color-grey-muted);
+      font-size: 0.85rem;
+      margin-bottom: 3rem;
+    }
+
+    section {
+      margin: 3.5rem 0;
+    }
+
+    section + section {
+      padding-top: 0;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1.5rem 0 2.5rem;
+      font-size: 0.85rem;
+      color: var(--color-grey-text);
+    }
+
+    .legend span {
+      padding: 0.25rem 0.65rem;
+      background: var(--color-cream-warm);
+      border-radius: 999px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      display: block;
+      padding: 1.25rem 1.5rem;
+      background: var(--color-cream-warm);
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, background 0.2s ease;
+      position: relative;
+    }
+
+    a.card:hover {
+      transform: translateY(-2px);
+      background: var(--color-navy);
+      color: var(--color-cream);
+    }
+
+    a.card:hover h3 { color: var(--color-cream); }
+    a.card:hover .role { color: var(--color-cream-warm); }
+    a.card:hover .detail { color: var(--color-cream-warm); }
+
+    .card .role {
+      color: var(--color-grey-text);
+      font-size: 0.95rem;
+      margin: 0.25rem 0 0.75rem;
+    }
+
+    .card .detail {
+      color: var(--color-grey-muted);
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .status {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+    }
+
+    .status-active   { background: #C8E6C9; color: #1B5E20; }
+    .status-migrate  { background: #FFE0B2; color: #6E4C00; }
+    .status-planned  { background: #BBDEFB; color: #0D3D6B; }
+    .status-legacy   { background: #E0E0E0; color: #555; }
+    .status-open     { background: #F5EFE6; color: #6E5A4A; border: 1px solid var(--color-grey-muted); }
+    .status-drop     { background: #F8D7DA; color: #842029; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 0.5rem;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--color-cream-warm);
+      vertical-align: top;
+    }
+
+    th {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-navy);
+      background: var(--color-cream-warm);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    td a {
+      color: var(--color-copper);
+      text-decoration: none;
+    }
+    td a:hover { text-decoration: underline; }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: white;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      box-shadow: 0 1px 0 var(--color-cream-warm);
+    }
+
+    .drop {
+      color: var(--color-grey-muted);
+      text-decoration: line-through;
+    }
+
+    .callout {
+      padding: 1.25rem 1.5rem;
+      background: white;
+      border-left: 4px solid var(--color-copper);
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin: 1.5rem 0;
+    }
+
+    .callout h3 { margin-bottom: 0.5rem; }
+    .callout p { color: var(--color-grey-text); font-size: 0.95rem; }
+    .callout a { color: var(--color-copper); text-decoration: none; }
+    .callout a:hover { text-decoration: underline; }
+
+    .cost-summary {
+      background: var(--color-navy);
+      color: var(--color-cream);
+      padding: 2rem;
+      border-radius: 0.5rem;
+      margin: 2rem 0;
+    }
+
+    .cost-summary h2 { color: var(--color-cream); }
+    .cost-summary table th { background: rgba(245,239,230,0.1); color: var(--color-cream); }
+    .cost-summary table td { color: var(--color-cream); border-bottom-color: rgba(245,239,230,0.15); }
+    .cost-summary table a { color: var(--color-copper); }
+    .cost-summary .total {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      color: var(--color-copper);
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-cream-warm);
+      font-size: 0.85rem;
+      color: var(--color-grey-muted);
+    }
+
+    footer a {
+      color: var(--color-copper);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    .roadmap-list {
+      counter-reset: step;
+      list-style: none;
+    }
+    .roadmap-list li {
+      counter-increment: step;
+      padding: 0.75rem 0 0.75rem 3rem;
+      position: relative;
+      border-bottom: 1px solid var(--color-cream-warm);
+    }
+    .roadmap-list li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0.75rem;
+      width: 2rem;
+      height: 2rem;
+      background: var(--color-copper);
+      color: var(--color-cream);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+    }
+    .roadmap-list li strong { color: var(--color-navy); }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="label-copper">Little Lights Studio</p>
+      <h1>Tech Stack.</h1>
+      <p class="subline">Zentrale Übersicht aller Tools, Services und Provider. Lebende Datei, bei jeder Veränderung nachpflegen.</p>
+      <p class="meta">Stand: 2026-04-28</p>
+
+      <div class="legend">
+        <span><strong>✅</strong> Aktiv &amp; stabil</span>
+        <span><strong>🔄</strong> In Migration</span>
+        <span><strong>⏳</strong> Geplant</span>
+        <span><strong>💤</strong> Legacy</span>
+        <span><strong>❓</strong> Offen</span>
+      </div>
+    </header>
+
+    <!-- 1. Server & Hosting -->
+    <section>
+      <h2>1. Server &amp; Hosting</h2>
+      <div class="grid">
+        <a class="card" href="https://www.hetzner.com/cloud">
+          <span class="status status-active">Aktiv</span>
+          <h3>Hetzner Cloud</h3>
+          <p class="role">Cloud-Server (CPX32, Nuremberg)</p>
+          <p class="detail">46.224.59.56 / 2a01:4f8:1c18:e9d1::1, Ubuntu 24.04, ~€16.80/Mo inkl. Backups</p>
+        </a>
+        <a class="card" href="https://coolify.io">
+          <span class="status status-active">Aktiv</span>
+          <h3>Coolify</h3>
+          <p class="role">Hosting-Layer (self-hosted, v4.0.0-beta.474)</p>
+          <p class="detail">UI: <a href="https://coolify.littlelights.studio">coolify.littlelights.studio</a> · GitHub-Auto-Deploy</p>
+        </a>
+        <a class="card" href="https://www.docker.com/">
+          <span class="status status-active">Aktiv</span>
+          <h3>Docker</h3>
+          <p class="role">Container-Engine</p>
+          <p class="detail">Von Coolify gemanaged</p>
+        </a>
+        <a class="card" href="https://traefik.io/">
+          <span class="status status-active">Aktiv</span>
+          <h3>Traefik</h3>
+          <p class="role">Reverse-Proxy &amp; SSL</p>
+          <p class="detail">In Coolify integriert · Auto-Cert via Let's Encrypt</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 2. DNS -->
+    <section>
+      <h2>2. DNS</h2>
+      <div class="grid">
+        <a class="card" href="https://dns.hetzner.com">
+          <span class="status status-migrate">In Migration</span>
+          <h3>Hetzner DNS</h3>
+          <p class="role">Authoritative DNS</p>
+          <p class="detail">21 Zonen importiert. NS-Cutover läuft Domain-für-Domain. Erster Cutover (nocturnecodex.com) erfolgt 27.04.2026.</p>
+        </a>
+        <a class="card" href="https://www.easyname.com/">
+          <span class="status status-legacy">Legacy</span>
+          <h3>easyname</h3>
+          <p class="role">Legacy DNS</p>
+          <p class="detail">Wird je Domain durch Hetzner abgelöst</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 3. Domain-Registrar -->
+    <section>
+      <h2>3. Domain-Registrar</h2>
+      <div class="grid">
+        <a class="card" href="https://www.easyname.com/">
+          <span class="status status-legacy">Legacy</span>
+          <h3>easyname</h3>
+          <p class="role">Aktueller Domain-Registrar</p>
+          <p class="detail">21 Domains aktuell hier registriert · 5 davon werden auslaufen gelassen (Drop-Liste)</p>
+        </a>
+        <a class="card" href="https://konsoleh.hetzner.com">
+          <span class="status status-migrate">In Migration</span>
+          <h3>Hetzner Domains (konsoleH)</h3>
+          <p class="role">Ziel-Registrar</p>
+          <p class="detail">Pilot läuft: nocturnedomains.com Transfer initiiert 27.04.2026, in „being processed". 16 Domains insgesamt nach Migration.</p>
+        </a>
+      </div>
+
+      <div class="callout">
+        <h3>Wichtig zur Hetzner-Domain-Verwaltung</h3>
+        <p>Hetzner hat keinen Standalone-Domain-Service à la Cloudflare/Porkbun. Domain-Registrierung ohne Webhosting läuft über das <a href="https://konsoleh.hetzner.com">konsoleH-Panel</a>, Produkt „Domains → Registration only". Bestellt wird via <a href="https://accounts.hetzner.com">accounts.hetzner.com</a>, das Panel-Login danach ist konsoleH.</p>
+      </div>
+    </section>
+
+    <!-- 4. Email -->
+    <section>
+      <h2>4. Email</h2>
+      <p class="subline">Pro Domain unterschiedlich. Mehrere Stacks parallel.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Domain</th><th>Mail-Stack</th><th>Status</th><th>Details</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>littlelights.studio</td><td><a href="https://workspace.google.com/">Google Workspace</a></td><td><span class="status status-active">Aktiv</span></td><td>Primary, alle Mitarbeiter-Adressen</td></tr>
+            <tr><td>littlelightsstudio.com</td><td><a href="https://workspace.google.com/">Google Workspace</a></td><td><span class="status status-active">Aktiv</span></td><td>Domain-Alias / sekundär</td></tr>
+            <tr><td>littlelightsstudio.at</td><td><a href="https://workspace.google.com/">Google Workspace</a></td><td><span class="status status-active">Aktiv</span></td><td>Domain-Alias / sekundär</td></tr>
+            <tr><td>michaelsokolar.com</td><td><a href="https://workspace.google.com/">Google Workspace</a> + <a href="https://www.mailerlite.com">MailerLite</a></td><td><span class="status status-active">Aktiv</span></td><td>Persönliche Mail + Newsletter-Versand</td></tr>
+            <tr><td>helenaflinn.com</td><td>easyname Mailbox</td><td><span class="status status-legacy">Legacy</span></td><td>Migration zu <a href="https://forwardemail.net">Forward Email</a> geplant (Phase 4a)</td></tr>
+            <tr><td>sokolar.com</td><td>easyname Forwarding (13 Aliases → Gmail)</td><td><span class="status status-legacy">Legacy</span></td><td>Migration zu <a href="https://forwardemail.net">Forward Email</a> geplant (Phase 4a)</td></tr>
+            <tr><td>sokolar.at</td><td>easyname Forwarding (4 Aliases)</td><td><span class="status status-legacy">Legacy</span></td><td>Migration zu <a href="https://forwardemail.net">Forward Email</a> geplant (Phase 4a)</td></tr>
+            <tr><td>Brand-Schutz (12 Domains)</td><td>easyname Default-MX (ungenutzt)</td><td><span class="status status-legacy">Legacy</span></td><td>MX kann ohne Forwarding-Service ggf. gestrichen werden</td></tr>
+            <tr><td>ferienwohnung-mistelbach.at</td><td>keine Email</td><td><span class="status status-active">Aktiv</span></td><td>Bewusst keine Mail-Records</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <h3>Geplanter Forwarding-Provider (Phase 4a)</h3>
+        <p><a href="https://forwardemail.net">Forward Email</a> Enhanced Protection Plan — <strong>$3/Monat für unlimited Domains + unlimited Aliases</strong>. Open Source. Inkludiert: outbound SMTP, DMARC Reporting, Email Analytics, API, 10 GB pooled Storage. Deckt alle aktuellen + zukünftigen LL-Studio-Domains ab.</p>
+      </div>
+    </section>
+
+    <!-- 5. Source Control & CI/CD -->
+    <section>
+      <h2>5. Source Control &amp; CI/CD</h2>
+      <div class="grid">
+        <a class="card" href="https://github.com/littlelightsstudio">
+          <span class="status status-active">Aktiv</span>
+          <h3>GitHub</h3>
+          <p class="role">Git-Hosting (littlelightsstudio)</p>
+          <p class="detail">Source Control für alle Projekte</p>
+        </a>
+        <a class="card" href="https://coolify.littlelights.studio">
+          <span class="status status-active">Aktiv</span>
+          <h3>Coolify CI/CD</h3>
+          <p class="role">Webhook → Auto-Build → Deploy</p>
+          <p class="detail">GitHub-App coolify-lls (Installation-ID 127497266)</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 6. Frontend & Code-Stack -->
+    <section>
+      <h2>6. Frontend &amp; Code-Stack</h2>
+      <div class="grid">
+        <a class="card" href="https://nextjs.org">
+          <span class="status status-planned">Geplant</span>
+          <h3>Next.js + Payload CMS</h3>
+          <p class="role">littlelights.studio Hauptseite</p>
+          <p class="detail">App Router · in Phase 3 Design, Build kommt in Phase 4 · <a href="https://payloadcms.com">Payload CMS</a></p>
+        </a>
+        <a class="card">
+          <span class="status status-migrate">In Migration</span>
+          <h3>Static HTML</h3>
+          <p class="role">helenaflinn.com, michaelsokolar.com</p>
+          <p class="detail">Aktuell GitHub Pages, Migration zu Coolify Static-Site</p>
+        </a>
+        <a class="card" href="https://wordpress.org/">
+          <span class="status status-legacy">Legacy</span>
+          <h3>WordPress</h3>
+          <p class="role">ferienwohnung-mistelbach.at</p>
+          <p class="detail">Aktuell easyname-Webspace (PHP 8.4), Migration zu Coolify-Container geplant</p>
+        </a>
+        <a class="card">
+          <span class="status status-planned">Geplant</span>
+          <h3>Sprachen</h3>
+          <p class="role">Deutsch + Englisch</p>
+          <p class="detail">DE primär für DACH, EN für International · Implementierung in Phase 4</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 7. Tooling -->
+    <section>
+      <h2>7. Tooling rund ums Coding</h2>
+      <div class="grid">
+        <a class="card" href="https://claude.com/claude-code">
+          <span class="status status-active">Aktiv</span>
+          <h3>Claude Code</h3>
+          <p class="role">KI-Pair-Programming</p>
+          <p class="detail">Anthropic CLI für Software-Engineering-Tasks</p>
+        </a>
+        <a class="card" href="https://code.visualstudio.com">
+          <span class="status status-active">Aktiv</span>
+          <h3>VSCode</h3>
+          <p class="role">Editor</p>
+          <p class="detail">Mit Claude Code Extension</p>
+        </a>
+        <a class="card" href="https://coolify.io">
+          <span class="status status-active">Aktiv</span>
+          <h3>Coolify</h3>
+          <p class="role">Container-Deployment</p>
+          <p class="detail">Self-hosted CI/CD und Hosting-Layer</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 7a. Internal Tools -->
+    <section>
+      <h2>7a. Internal Tools — tools.littlelights.studio</h2>
+      <p class="subline">Eigenes Mini-Repo für team-interne Web-Tools. Live unter <a href="https://tools.littlelights.studio" style="color: var(--color-copper); text-decoration: none;">tools.littlelights.studio</a>. Express + Vanilla HTML/JS oder React via Babel Standalone, kein Build-Step. Auto-Deploy via Dockerfile auf demselben Coolify wie die Hauptseite.</p>
+      <div class="grid">
+        <a class="card" href="https://tools.littlelights.studio/poc-dispo-generator/">
+          <span class="status status-active">Aktiv</span>
+          <h3>Dispo Generator</h3>
+          <p class="role">Karrierestories</p>
+          <p class="detail">Generiert Drehpläne aus Notion-Transkripten und Claude-Prompts. API-Anbindung an Anthropic + Notion.</p>
+        </a>
+        <a class="card" href="https://tools.littlelights.studio/poc-karrierestories-kalkulator/">
+          <span class="status status-active">Aktiv</span>
+          <h3>Crew-Kalkulator</h3>
+          <p class="role">Karrierestories</p>
+          <p class="detail">Berechnet Crew-Vergütung für Karrierestory- und Recruiting-Imagefilm-Produktionen auf Basis der STRABAG-Rahmenvereinbarung 2026. PDF-Export pro Rolle via Puppeteer.</p>
+        </a>
+        <a class="card" href="https://github.com/littlelightsstudio/littlelights-tools">
+          <span class="status status-active">Aktiv</span>
+          <h3>littlelights-tools</h3>
+          <p class="role">Repo</p>
+          <p class="detail">github.com/littlelightsstudio/littlelights-tools</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 8. Analytics & Monitoring -->
+    <section>
+      <h2>8. Analytics &amp; Monitoring</h2>
+      <div class="grid">
+        <a class="card" href="https://umami.is">
+          <span class="status status-planned">Geplant</span>
+          <h3>Umami</h3>
+          <p class="role">Web-Analytics (privacy-first)</p>
+          <p class="detail">Self-hosted auf Coolify · kein Cookie-Banner nötig</p>
+        </a>
+        <a class="card" href="https://www.hetzner.com/cloud/backup">
+          <span class="status status-active">Aktiv</span>
+          <h3>Hetzner Cloud Backups</h3>
+          <p class="role">VM-Snapshots</p>
+          <p class="detail">Daily, 7 Tage Retention · €2.80/Mo</p>
+        </a>
+        <a class="card" href="https://coolify.io">
+          <span class="status status-planned">Geplant</span>
+          <h3>Coolify-DB-Backups</h3>
+          <p class="role">App-spezifische DB-Backups</p>
+          <p class="detail">Wird mit erstem DB-Container aktiviert</p>
+        </a>
+        <a class="card" href="https://uptime.kuma.pet">
+          <span class="status status-open">Offen</span>
+          <h3>Uptime Kuma</h3>
+          <p class="role">Status-Page / Uptime-Monitoring</p>
+          <p class="detail">Nice-to-have, nicht Priorität</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 9. Marketing & Reach -->
+    <section>
+      <h2>9. Marketing &amp; Reach</h2>
+      <div class="grid">
+        <a class="card" href="https://www.mailerlite.com">
+          <span class="status status-active">Aktiv</span>
+          <h3>MailerLite</h3>
+          <p class="role">Newsletter-Versand</p>
+          <p class="detail">Für michaelsokolar.com · DKIM via litesrv._domainkey</p>
+        </a>
+        <a class="card" href="https://search.google.com/search-console">
+          <span class="status status-planned">Geplant</span>
+          <h3>Google Search Console</h3>
+          <p class="role">SEO-Monitoring</p>
+          <p class="detail">Setup in Phase 6 Launch</p>
+        </a>
+        <a class="card" href="https://calendly.com">
+          <span class="status status-planned">Geplant</span>
+          <h3>Calendly</h3>
+          <p class="role">Booking</p>
+          <p class="detail">R&amp;S / Workshop · Wird in Phase 4 Build integriert</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 10. Video & Media -->
+    <section>
+      <h2>10. Video &amp; Media</h2>
+      <div class="grid">
+        <a class="card" href="https://vimeo.com">
+          <span class="status status-open">Offen</span>
+          <h3>Vimeo</h3>
+          <p class="role">Video-Hosting (Premium-Optik)</p>
+          <p class="detail">Eine der zwei Optionen · Entscheidung in Phase 4 Build</p>
+        </a>
+        <a class="card" href="https://bunny.net">
+          <span class="status status-open">Offen</span>
+          <h3>Bunny.net</h3>
+          <p class="role">Video-CDN (günstiger, eigener Player)</p>
+          <p class="detail">Eine der zwei Optionen · Entscheidung in Phase 4 Build</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 11. Branding & Design -->
+    <section>
+      <h2>11. Branding &amp; Design-Tools</h2>
+      <div class="grid">
+        <a class="card" href="https://figma.com">
+          <span class="status status-active">Aktiv</span>
+          <h3>Figma</h3>
+          <p class="role">Design-Prototypen</p>
+          <p class="detail">Begrenzt eingesetzt · gebaut wird im Code</p>
+        </a>
+        <a class="card" href="https://canva.com">
+          <span class="status status-planned">Geplant</span>
+          <h3>Canva</h3>
+          <p class="role">Brand-Collateral</p>
+          <p class="detail">Stream 2 Branding, ausstehend</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Per-Domain-Stack-Übersicht -->
+    <section>
+      <h2>Per-Domain-Stack-Übersicht</h2>
+      <p class="subline">Alle 21 LL-Studio-Domains — 16 nach geplanten Drops. Web-Stack, Email-Stack, DNS, Registrar pro Domain.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Web-Stack</th>
+              <th>Email-Stack</th>
+              <th>DNS</th>
+              <th>Registrar</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>littlelights.studio</td><td>Alter Webhost → Next.js+Payload @ Coolify</td><td>Google Workspace</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>littlelightsstudio.com</td><td>(Brand-Alias, Subdomains aktiv)</td><td>Google Workspace</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>littlelightsstudio.at</td><td>(Brand-Alias)</td><td>Google Workspace</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>michaelsokolar.com</td><td>GitHub Pages → Coolify Static</td><td>Google Workspace + MailerLite</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>helenaflinn.com</td><td>GitHub Pages → Coolify Static</td><td>easyname Mailbox → Forward Email</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>helenaflinn-chronicles.com</td><td>easyname HTTP-Redirect → Coolify</td><td>easyname Default</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>sokolar.com</td><td>easyname Subdomains → Triage</td><td>easyname Forwarding (13 Aliases) → Forward Email</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>sokolar.at</td><td>easyname Webspace → ❓</td><td>easyname Forwarding (4 Aliases) → Forward Email</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>michaelsokolar.at</td><td>easyname HTTP-Redirect → Coolify</td><td>easyname Default</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>ferienwohnung-mistelbach.at</td><td>easyname WordPress → Coolify WordPress</td><td>keine</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td><strong>nocturnedomains.com</strong></td><td>(Helena-World-Reserve)</td><td>easyname Default</td><td><strong>Hetzner DNS (live)</strong></td><td><strong>Hetzner Domains (Transfer in Arbeit)</strong></td><td><span class="status status-migrate">🔄 Pilot läuft</span></td></tr>
+            <tr><td>nocturnecodex.com</td><td>(Helena-World-Reserve)</td><td>easyname Default</td><td><strong>Hetzner DNS (live)</strong></td><td>easyname (durch ICANN-60-Tage-Lock blockiert)</td><td>DNS-Cutover 27.04.2026, Registrar wartet</td></tr>
+            <tr><td>littlelights.agency</td><td>easyname HTTP-Redirect → Coolify</td><td>easyname Default</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>littlelights.at</td><td>easyname HTTP-Redirect → Coolify</td><td>easyname Default</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>littlelights.media</td><td>easyname HTTP-Redirect → Coolify</td><td>easyname Default</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr><td>littlelights.productions</td><td>easyname HTTP-Redirect → Coolify</td><td>easyname Default</td><td>Hetzner DNS</td><td>easyname → Hetzner</td><td>DNS ready, Cutover ausstehend</td></tr>
+            <tr class="drop"><td>brand-film.agency</td><td>—</td><td>—</td><td>—</td><td>easyname (auslaufen)</td><td><span class="status status-drop">❌ Drop</span></td></tr>
+            <tr class="drop"><td>brandfilm.agency</td><td>—</td><td>—</td><td>—</td><td>easyname (auslaufen)</td><td><span class="status status-drop">❌ Drop</span></td></tr>
+            <tr class="drop"><td>littlelights.pub</td><td>—</td><td>—</td><td>—</td><td>easyname (auslaufen)</td><td><span class="status status-drop">❌ Drop</span></td></tr>
+            <tr class="drop"><td>littlelights-studio.at</td><td>—</td><td>—</td><td>—</td><td>easyname (auslaufen)</td><td><span class="status status-drop">❌ Drop</span></td></tr>
+            <tr class="drop"><td>littlelights-studio.com</td><td>—</td><td>—</td><td>—</td><td>easyname (auslaufen)</td><td><span class="status status-drop">❌ Drop</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Migrationen -->
+    <section>
+      <h2>Zukünftige Migrationen (Reihenfolge)</h2>
+      <ol class="roadmap-list">
+        <li><strong>Phase 1 (DNS-Cutover):</strong> Alle 16 Domains von easyname-NS auf Hetzner-NS umstellen — in Arbeit</li>
+        <li><strong>Coolify-Apps-Setup:</strong> helenaflinn.com → michaelsokolar.com → littlelights.studio → ferienwohnung-mistelbach.at als Coolify-Container</li>
+        <li><strong>Phase 3 (Redirect-Migration):</strong> Brand-Schutz-Domains' Redirects von easyname auf Coolify Traefik</li>
+        <li><strong>Phase 4a (Email-Migration):</strong> sokolar.com + sokolar.at + helenaflinn.com Email zu <a href="https://forwardemail.net">Forward Email</a></li>
+        <li><strong>Phase 4b (Registrar-Transfer):</strong> Domain-für-Domain easyname → Hetzner Domains. Pilot: nocturnedomains.com (27.04.2026 in Arbeit). nocturnecodex.com nachziehen sobald 60-Tage-Lock fällt.</li>
+        <li><strong>Phase 5 (easyname-Cancellation):</strong> Webhosting + Email-Account bei easyname kündigen, sobald alle Domains migriert oder gedroppt sind</li>
+      </ol>
+    </section>
+
+    <!-- Kosten -->
+    <section class="cost-summary">
+      <p class="label-copper" style="color: var(--color-copper);">Provider-Übersicht</p>
+      <h2>Kosten (Monatsschätzung)</h2>
+
+      <table>
+        <thead>
+          <tr><th>Provider</th><th>Was</th><th>Kosten</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="https://www.hetzner.com/cloud">Hetzner Cloud</a> (Server + Backups)</td><td>Production-Server</td><td>~€16.80/Mo</td></tr>
+          <tr><td><a href="https://dns.hetzner.com">Hetzner DNS</a></td><td>DNS-Hosting für 16 Zonen</td><td>gratis</td></tr>
+          <tr><td><a href="https://konsoleh.hetzner.com">Hetzner Domains</a> (via konsoleH)</td><td>Registrar für 16 Domains</td><td>~€411/Jahr (~€34/Mo)</td></tr>
+          <tr><td><a href="https://workspace.google.com/">Google Workspace</a></td><td>Mail für 4 Domains</td><td>~€6/User/Mo (Business Starter)</td></tr>
+          <tr><td><a href="https://forwardemail.net">Forward Email</a></td><td>Mail-Forwarding für unlimited Domains</td><td>$3 (~€2.80/Mo)</td></tr>
+          <tr><td><a href="https://www.mailerlite.com">MailerLite</a></td><td>Newsletter</td><td>abhängig von Subscriber-Count</td></tr>
+          <tr><td><a href="https://github.com">GitHub</a></td><td>Source Control</td><td>gratis (für public repos)</td></tr>
+          <tr><td><a href="https://vimeo.com">Vimeo</a> / <a href="https://bunny.net">Bunny.net</a></td><td>Video-Hosting</td><td>TBD nach Entscheidung</td></tr>
+        </tbody>
+      </table>
+
+      <p class="total">Total laufende Infrastruktur: ~€53/Monat</p>
+      <p style="color: var(--color-cream-warm); margin-top: 0.5rem; font-size: 0.85rem;">(Server €16.80 + Domains-Anteil ~€34 + Forward Email €2.80, ohne Workspace + Marketing-Tools)</p>
+    </section>
+
+    <!-- Detail-Docs -->
+    <section>
+      <h2>Detail-Dokumentation</h2>
+      <div class="grid">
+        <a class="card" href="infrastructure.md">
+          <h3>infrastructure.md</h3>
+          <p class="role">Server-Konfiguration im Detail</p>
+        </a>
+        <a class="card" href="domain-migration.md">
+          <h3>domain-migration.md</h3>
+          <p class="role">DNS-Migrations-Plan + Status-Tracker</p>
+        </a>
+        <a class="card" href="dns-zones/README.md">
+          <h3>dns-zones/README.md</h3>
+          <p class="role">Zone-File-Konventionen</p>
+        </a>
+        <a class="card" href="dns-zones/triage.md">
+          <h3>dns-zones/triage.md</h3>
+          <p class="role">User-Entscheidungen pro Sonderfall</p>
+        </a>
+        <a class="card" href="roadmap.md">
+          <h3>roadmap.md</h3>
+          <p class="role">Stream 4 Infrastruktur (high-level Roadmap)</p>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <p>Diese Datei ist die zentrale „wo stehen wir mit der Tech"-Übersicht. Bei jeder Statusänderung in <a href="tech-stack.md">tech-stack.md</a> nachpflegen, dann diese HTML neu generieren.</p>
+    </footer>
+  </main>
+</body>
+</html>
