@@ -285,7 +285,7 @@
       <p class="label-copper">Little Lights Studio</p>
       <h1>Tech Stack.</h1>
       <p class="subline">Zentrale Übersicht aller Tools, Services und Provider. Lebende Datei, bei jeder Veränderung nachpflegen.</p>
-      <p class="meta">Stand: 2026-04-28</p>
+      <p class="meta">Stand: 2026-04-28 (Nachmittag, Redirect-Architektur ergänzt)</p>
 
       <div class="legend">
         <span><strong>✅</strong> Aktiv &amp; stabil</span>
@@ -645,7 +645,7 @@
       <ol class="roadmap-list">
         <li><strong>Phase 1 (DNS-Cutover):</strong> Alle 16 Domains von easyname-NS auf Hetzner-NS umstellen — in Arbeit</li>
         <li><strong>Coolify-Apps-Setup:</strong> helenaflinn.com → michaelsokolar.com → littlelights.studio → ferienwohnung-mistelbach.at als Coolify-Container</li>
-        <li><strong>Phase 3 (Redirect-Migration):</strong> Brand-Schutz-Domains' Redirects von easyname auf Coolify Traefik</li>
+        <li><strong>Phase 3 (Redirect-Migration):</strong> 8 Brand-Schutz-Domains' Redirects von easyname auf einen eigenen Caddy-Container in Coolify. Separates Repo <code>littlelights-redirects</code> mit Caddyfile als Source of Truth. Pflege liegt bei miso, Lukas baut nur Tools. Details in <a href="roadmap.md" style="color: var(--color-copper); text-decoration: none;">roadmap.md</a>.</li>
         <li><strong>Phase 4a (Email-Migration):</strong> sokolar.com + sokolar.at + helenaflinn.com Email zu <a href="https://forwardemail.net">Forward Email</a></li>
         <li><strong>Phase 4b (Registrar-Transfer):</strong> Domain-für-Domain easyname → Hetzner Domains. Pilot: nocturnedomains.com (27.04.2026 in Arbeit). nocturnecodex.com nachziehen sobald 60-Tage-Lock fällt.</li>
         <li><strong>Phase 5 (easyname-Cancellation):</strong> Webhosting + Email-Account bei easyname kündigen, sobald alle Domains migriert oder gedroppt sind</li>

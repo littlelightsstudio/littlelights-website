@@ -12,6 +12,7 @@ Dieses Projekt ist mehr als eine Website — es ist ein **komplettes Rebranding*
 | **Stream 1: Website** | 🔄 In Arbeit | Analyse → Strategie → Design → Build → Launch |
 | **Stream 2: Brand Collateral** | ⏳ Ausstehend | Office-Vorlagen, Visitenkarten, Präsentationen |
 | **Stream 3: Brand Guidelines** | ⏳ Ausstehend | Styleguide, Nutzungsregeln, Asset-Library |
+| **Stream 4: Infrastruktur & Hosting** | 🔄 In Arbeit | Server, DNS, Domain-Migration, Legacy-Ablösung |
 
 ---
 
@@ -110,6 +111,9 @@ Nächste Schritte → siehe [3.3 Design Tasks](phase3/3.3_design_tasks.md)
 
 Aufbauend auf dem Design-System der Website:
 
+> **Tool-Option:** Claude Design (Anthropic Labs, Research Preview auf Pro/Max/Team) könnte hier stark sein — liest Design-System ein, produziert konsistente Slides/Pitch-Decks/Social-Templates/Landing-Pages, Export zu Canva/PDF/PPTX. Evaluieren wenn Website-Stream fertig.
+
+
 - [ ] Office-Vorlagen (Word, PowerPoint, Google Docs/Slides)
 - [ ] Visitenkarten
 - [ ] E-Mail Signatur
@@ -126,6 +130,75 @@ Aufbauend auf dem Design-System der Website:
 - [ ] Logo-Nutzungsregeln
 - [ ] Asset-Library (Logos, Icons, Fonts, Templates)
 - [ ] Do's & Don'ts
+
+---
+
+## Stream 4: Infrastruktur & Hosting
+**Laufend — operative Spur parallel zu den Rebranding-Streams**
+
+**Übersicht:** [`tech-stack.md`](tech-stack.md) — zentrale Karte aller Tools, Provider und Status pro Domain.
+
+Detail-Docs: [`infrastructure.md`](infrastructure.md) (Server), [`domain-migration.md`](domain-migration.md) (DNS-Migration).
+
+### Server (✅ steht)
+- ✅ Hetzner Cloud CPX32 `lls-prod-01` (`46.224.59.56`), Ubuntu 24.04
+- ✅ Coolify als Hosting-Layer, Auto-Deploy aus GitHub
+- [ ] `coolify.littlelights.studio` Subdomain einrichten (aktuell nur IP:8000)
+
+### DNS-Migration easyname → Hetzner DNS (🔄 in Arbeit)
+21 Domains. Strategie: erst alle Hetzner-Zonen aufbauen + verifizieren, dann kontrollierter Cutover Domain-für-Domain.
+
+- ✅ Pilot `nocturnedomains.com` in Hetzner importiert + verifiziert
+- ✅ Cleanup-Konventionen etabliert ([`dns-zones/README.md`](dns-zones/README.md))
+- ✅ Triage-Runde abgeschlossen ([`dns-zones/triage.md`](dns-zones/triage.md))
+- ✅ DKIM-Werte für alle 4 Google-Workspace-Domains aus Google Admin Console gesammelt
+- ✅ **Alle 21 Zone-Files generiert** (inkl. Cleanup, DKIM, DMARC, Cross-Domain-Auth)
+- ✅ **Alle 21 Zonen in Hetzner DNS importiert** (Stand 27.04.2026, Record-Counts verifiziert)
+- ✅ **Erster Cutover erfolgt:** `nocturnecodex.com` NS bei easyname auf Hetzner umgestellt (27.04.2026)
+- 🤖 **Verifikations-Routine geplant:** 2026-04-29 10:00 — Zone-Integrity + NS-Propagation aller 21 Domains ([Routine](https://claude.ai/code/routines/trig_016uJCBYvToVXiTvJauiSigs))
+- [ ] Cutover-Phase fortsetzen: Domain für Domain NS umstellen (Bulk-Brand-Schutz zuerst, `littlelights.studio` zuletzt)
+- [ ] sokolar.com Subdomain-Cleanup-Session (separate Triage, optional vor oder nach Cutover)
+
+### WordPress-Migration ferienwohnung-mistelbach.at (⏳ ausstehend)
+Aktive WordPress-Installation auf easyname-Webspace. **Eigenes Projekt**, getrennt von DNS-Migration. DNS migriert: A-Record bleibt erst auf `77.244.243.53` damit WordPress weiterläuft.
+
+- [ ] Neuen Host wählen (Hetzner Webspace? Coolify mit WP-Container?)
+- [ ] Files + MySQL-DB exportieren und auf neuem Host aufsetzen
+- [ ] DNS-A-Record umlenken
+- [ ] easyname-Webspace für diese Domain abkündigen
+
+### Phase 3: easyname-Redirects auf Coolify migrieren (⏳ ausstehend)
+Voraussetzung für vollständige easyname-Ablösung. Hintergrund: DNS macht keine HTTP-Redirects, easyname's Webserver macht das aktuell noch. Ziel: eigener Caddy-Container in Coolify übernimmt.
+
+**Architektur-Entscheidung (28.04.2026):** Redirects werden über ein eigenes Repo `littlelights-redirects` mit einer Caddyfile verwaltet, NICHT als Traefik-Labels in einzelnen Coolify-Apps. Begründung: alle Redirects in einer deklarativen Datei = lesbar, review-bar, von Admin in Sekunden änderbar. Caddy holt SSL eigenständig, Coolify deployt automatisch beim Push.
+
+**Initialer Domain-Scope: 8 Brand-Schutz-Domains** (nach Drops):
+
+| Domain | Redirect-Ziel |
+|---|---|
+| `nocturnedomains.com` | `helenaflinn.com` |
+| `nocturnecodex.com` | `helenaflinn.com` |
+| `helenaflinn-chronicles.com` | `helenaflinn.com` |
+| `michaelsokolar.at` | `michaelsokolar.com` |
+| `littlelights.agency` | `littlelights.studio` |
+| `littlelights.at` | `littlelights.studio` |
+| `littlelights.media` | `littlelights.studio` |
+| `littlelights.productions` | `littlelights.studio` |
+
+**Setup-Schritte:**
+
+- [ ] Repo `littlelightsstudio/littlelights-redirects` anlegen (Caddyfile + Dockerfile + README)
+- [ ] Coolify-Application aus dem Repo erstellen, Build-Pack `Dockerfile`, Domains hinzufügen (alle 8 plus `www.`-Varianten = 16 Einträge)
+- [ ] Hetzner DNS pro Domain umstellen: A `46.224.59.56`, AAAA `2a01:4f8:1c18:e9d1::1` (statt aktuell `77.244.243.53`)
+- [ ] Verifikation: `curl -I https://<domain>` muss `HTTP/2 301` mit `location:` zum Ziel liefern
+
+**Wartung später:** Neue Redirect = 2 Zeilen in Caddyfile + DNS-Records + Domain-Eintrag in Coolify. Total ~5 Min pro Domain. **Pflege liegt bei miso (Admin)** — Lukas baut nur Tools, hat mit Server/Redirects nichts zu tun.
+
+- Details: [`dns-zones/triage.md` Block L](dns-zones/triage.md#l-vermerk-phase-3--easyname-redirects-auf-coolify-migrieren)
+
+### Phase 4: easyname-Registrar-Transfer + Hosting-Kündigung (⏳ ausstehend)
+- [ ] Phase 2 der Domain-Migration: Registrar-Transfer easyname → Hetzner Domains (siehe domain-migration.md)
+- [ ] easyname-Webhosting kündigen (erst nach WordPress-Migration + Redirect-Migration)
 
 ---
 
@@ -170,3 +243,4 @@ Aufbauend auf dem Design-System der Website:
 | 14.04. | Sektionen als abstrakte Templates | Wiederverwendbar, CMS-ready, skalierbar |
 | 14.04. | Bereichs-Farbschemen geplant | Agency / R&S / Creative Studio mit eigenem Farbton |
 | 14.04. | "Drei Disziplinen. Eine Handschrift." | Tagline gelockt (ersetzt "Drei Bereiche") |
+| 28.04. | Redirects via Caddy-Container in Coolify, eigenes Repo `littlelights-redirects` | Eine Caddyfile als Source of Truth für alle Brand-Schutz-Redirects, statt verstreute Traefik-Labels in einzelnen Apps. Lesbar, review-bar, in 5 Min pro neuer Domain erweiterbar. |

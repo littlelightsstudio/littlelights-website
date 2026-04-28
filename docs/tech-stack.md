@@ -1,5 +1,5 @@
 # Tech Stack — Little Lights Studio
-**Stand: 2026-04-28**
+**Stand: 2026-04-28 (Nachmittag, Redirect-Architektur ergänzt)**
 
 Zentrale Übersicht aller Tools, Services und Provider. Lebende Datei, bei jeder Veränderung nachpflegen.
 
@@ -170,7 +170,7 @@ Alle 21 LL-Studio-Domains, gruppiert nach Verwendung:
 
 1. **Phase 1 (DNS-Cutover):** Alle 21 Domains von easyname-NS auf Hetzner-NS umstellen — in Arbeit, 1/21 fertig
 2. **Coolify-Apps-Setup:** helenaflinn.com → michaelsokolar.com → littlelights.studio → ferienwohnung-mistelbach.at als Coolify-Container
-3. **Phase 3 (Redirect-Migration):** 12 Brand-Schutz-Domains' Redirects von easyname auf Coolify Traefik
+3. **Phase 3 (Redirect-Migration):** 8 Brand-Schutz-Domains' Redirects von easyname auf einen eigenen Caddy-Container in Coolify. Architektur: separates Repo `littlelights-redirects` mit einer Caddyfile als Source of Truth, Coolify deployt automatisch beim Push. Details siehe [`roadmap.md`](roadmap.md#phase-3-easyname-redirects-auf-coolify-migrieren-ausstehend).
 4. **Phase 4a (Email-Migration):** sokolar.com + sokolar.at + helenaflinn.com Email zu Forward Email
 5. **Phase 4b (Registrar-Transfer):** Domain-für-Domain easyname → Hetzner Domains (via konsoleH). **Pilot: `nocturnedomains.com` (Transfer initiiert 27.04.2026, in Bearbeitung).** `nocturnecodex.com` durch ICANN-60-Tage-Lock blockiert, Transfer nachgezogen sobald Lock abläuft.
 6. **Phase 5 (easyname-Cancellation):** Webhosting + Email-Account bei easyname kündigen, sobald alle Domains migriert
