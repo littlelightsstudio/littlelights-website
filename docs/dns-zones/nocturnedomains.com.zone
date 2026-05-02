@@ -1,0 +1,26 @@
+;; Zone file: nocturnedomains.com
+;; Generated:  2026-04-27 from dig-scan of easyname's live DNS
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; SOA und NS werden von Hetzner automatisch generiert beim Import.
+;; Diese Datei enthält nur die Inhalts-Records die migriert werden.
+
+$ORIGIN nocturnedomains.com.
+$TTL 3600
+
+; ── A / AAAA Records ──────────────────────────────────────────
+@                    IN  A      77.244.243.53
+@                    IN  AAAA   2a01:aee0:0:6::11
+www                  IN  A      77.244.243.53
+mail                 IN  A      77.244.243.53
+webmail              IN  A      77.244.243.53
+ftp                  IN  A      77.244.243.53
+
+; ── Mail Records (easyname Mail) ──────────────────────────────
+@                    IN  MX     10 mx01.easyname.eu.
+@                    IN  MX     10 mx02.easyname.eu.
+@                    IN  TXT    "v=spf1 include:spf.easyname.com -all"
+easyname._domainkey  IN  CNAME  dkim.easyname.com.
+
+; ── Outlook / Mail-Client Autodiscover ────────────────────────
+autodiscover         IN  CNAME  mailconfig.easyname.com.

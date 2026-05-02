@@ -1,0 +1,26 @@
+;; Zone file: littlelights.media
+;; Generated:  2026-04-27 — easyname-Migration mit Cleanup
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; Brand-Schutz-Domain. Leitet via easyname's Subdomain-Tab nach littlelights.studio
+;; weiter (HTTP-Redirect; läuft solange A → 77.244.243.53 zeigt).
+;; Phase-3-Migration auf Coolify-Reverse-Proxy: siehe roadmap.md.
+;;
+;; Cleanup (siehe docs/dns-zones/README.md):
+;;   ENTFERNT: *, autoconfig, autodiscover
+;;   BEHALTEN: A/AAAA root + www, MX/SPF/DKIM (easyname-Default-Mail)
+
+$ORIGIN littlelights.media.
+$TTL 3600
+
+; ── Web (easyname Webspace + Redirect-Layer) ──────────────────
+@                    IN  A      77.244.243.53
+@                    IN  AAAA   2a01:aee0:0:6::11
+www                  IN  A      77.244.243.53
+www                  IN  AAAA   2a01:aee0:0:6::11
+
+; ── Mail Records (easyname Mail) ──────────────────────────────
+@                    IN  MX     10 mx01.easyname.eu.
+@                    IN  MX     10 mx02.easyname.eu.
+@                    IN  TXT    "v=spf1 include:spf.easyname.com -all"
+easyname._domainkey  IN  CNAME  dkim.easyname.com.

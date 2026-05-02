@@ -1,0 +1,29 @@
+;; Zone file: littlelightsstudio.at
+;; Generated:  2026-04-27 — easyname-Migration mit Cleanup
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; Google Workspace Domain. easyname-Webspace-Anteil entfernt (Wildcard raus),
+;; Mail-Stack (Google) ergänzt um DKIM + DMARC.
+;;
+;; Cleanup (siehe docs/dns-zones/README.md):
+;;   ENTFERNT: *
+;;   BEHALTEN: A root + www (verweist auf easyname-Webspace, Subdomain-Tab leer)
+;;   ERGÄNZT:  Google DKIM (google._domainkey), DMARC (_dmarc)
+
+$ORIGIN littlelightsstudio.at.
+$TTL 3600
+
+; ── Web (easyname Webspace, kein Subdomain-Tab) ───────────────
+@                    IN  A      77.244.243.53
+www                  IN  A      77.244.243.53
+
+; ── Mail Records (Google Workspace) ───────────────────────────
+@                    IN  MX     1 smtp.google.com.
+@                    IN  TXT    "google-site-verification=WLLcabbxKJTk_YcqL2KC00AFDxi8KOWpJWAjyn503OM"
+@                    IN  TXT    "v=spf1 include:_spf.google.com ~all"
+
+; Google DKIM (User-geliefert aus Admin Console)
+google._domainkey    IN  TXT    "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoBiHG0Ip9TFakFDOifVmo9lG2zyMA0s34e4k0+CDN/kkkiTRQx/Er4HifWzWB8zpQwPOHmBnHYZynHs0G/MZZNzoaw8sjHVa7zYtnf/1j6RZsefAi7ilsFm427Qbh5SSz6fPoe0vvxlszVUL4nbVwNZVaBLPZfosb9mgsQxEO4iGyiOjH+UJ0t6P+UWYWJ4tUTFZdXbZvugE9eIYJS99Y8xRn0svQVU4V3S7m4OBZAnb2rO7pkIveg5/C57dSvT3dX909792EDtnFjiOWXOrhdg+Kag9EmqmoLocu2rywcm/6AdfB5pXDSvmHRdmaA/G2xdE/5lNRqrBE+lj+Jtu0QIDAQAB"
+
+; DMARC — Monitoring-Modus, Reports an admin@littlelights.studio
+_dmarc               IN  TXT    "v=DMARC1; p=none; rua=mailto:admin@littlelights.studio"

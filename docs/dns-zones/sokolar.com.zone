@@ -1,0 +1,61 @@
+;; Zone file: sokolar.com
+;; Generated:  2026-04-27 — easyname-Migration, KONSERVATIV (alle Subdomains 1:1)
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; KOMPLEXES LEGACY-SETUP. Anders als die anderen Domains hat sokolar.com gewachsene
+;; Strukturen über Jahre — viele aktive Subdomains (HTTP-Redirects + Webspace + Home-Server),
+;; viele Forwarding-Aliases (über easyname-Email-Panel, NICHT in DNS sichtbar).
+;;
+;; Strategie: jetzt 1:1 nach Hetzner damit's dort erfasst ist und der Cutover gemacht
+;; werden kann. Cleanup der Subdomain-Karteileichen ist eine SEPARATE Triage-Session
+;; später — siehe roadmap.md / dns-zones/README.md.
+;;
+;; Aktueller Stand der Subdomains (Stand Triage 27.04.2026):
+;;   easyname-Webspace (77.244.243.39):
+;;     baby           — HTTP-Redirect → nola.matilda.sokolar.com (easyname Subdomain-Tab)
+;;     downloads      — Web space content PHP 8.4 (/sokolar.com/downloads...)
+;;     family         — HTTP-Redirect → home.sokolar.com (easyname Subdomain-Tab)
+;;     nola.matilda   — Web space content PHP 8.4 (/sokolar.com/nola_matilda...)
+;;     photos         — HTTP-Redirect → home.sokolar.com (easyname Subdomain-Tab)
+;;     smarthome      — Web space content PHP 8.4 (/sokolar.com/smarthome...)
+;;     wedding        — Web space content PHP 8.4 (/michaelsokolar.com/p...)
+;;     root + www     — HTTP-Redirects (root → www.sokolar.com, www → www.michaelsokolar...)
+;;   Home-Server (81.217.59.225):
+;;     diskstation    — Direkt-Zugriff
+;;     home           — Direkt-Zugriff
+;;
+;; Email-Forwarding (alle Aliases laufen über easyname-Email-Panel, NICHT in DNS):
+;;   angela, family, home, michael, miso, office, oliver, ulrike, wedding,
+;;   wohnungsverkauf → diverse Gmail-Adressen oder miso@michaelsokolar.com
+;;   elva, nola, smarthome → easyname-interne Slots (10974mail*, KEINE echten Mailboxen)
+;; → Funktioniert weiter solange MX auf mx01/mx02.easyname.eu zeigt.
+;;
+;; Cleanup (siehe docs/dns-zones/README.md):
+;;   ENTFERNT: *.sokolar.com (Wildcard), autoconfig, autodiscover
+;;   BEHALTEN: ALLE anderen Records (konservativ — Cleanup separate Session)
+
+$ORIGIN sokolar.com.
+$TTL 3600
+
+; ── Web (easyname Webspace + Redirect-Layer) ──────────────────
+@                    IN  A      77.244.243.39
+www                  IN  A      77.244.243.39
+
+; ── Subdomains: easyname-Webspace (Redirects + PHP-Inhalte) ──
+baby                 IN  A      77.244.243.39
+downloads            IN  A      77.244.243.39
+family               IN  A      77.244.243.39
+nola.matilda         IN  A      77.244.243.39
+photos               IN  A      77.244.243.39
+smarthome            IN  A      77.244.243.39
+wedding              IN  A      77.244.243.39
+
+; ── Subdomains: Home-Server (Synology / direkt) ──────────────
+diskstation          IN  A      81.217.59.225
+home                 IN  A      81.217.59.225
+
+; ── Mail Records (easyname Mail Forwarding) ──────────────────
+@                    IN  MX     10 mx01.easyname.eu.
+@                    IN  MX     10 mx02.easyname.eu.
+@                    IN  TXT    "v=spf1 include:spf.easyname.com -all"
+easyname._domainkey  IN  CNAME  dkim.easyname.com.

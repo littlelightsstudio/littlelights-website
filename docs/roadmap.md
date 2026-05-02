@@ -1,5 +1,5 @@
 # Little Lights Studio — Rebranding Roadmap
-**Letzte Aktualisierung: 14. April 2026**
+**Letzte Aktualisierung: 2. Mai 2026**
 
 ---
 
@@ -64,36 +64,60 @@ Kernerkenntnisse:
 
 Gelockt:
 - Farbpalette: Navy #0f1b2d + Warm Cream #F7F6F3 + Copper #C8956C
-- Typografie: Satoshi, negative Tracking bei Headlines
+- Typografie: Clash Display (Headings) + Satoshi (Body), negative Tracking bei Headlines
 - Designsprache: Hell als Basis, dunkle Sektionen für Rhythmus, Diagonale als Leitmotiv
 - Homepage MVP: 8 Sektionen mit Sticky Stacking, Footer-Reveal, Lenis + GSAP
 - Three-Split Slider: Diagonale Clips, Copper Divider, Hover-Expansion
 - Methode: Isoliert bauen → testen → integrieren
 
-Nächste Schritte → siehe [3.3 Design Tasks](phase3/3.3_design_tasks.md)
+**Bereits gebaut (Stand Session 7, 02.05.2026):**
+- Hero-Variants: `full` (Homepage, animiert), `landing` (Disziplin-Hubs mit Foto + Triangle), `editorial` (Pages ohne Foto, mit/ohne Triangle), `reduced`
+- Block-Library für Pages.sections: `hero`, `bold-statement`, `text-section` (RichText), `magazine-manifest` (Editorial-Fließtext mit Drop-Cap + Pull-Quote), `team-grid` (4-Col mit Hover-Crossfade), `diagonal-slider`, `projects-grid`, `stats`, `cta`, `testimonials`, `client-logos`
+- Globals: `Header` (Mega-Menu) + `Footer` (5 Spalten mit auto-from-parent + manual-Modi) + `SiteSettings`
+- Wiederverwendbares `FooterReveal`-Pattern für alle dynamischen Pages
+- Erste komplette Sub-Page: **Über Uns** (Hero editorial + Bold + Magazine Manifest + Team Grid)
+- Legal-Pages-Infrastruktur: TextSection mit Lese-Typografie (h2/h3, Listen, Links, Blockquotes)
+
+Nächste Schritte → siehe [3.3 Design Tasks](phase3/3.3_design_tasks.md). Operativ:
+- TeamMembers in Payload befüllen (Photos + Hover-Photos + Socials)
+- Legal-Pages anlegen + Inhalte einsetzen (Drafts liegen vor: Impressum, Datenschutz, AGB)
+- Disziplin-Pages bauen (Drei-Akt-Schema WAS/WIE/WER mit Magazine-Manifest)
+- Mobile-Verifikation aller neuen Patterns
 
 ### Phase 4: Build
-**Ausstehend — nach Design-Abschluss**
+**🔄 In Arbeit — parallel zu Phase 3 Design**
 
-- Payload CMS Setup + Content-Types
-- Next.js 15 Frontend-Entwicklung
-- CMS-Integration aller Design-Komponenten
-- Zweisprachigkeit DE/EN
-- Video-Integration (Vimeo/Bunny.net)
-- Kontaktformular + Calendly (nur R&S/Workshop)
-- SEO-Implementierung (Schema Markup, Sitemap, hreflang, Redirects)
-- GEO-Optimierung
+Bereits abgeschlossen:
+- ✅ Payload CMS Setup + Content-Types (Pages, Projects, Testimonials, TeamMembers, Media, MediaTags, Users) + Globals (Header, Footer, SiteSettings)
+- ✅ Next.js 15 Frontend-Skeleton (`littlelights-build` Repo)
+- ✅ CMS-Integration der meisten Components (siehe Phase 3 Block-Library)
+- ✅ Video-Integration Bunny.net (Hero-Background-Video)
+- ✅ Live-Preview-URLs für Pages und Projects (mit nested-URL-Resolver)
+
+Noch ausstehend:
+- [ ] **Zweisprachigkeit DE/EN** — Localized-Felder sind im Schema vorbereitet, aber Routing/Switcher noch nicht gebaut
+- [ ] **Kontaktformular + Calendly** (nur R&S/Workshop)
+- [ ] **SEO-Implementierung** — SEO-Plugin ist installiert, aber Schema Markup, Sitemap, hreflang, 301-Redirects fehlen
+- [ ] **GEO-Optimierung** für AI-Suche
+- [ ] **Self-Hosting der Schriften** (Satoshi, Clash Display) statt Fontshare-CDN — DSGVO-Vereinfachung (kein externer Verarbeiter), Performance-Gewinn, via `next/font/local` einbinden. Aktuell läuft via api.fontshare.com, ist im Datenschutz erwähnt
+- [ ] **Markdown-Auto-Conversion im Lexical-Editor** (`MarkdownTransformersFeature`) — komfortabel für künftige Content-Edits, aktuell muss manuell im Editor formatiert werden
 
 ### Phase 5: Content
-**Ausstehend — parallel zu Build**
+**🔄 Teilweise in Arbeit — parallel zu Build**
 
-- Finaler Copytext (auf Basis der Messaging-Architektur)
-- 5 Full Case Studies einpflegen
-- 10-15 Minimal-Ansicht Projekte
-- Testimonials einholen und einpflegen
-- Team-Fotos und Bios
-- Bildmaterial und Video-Embeds
-- Kundenlogos (SVG, farblich angepasst)
+Bereits abgeschlossen:
+- ✅ **Über Uns** Texte (Bold Statement, Magazine Manifest, Team Grid)
+- ✅ **Legal-Drafts** (Impressum, Datenschutz, AGB) — paste-ready, Anwalt-Review noch offen
+- ✅ **Projektdatenbank**: 39 Projekte importiert (Session 5)
+
+Noch ausstehend:
+- [ ] **Finaler Copytext** für Disziplin-Seiten (Agency, R&S, Creative Studio) auf Basis der Messaging-Architektur
+- [ ] **5 Full Case Studies** einpflegen (aktuell: Helena Flinn Chronicles + I am Progress angelegt)
+- [ ] **10-15 Minimal-Ansicht Projekte**
+- [ ] **Testimonials einholen** und einpflegen (Block fertig seit Session 3, Filter `filterByArea` + `onlyFeatured` gebaut)
+- [ ] **Team-Fotos** (Default + Hover-Variante) + Bios + Socials in CMS
+- [ ] Bildmaterial und Video-Embeds
+- [ ] Kundenlogos (SVG, farblich angepasst)
 
 ### Phase 6: Launch
 **Ausstehend**
@@ -145,30 +169,46 @@ Detail-Docs: [`infrastructure.md`](infrastructure.md) (Server), [`domain-migrati
 - ✅ Coolify als Hosting-Layer, Auto-Deploy aus GitHub
 - [ ] `coolify.littlelights.studio` Subdomain einrichten (aktuell nur IP:8000)
 
-### DNS-Migration easyname → Hetzner DNS (🔄 in Arbeit)
+### DNS-Migration easyname → Hetzner DNS (🔄 in Arbeit, Großteil durch)
 21 Domains. Strategie: erst alle Hetzner-Zonen aufbauen + verifizieren, dann kontrollierter Cutover Domain-für-Domain.
 
-- ✅ Pilot `nocturnedomains.com` in Hetzner importiert + verifiziert
+**Stand 02.05.2026 — abgeschlossen:**
+- ✅ Pilot `nocturnedomains.com` + `nocturnecodex.com` (Cutover 27.04.)
 - ✅ Cleanup-Konventionen etabliert ([`dns-zones/README.md`](dns-zones/README.md))
 - ✅ Triage-Runde abgeschlossen ([`dns-zones/triage.md`](dns-zones/triage.md))
-- ✅ DKIM-Werte für alle 4 Google-Workspace-Domains aus Google Admin Console gesammelt
-- ✅ **Alle 21 Zone-Files generiert** (inkl. Cleanup, DKIM, DMARC, Cross-Domain-Auth)
-- ✅ **Alle 21 Zonen in Hetzner DNS importiert** (Stand 27.04.2026, Record-Counts verifiziert)
-- ✅ **Erster Cutover erfolgt:** `nocturnecodex.com` NS bei easyname auf Hetzner umgestellt (27.04.2026)
-- 🤖 **Verifikations-Routine geplant:** 2026-04-29 10:00 — Zone-Integrity + NS-Propagation aller 21 Domains ([Routine](https://claude.ai/code/routines/trig_016uJCBYvToVXiTvJauiSigs))
-- [ ] Cutover-Phase fortsetzen: Domain für Domain NS umstellen (Bulk-Brand-Schutz zuerst, `littlelights.studio` zuletzt)
-- [ ] sokolar.com Subdomain-Cleanup-Session (separate Triage, optional vor oder nach Cutover)
+- ✅ DKIM-Werte für alle 4 Google-Workspace-Domains gesammelt
+- ✅ Alle 21 Zone-Files generiert (Cleanup, DKIM, DMARC, Cross-Domain-Auth)
+- ✅ Alle 21 Zonen in Hetzner DNS importiert
+- ✅ **Pilot-Cutover littlelights.studio** mit Mail-Smoke-Test + DKIM Start Authentication in Google Admin
+- ✅ **4 Brand-Schutz-Domains NS umgezogen:** littlelights.agency, littlelights.at, littlelights.media, littlelights.productions
+- ✅ **michaelsokolar.at** NS umgezogen (Brand-Schutz-Redirect)
+- ✅ **helenaflinn-chronicles.com** NS umgezogen (Brand-Schutz-Redirect)
+- ✅ **ferienwohnung-mistelbach.at** NS umgezogen + Coolify-App live (Express-Server, replaced WordPress)
+- ✅ **michaelsokolar.com** NS umgezogen + Coolify-App live (Static Site nginx:alpine, GitHub Pages → Coolify) + Mail-Smoke-Test + DKIM
+- ✅ **Workspace-Domains littlelightsstudio.com** NS umgezogen + Mail-Smoke-Test + DKIM
+- 🔄 **littlelightsstudio.at** NS gesetzt, Propagation hinkt (NIC.AT registry-langsam) — Mail-Smoke + DKIM nach Propagation
 
-### WordPress-Migration ferienwohnung-mistelbach.at (⏳ ausstehend)
-Aktive WordPress-Installation auf easyname-Webspace. **Eigenes Projekt**, getrennt von DNS-Migration. DNS migriert: A-Record bleibt erst auf `77.244.243.53` damit WordPress weiterläuft.
+**Noch ausstehend:**
+- [ ] **helenaflinn.com** — wartet auf Promotion-Ende. Nach Promotion: Hetzner-Zone-Update (GitHub-Pages-IPs → Coolify), NS-Switch, Mail-Smoke
+- [ ] **sokolar.at + sokolar.com** — separate Session (Mail-Forwarding-Setup ist komplex, anderer easyname-Account, sokolar.com hat Legacy-Subdomains)
 
-- [ ] Neuen Host wählen (Hetzner Webspace? Coolify mit WP-Container?)
-- [ ] Files + MySQL-DB exportieren und auf neuem Host aufsetzen
-- [ ] DNS-A-Record umlenken
-- [ ] easyname-Webspace für diese Domain abkündigen
+**Drops (NICHT migriert, laufen bei easyname aus):** brand-film.agency, brandfilm.agency, littlelights.pub, littlelights-studio.at, littlelights-studio.com — strategisch nicht mehr relevant, kein Renewal/Transfer.
 
-### Phase 3: easyname-Redirects auf Coolify migrieren (⏳ ausstehend)
+### Registrar-Transfer easyname → Hetzner (🔄 in Arbeit)
+- ✅ **littlelights.studio** Auth-Code geholt + Transfer bei Hetzner konsoleH eingereicht (mit 3 Hetzner-NS in Advanced Options, nahtloser DNS-Transfer). Wartet auf ICANN-Bestätigungsmail + Tucows→Hetzner-Handoff (~5-7 Tage)
+- 🤖 Cloud-Agent geplant für 2026-05-03 15:00 CEST: Transfer-Status-Check + .at-Propagation + DKIM-Records ([Routine](https://claude.ai/code/routines/trig_01NRDn4BTEvCh8hndBoAeeBz))
+- [ ] **7 weitere fertig migrierte Domains**: 4× brand-domains + michaelsokolar.at + michaelsokolar.com + helenaflinn-chronicles.com + ferienwohnung-mistelbach.at — Auth-Code holen + Transfer-Lock entfernen + via konsoleH einreichen
+- [ ] **Workspace-Domains-Transfer** (littlelightsstudio.at, .com, michaelsokolar.com hat schon Transfer eingereicht — siehe oben) — beide bezahlt bis Februar 2027 bei easyname, Transfer optional bis dahin
+
+### ~~WordPress-Migration ferienwohnung-mistelbach.at~~ ✅ erledigt (02.05.2026)
+Statt WordPress-Migration: Site komplett auf statisches Express-Setup umgestellt + auf Coolify deployed. Repo: `littlelightsstudio/ferienwohnung-mistelbach`. Hetzner-DNS-A-Record auf 46.224.59.56 (Coolify) umgelenkt, NS-Switch durchgeführt, 200 OK verifiziert. easyname-Webspace für diese Domain kann gekündigt werden.
+
+⚠️ Browser-Cache-Verdacht beim ersten Besuch nach DNS-Switch: lokaler Cache zeigt teilweise noch alte WordPress-Site, neue Site lädt korrekt via curl/Inkognito. Folge-Session: DNS-Cache-Flush + alternative Devices testen.
+
+### Phase 3: easyname-Redirects auf Coolify migrieren (⏳ ausstehend, kritisch vor Webspace-Kündigung)
 Voraussetzung für vollständige easyname-Ablösung. Hintergrund: DNS macht keine HTTP-Redirects, easyname's Webserver macht das aktuell noch. Ziel: eigener Caddy-Container in Coolify übernimmt.
+
+**Stand:** Alle Brand-Schutz-Domains haben NS auf Hetzner umgezogen, A-Records zeigen aber weiterhin auf `77.244.243.53` (easyname-Webspace). Solange easyname-Webspace bezahlt ist, laufen die HTTP-Redirects dort. **Bei Webspace-Kündigung müssen die Redirects in Coolify (Caddy) laufen, sonst brechen Brand-Schutz-Pfade.**
 
 **Architektur-Entscheidung (28.04.2026):** Redirects werden über ein eigenes Repo `littlelights-redirects` mit einer Caddyfile verwaltet, NICHT als Traefik-Labels in einzelnen Coolify-Apps. Begründung: alle Redirects in einer deklarativen Datei = lesbar, review-bar, von Admin in Sekunden änderbar. Caddy holt SSL eigenständig, Coolify deployt automatisch beim Push.
 
@@ -196,9 +236,30 @@ Voraussetzung für vollständige easyname-Ablösung. Hintergrund: DNS macht kein
 
 - Details: [`dns-zones/triage.md` Block L](dns-zones/triage.md#l-vermerk-phase-3--easyname-redirects-auf-coolify-migrieren)
 
-### Phase 4: easyname-Registrar-Transfer + Hosting-Kündigung (⏳ ausstehend)
-- [ ] Phase 2 der Domain-Migration: Registrar-Transfer easyname → Hetzner Domains (siehe domain-migration.md)
-- [ ] easyname-Webhosting kündigen (erst nach WordPress-Migration + Redirect-Migration)
+### Phase 4: easyname-Registrar-Transfer + Hosting-Kündigung (🔄 in Arbeit)
+- 🔄 **Registrar-Transfer Wave** läuft: littlelights.studio bei Hetzner eingereicht (siehe oben unter Stream 4 → Registrar-Transfer). 7 weitere Domains warten auf Auth-Code-Run.
+- [ ] **easyname-Webhosting-Kündigung** — erst möglich nach: (a) Caddy-Redirect-Container in Coolify live, (b) helenaflinn.com auf Coolify migriert. Aktuell ist `77.244.243.53` (easyname-Webspace) noch der Redirect-Server für 6 Brand-Schutz-Domains.
+
+---
+
+## Offene Konzept-Fragen / Backlog
+
+### Hauptmenü-Untermenü-Strategie (Mega-Menü)
+**Status:** Konzept-Phase, Design noch nicht entschieden.
+
+**Problem:** Sub-Bereiche (Employer Branding, Imagefilm, Werbespot, Branded Entertainment, Sustainability, Brand Documentary) sind aktuell nur via Footer erreichbar. EB ist einer der wichtigsten Bereiche und muss prominenter im Hauptmenü vertreten sein, ohne dass die Top-Level-Nav überladen wird.
+
+**Diskutierte Richtung (28.04.):** Editorial Mega-Menü als Drawer — auf Hover/Click "Agency" öffnet ein full-width Dropdown mit Sub-Bereich-Liste links und dynamischem Visual rechts (das auf Hover des Sub-Items wechselt).
+
+**Offene Fragen:**
+- Reels & Stories — sollte das auch ein Mega-Menü bekommen? (Methodik / Showcase / Stories?) Oder bleibt Single-Link?
+- Creative Studio — gleiche Frage, plus Sub-Struktur ist noch nicht definiert.
+- Mobile — auf Touch-Devices wird das vermutlich ein simpleres Hamburger-Slide-In-Menü mit Accordion-Logik für die Sub-Bereiche. Konzept getrennt durchdenken.
+- Hover vs Click — auf Desktop: Hover öffnet, Click navigiert zur Hub-Seite? Oder Click pflicht?
+
+**Aufwand:** ~1h für Mega-Menü-Komponente (Desktop), zusätzliche ~1h für Mobile-Variante.
+
+**Backend-Editierbarkeit (späterer Schritt):** Sub-Bereiche, Reihenfolge, Bilder pro Sub-Bereich und ggf. DE/EN-Labels sollen über das CMS editierbar sein. Mögliche Implementierung: Payload-Global "Navigation" mit Array-Field pro Bereich, jedes Item mit `slug`, `label`, `description`, `image` (Media-Relation). Aktuell hardcoded für Prototyp, vor Production-Launch ins CMS migrieren.
 
 ---
 
@@ -214,10 +275,10 @@ Voraussetzung für vollständige easyname-Ablösung. Hintergrund: DNS macht kein
 - Zusammenarbeit (Agenturpartner)
 
 ### Pflichtseiten
-- Impressum
-- AGB
-- Datenschutzerklärung
-- Cookie-Richtlinie (falls benötigt — bei Umami ggf. nicht nötig)
+- ✅ Impressum (in Payload angelegt + befüllt, 02.05.2026)
+- ✅ AGB (in Payload angelegt + befüllt, 02.05.2026, FAMA-referenced)
+- ✅ Datenschutzerklärung (in Payload angelegt + befüllt, 02.05.2026)
+- ~~Cookie-Richtlinie~~ — entfällt: mit Umami (cookieless) + keinem Tracking ohne Einwilligung ist kein eigener Cookie-Banner / -Page nötig. Der Hinweis in der Datenschutzerklärung reicht.
 
 ---
 
@@ -244,3 +305,8 @@ Voraussetzung für vollständige easyname-Ablösung. Hintergrund: DNS macht kein
 | 14.04. | Bereichs-Farbschemen geplant | Agency / R&S / Creative Studio mit eigenem Farbton |
 | 14.04. | "Drei Disziplinen. Eine Handschrift." | Tagline gelockt (ersetzt "Drei Bereiche") |
 | 28.04. | Redirects via Caddy-Container in Coolify, eigenes Repo `littlelights-redirects` | Eine Caddyfile als Source of Truth für alle Brand-Schutz-Redirects, statt verstreute Traefik-Labels in einzelnen Apps. Lesbar, review-bar, in 5 Min pro neuer Domain erweiterbar. |
+| 02.05. | Brand-Schutz "Für Agenturen" Page raus | Keine Agentur sucht das. Die Botschaft kommt durch Über Uns + Agency + R&S, braucht keine eigene Landing. Footer-Spalte "Über Uns" hat jetzt nur noch "Über Uns" + "Projekte". |
+| 02.05. | AGB als FAMA-Ergänzung statt eigenständig | FAMA-AGB des Fachverbands der Film- und Musikwirtschaft Österreichs (Stand 1.1.2026) als Grundlage. Eigene AGB regulieren nur 2 Abweichungen: Feedback-Loops (2 statt 1 pro Phase) und Wettertage (50% Crew-Kompensation). FAMA-Stornogebühren übernommen. |
+| 02.05. | Umami statt Google Analytics | Cookieless, DSGVO-konform out-of-the-box, self-hosted oder EU-Cloud. Keine Einwilligungspflicht, kein Cookie-Banner nötig. |
+| 02.05. | Mailchimp → MailerLite | Newsletter-Stack umgestellt. EU-basiert (Litauen). |
+| 02.05. | sokolar.com bleibt vorerst auf easyname-Registrar | Domains bezahlt bis Februar 2027. Mail-Forwarding-Setup ist komplex (anderer easyname-Account). Transfer optional bis Vertragsende. |

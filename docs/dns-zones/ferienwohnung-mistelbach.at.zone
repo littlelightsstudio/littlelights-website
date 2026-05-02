@@ -1,0 +1,21 @@
+;; Zone file: ferienwohnung-mistelbach.at
+;; Generated:  2026-04-27 — easyname-Migration mit Cleanup
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; SONDERFALL: Aktive WordPress-Installation auf easyname-Webspace ("Web space content PHP 8.4").
+;; A-Record bleibt auf easyname-IP damit WordPress unverändert weiterläuft.
+;; WordPress-Migration (Files + DB auf neuen Host) ist eigenes Projekt — siehe roadmap.md.
+;;
+;; User-Entscheidung (triage.md B.3): keine Mails für diese Domain → MX/SPF/DKIM entfernt.
+;;
+;; Cleanup:
+;;   ENTFERNT: *, autoconfig, autodiscover, MX, SPF-TXT, easyname._domainkey
+;;   BEHALTEN: A root + www (WordPress läuft auf easyname-Webspace)
+;;   Hinweis: Domain hat keine AAAA-Records bei easyname.
+
+$ORIGIN ferienwohnung-mistelbach.at.
+$TTL 3600
+
+; ── Web (easyname Webspace, WordPress) ───────────────────────
+@                    IN  A      77.244.243.53
+www                  IN  A      77.244.243.53

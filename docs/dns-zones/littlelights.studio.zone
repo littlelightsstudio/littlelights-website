@@ -1,0 +1,73 @@
+;; Zone file: littlelights.studio
+;; Generated:  2026-04-27 — easyname-Migration mit Cleanup + User-Triage
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; GESCHÄFTSKRITISCHE Zone. Mehrere Layer:
+;;   - Google Workspace (Mail)
+;;   - Microsoft 365 Spuren (TXT-Verification + ms._domainkey DKIM, User: lassen wir mal so)
+;;   - Webseite läuft aktuell auf altem Webhost 188.40.29.55 bis Relaunch
+;;   - tools.* auf Hetzner-Coolify (Production-Server 46.224.59.56)
+;;   - Home-Server 81.223.179.78 für backup/studio/surveillance/vpn
+;;   - easyname-Webspace für media (PHP) + publishing (Redirect)
+;;   - Google-CNAME-Subdomains für gcal/gdrive/groups/mail (Workspace Short-URLs)
+;;
+;; User-Triage (siehe triage.md E.1-E.9):
+;;   ENTFERNT: * (Wildcard, alle echten Subdomains explizit definiert)
+;;   BEHALTEN: alles andere 1:1
+;;   ERGÄNZT:  Google DKIM (google._domainkey), DMARC (_dmarc)
+;;
+;; HINWEIS: Beim Cutover dieser Domain VORHER nochmal verifizieren dass
+;; der DKIM-Wert noch aktuell ist (Google-Admin-Konsole kann ihn rotieren).
+
+$ORIGIN littlelights.studio.
+$TTL 3600
+
+; ── Web (alter Webhost, bis Relaunch) ─────────────────────────
+@                    IN  A      188.40.29.55
+www                  IN  A      188.40.29.55
+
+; ── Subdomains: easyname-Webspace ─────────────────────────────
+media                IN  A      77.244.243.53
+publishing           IN  A      77.244.243.53
+publishing           IN  AAAA   2a01:aee0:0:6::11
+
+; ── Subdomains: Home-Server ───────────────────────────────────
+backup               IN  A      81.223.179.78
+studio               IN  A      81.223.179.78
+surveillance         IN  A      81.223.179.78
+vpn                  IN  A      81.223.179.78
+
+; ── Subdomains: Hetzner Coolify (Production) ──────────────────
+tools                IN  A      46.224.59.56
+tools                IN  AAAA   2a01:4f8:1c18:e9d1::1
+coolify              IN  A      46.224.59.56
+coolify              IN  AAAA   2a01:4f8:1c18:e9d1::1
+
+; ── Subdomains: Google Workspace Short-URLs ───────────────────
+gcal                 IN  CNAME  ghs.googlehosted.com.
+gdrive               IN  CNAME  ghs.googlehosted.com.
+groups               IN  CNAME  ghs.googlehosted.com.
+mail                 IN  CNAME  ghs.googlehosted.com.
+
+; ── Mail Records (Google Workspace) ───────────────────────────
+@                    IN  MX     1 smtp.google.com.
+@                    IN  TXT    "v=spf1 include:_spf.google.com ~all"
+@                    IN  TXT    "google-site-verification=5YQ7CN49MlzewVuAGgERHnH7CUATxKeiTQQrAp-xKYU"
+@                    IN  TXT    "google-site-verification=pZ2oF9aqDNa5LHOA10CBUHJKMb3WYvQQuMoQ1A_wmnE"
+
+; ── Microsoft 365 Spuren (User: belassen — Verwendung unklar) ─
+@                    IN  TXT    "MS=ms33161861"
+ms._domainkey        IN  TXT    "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCaR1AGYi0GxjwaYeaaxQbhtL+CXR7pYJSMkjgs6vhE4qtaARRa+3X/PLaERxeFOppPfKsqDeuXHIs/8npDFNkeyeGnk00NKud/+g7P76ScYIFCu10aHNtO6gVl2L629oZMG5I6UMeXcWbDyYHtHMQd21giF2uFS5eCUV5zP73CtwIDAQAB"
+
+; ── Google DKIM (User-geliefert aus Admin Console) ────────────
+google._domainkey    IN  TXT    "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4GWzBwvEhTH0JsQKiyq5UYwd9xI1+oRLiA2actNNCQ91zOypyiZN83nBEhTJx1sEkHPEaAzZP4t5eEyZxMolj2NrOaXfgeAGhog52f2Xfp6Kzj6TlKAtb5PFm2ntpd3BUUlv1vMkii7kF0Z/tyESOsMW6v8AFQUj60YPtOrdSSysNumGPt1iOn0QvHptSzlRM3smciozD/3FZ9mFW8JdjwsUQaBehBsBQ0GtJM6EY67l7rnUfF22fS34SliDDLyLu0Ai4+BRP+tWbfzlPPz0lk6HYmEBzpo175Jgf+anldVWUC7Apy4+Hpg0TzlfNe1uTcALFO1XJNAvSlFMVnwH7QIDAQAB"
+
+; ── DMARC — Monitoring-Modus für littlelights.studio ──────────
+_dmarc               IN  TXT    "v=DMARC1; p=none; rua=mailto:admin@littlelights.studio"
+
+; ── Cross-domain DMARC-Reports-Authorisation ──────────────────
+;; Erlaubt DMARC-Reports der anderen Workspace-Domains an admin@littlelights.studio
+;; (RFC 7489 §7.1: rua-Mailbox auf anderer Domain → Authorisation-TXT nötig)
+michaelsokolar.com._report._dmarc       IN  TXT  "v=DMARC1"
+littlelightsstudio.at._report._dmarc    IN  TXT  "v=DMARC1"
+littlelightsstudio.com._report._dmarc   IN  TXT  "v=DMARC1"

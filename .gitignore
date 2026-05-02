@@ -3,3 +3,11 @@ prototype/_archive/
 tmp/
 node_modules/
 .agents/
+
+# Local-only (Claude config, skills state)
+.claude/
+skills-lock.json
+
+# Asset-Storage (lokal verwaltet, läuft übers Backend)
+images/
+videos/

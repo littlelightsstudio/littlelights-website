@@ -1,0 +1,36 @@
+;; Zone file: michaelsokolar.com
+;; Generated:  2026-04-27 — easyname-Migration, 1:1 + DKIM/DMARC ergänzt
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; Setup:
+;;   - Google Workspace (Mail über smtp.google.com, neuer 1-MX-Stil)
+;;   - GitHub Pages für Website (User: littlelightsstudio)
+;;   - MailerLite für Newsletter (DKIM via litesrv-Selector)
+;;
+;; Records 1:1 von easyname übernommen, plus zwei Ergänzungen:
+;;   + Google DKIM (`google._domainkey`) — vom User aus Google Admin Console geliefert
+;;   + DMARC (`_dmarc`) — Standard-Policy "p=none" (Monitoring-Modus, kein Risiko)
+
+$ORIGIN michaelsokolar.com.
+$TTL 3600
+
+; ── Web (GitHub Pages) ────────────────────────────────────────
+@                    IN  A      185.199.108.153
+@                    IN  A      185.199.109.153
+@                    IN  A      185.199.110.153
+@                    IN  A      185.199.111.153
+www                  IN  CNAME  littlelightsstudio.github.io.
+
+; ── Mail Records (Google Workspace + MailerLite) ──────────────
+@                    IN  MX     1 smtp.google.com.
+@                    IN  TXT    "google-site-verification=fKNdo9iA6z1GpJOL7tqt5IZ2ZlCsEDhoMuWfxc5W_Ww"
+@                    IN  TXT    "v=spf1 include:_spf.mlsend.com include:_spf.google.com ~all"
+
+; Google DKIM (User-geliefert aus Admin Console)
+google._domainkey    IN  TXT    "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx+pLQYtRaBZ5iVZBME0YR2tNl9323C4uB82QnP974G7+HrE6IzhhUadWUoll4fzKYvVXv/z2dN+yQqoc8lZo0uH3ELL6km6rAa/Jd1uiYGSwXfCKXPFI41RyWmSZtewbHKmqyLa8olwLLSMCQnPSzYq37l09C14K/JKw+axIpBtvi2wid5OUhl7Sf9lsRN6s+Y74qtZvPILl1t9BhkT1zgSrl2AExKLVd1CYR6UaX6J4XVlo3eXFY6v1CHB6h6ER/mYSvvPlHpmck3u6uAl638OzyRBtfpFW9G2csBEpB0cZgM5ySeIG6ZSSGcgszXv4HggE6BKDEFCvVghWLdJ4IwIDAQAB"
+
+; MailerLite DKIM
+litesrv._domainkey   IN  CNAME  litesrv._domainkey.mlsend.com.
+
+; DMARC — Monitoring-Modus, Reports an admin@littlelights.studio
+_dmarc               IN  TXT    "v=DMARC1; p=none; rua=mailto:admin@littlelights.studio"

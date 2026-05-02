@@ -1,0 +1,23 @@
+;; Zone file: sokolar.at
+;; Generated:  2026-04-27 — easyname-Migration mit Cleanup
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; Cleanup-Entscheidungen (siehe docs/dns-zones/README.md):
+;;   ENTFERNT: *.sokolar.at (Wildcard)
+;;   ENTFERNT: autoconfig.sokolar.at (Thunderbird-Konfig, ungenutzt)
+;;   ENTFERNT: autodiscover.sokolar.at (Outlook-Konfig, ungenutzt)
+;;   BEHALTEN: A root + www (easyname-Hosting bleibt sichtbar)
+;;   BEHALTEN: MX/SPF/DKIM (Mail-Forwarding läuft über easyname)
+
+$ORIGIN sokolar.at.
+$TTL 3600
+
+; ── Web ──────────────────────────────────────────────────────
+@                    IN  A      77.244.243.39
+www                  IN  A      77.244.243.39
+
+; ── Mail Records (easyname Mail Forwarding) ──────────────────
+@                    IN  MX     10 mx01.easyname.eu.
+@                    IN  MX     10 mx02.easyname.eu.
+@                    IN  TXT    "v=spf1 include:spf.easyname.com -all"
+easyname._domainkey  IN  CNAME  dkim.easyname.com.

@@ -1,0 +1,26 @@
+;; Zone file: helenaflinn.com
+;; Generated:  2026-04-27 — easyname-Migration mit Cleanup
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; Buch-Marke "Helena Flinn". Website läuft via GitHub Pages (User: littlelightsstudio),
+;; Mail läuft über easyname (Autoren-Mail-Setup). Beides bleibt 1:1 erhalten.
+;;
+;; Cleanup:
+;;   ENTFERNT: autoconfig, autodiscover (kein Wildcard vorhanden, nichts weiter zu tun)
+;;   BEHALTEN: 4× A für GitHub Pages, www CNAME, MX/SPF/DKIM (easyname-Default-Mail)
+
+$ORIGIN helenaflinn.com.
+$TTL 3600
+
+; ── Web (GitHub Pages) ────────────────────────────────────────
+@                    IN  A      185.199.108.153
+@                    IN  A      185.199.109.153
+@                    IN  A      185.199.110.153
+@                    IN  A      185.199.111.153
+www                  IN  CNAME  littlelightsstudio.github.io.
+
+; ── Mail Records (easyname Mail) ──────────────────────────────
+@                    IN  MX     10 mx01.easyname.eu.
+@                    IN  MX     10 mx02.easyname.eu.
+@                    IN  TXT    "v=spf1 include:spf.easyname.com -all"
+easyname._domainkey  IN  CNAME  dkim.easyname.com.

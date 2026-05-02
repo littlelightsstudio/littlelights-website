@@ -1,0 +1,39 @@
+;; Zone file: littlelightsstudio.com
+;; Generated:  2026-04-27 — easyname-Migration mit Cleanup + User-Triage
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; Google Workspace Domain mit historisch gewachsenen Subdomains.
+;; User-Triage (siehe triage.md F.1-F.5):
+;;   ENTFERNT: *, branded, cloud, married, sandbox
+;;   BEHALTEN: A root + www, dev, media, backup, studio, surveillance
+;;   ERGÄNZT:  Google DKIM, DMARC
+;;
+;; Cleanup-Regeln zusätzlich:
+;;   ENTFERNT: autoconfig/autodiscover (waren nicht in den DNS-Records, easyname-Domains-Standard)
+
+$ORIGIN littlelightsstudio.com.
+$TTL 3600
+
+; ── Web (easyname Webspace) ───────────────────────────────────
+@                    IN  A      77.244.243.53
+www                  IN  A      77.244.243.53
+
+; ── Subdomains: easyname-Webspace (PHP / Redirects) ───────────
+dev                  IN  A      77.244.243.53
+media                IN  A      77.244.243.53
+
+; ── Subdomains: Home-Server ──────────────────────────────────
+backup               IN  A      81.223.179.78
+studio               IN  A      81.223.179.78
+surveillance         IN  A      81.223.179.78
+
+; ── Mail Records (Google Workspace) ───────────────────────────
+@                    IN  MX     1 smtp.google.com.
+@                    IN  TXT    "google-site-verification=hAM4NSsw50lTVATsMZWe56sv8aHcGMjQ3hAU0NbPciw"
+@                    IN  TXT    "v=spf1 include:_spf.google.com ~all"
+
+; Google DKIM (User-geliefert aus Admin Console)
+google._domainkey    IN  TXT    "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApU7cLCFKyCyuCsjYRYmu3ZyzASLk4078x0fUSjSSTqJwKB+KqmaeTYQGCFLG7Fpfmbo3D942r2AnwXDE7moS34ov746hLxzxrjinQ5GliK0/dvW2qJyqLwaqajEWddWRtoWuWcr4jknwAzX7fZvkgJHYQ34K83XTOBdPwkdWd1njo0tbnvvHzHgclceDa4TLsNZr3FX8ybkBRrYGKfwEEvM6gGd1arOKQpARD8BFLqnzSxuW5KffuTTzGBFBbtMJQprnnn9Sd2edgFKHvskMKIHTuDE2eJZS3fRf2wbjtvx1cJstsIEoybL9Y7UUbNPn6WQTyIjuj0eVlSckhol/xQIDAQAB"
+
+; DMARC — Monitoring-Modus, Reports an admin@littlelights.studio
+_dmarc               IN  TXT    "v=DMARC1; p=none; rua=mailto:admin@littlelights.studio"

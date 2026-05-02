@@ -1,0 +1,23 @@
+;; Zone file: nocturnecodex.com
+;; Generated:  2026-04-27 — easyname-Migration mit Cleanup
+;; Target:     Hetzner Cloud Console → DNS → Add DNS zone → Import zone file
+;;
+;; Helena-World-Reserve-Domain. Aktuell ungenutzt, easyname-Default-Setup.
+;; Cleanup (siehe docs/dns-zones/README.md):
+;;   ENTFERNT: *, autoconfig, autodiscover
+;;   BEHALTEN: A/AAAA root + www, MX/SPF/DKIM (easyname-Default-Mail)
+
+$ORIGIN nocturnecodex.com.
+$TTL 3600
+
+; ── Web ──────────────────────────────────────────────────────
+@                    IN  A      77.244.243.53
+@                    IN  AAAA   2a01:aee0:0:6::11
+www                  IN  A      77.244.243.53
+www                  IN  AAAA   2a01:aee0:0:6::11
+
+; ── Mail Records (easyname Mail) ──────────────────────────────
+@                    IN  MX     10 mx01.easyname.eu.
+@                    IN  MX     10 mx02.easyname.eu.
+@                    IN  TXT    "v=spf1 include:spf.easyname.com -all"
+easyname._domainkey  IN  CNAME  dkim.easyname.com.
