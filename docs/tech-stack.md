@@ -117,6 +117,7 @@ Eigenes Mini-Repo für team-interne Web-Tools. Live unter [tools.littlelights.st
 | **MailerLite** | Newsletter-Versand (michaelsokolar.com) | ✅ | DKIM via `litesrv._domainkey` |
 | **Google Search Console** | SEO-Monitoring | ⏳ | Setup in Phase 6 Launch |
 | **Calendly** | Booking (R&S / Workshop) | ⏳ | Wird in Phase 4 Build integriert |
+| **Resend** | Transaktionale Mails (Kontaktformular-Submits) | ⏳ | Phase 4 Build, gratis bis 3k/Monat, API-Route `/api/contact` versendet an studio@littlelights.studio |
 
 ## 10. Video & Media
 

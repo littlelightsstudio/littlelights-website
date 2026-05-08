@@ -1,5 +1,5 @@
 # Little Lights Studio — Rebranding Roadmap
-**Letzte Aktualisierung: 2. Mai 2026**
+**Letzte Aktualisierung: 8. Mai 2026 (Session 16: Filme-Sub-Page → alle Landing-Pages inhaltlich gelockt)**
 
 ---
 
@@ -61,6 +61,9 @@ Kernerkenntnisse:
 | [3.1 Design Status](phase3/3.1_design_status.md) | ✅ Gelockt |
 | [3.2 Tech Stack](phase3/3.2_tech_stack.md) | ✅ |
 | [3.3 Design Tasks](phase3/3.3_design_tasks.md) | 🔄 In Arbeit |
+| [3.4 Disziplin-Pages Skeleton](phase3/3.4_disziplin_pages.md) | ✅ Gelockt |
+| [3.5 Reels & Stories Hub + Sub-Pages](phase3/3.5_reels_stories.md) | ✅ Hub + Workshop + Content-Production live (Session 14) |
+| [3.6 Creative Studio Hub + Sub-Pages](phase3/3.6_creative_studio.md) | ✅ Hub + Publishing + Filme gelockt (Session 15-16) |
 
 Gelockt:
 - Farbpalette: Navy #0f1b2d + Warm Cream #F7F6F3 + Copper #C8956C
@@ -70,18 +73,23 @@ Gelockt:
 - Three-Split Slider: Diagonale Clips, Copper Divider, Hover-Expansion
 - Methode: Isoliert bauen → testen → integrieren
 
-**Bereits gebaut (Stand Session 7, 02.05.2026):**
-- Hero-Variants: `full` (Homepage, animiert), `landing` (Disziplin-Hubs mit Foto + Triangle), `editorial` (Pages ohne Foto, mit/ohne Triangle), `reduced`
-- Block-Library für Pages.sections: `hero`, `bold-statement`, `text-section` (RichText), `magazine-manifest` (Editorial-Fließtext mit Drop-Cap + Pull-Quote), `team-grid` (4-Col mit Hover-Crossfade), `diagonal-slider`, `projects-grid`, `stats`, `cta`, `testimonials`, `client-logos`
+**Bereits gebaut (Stand Session 14, 07.05.2026):**
+- Hero-Variants: `full` (Homepage, animiert), `landing` (Disziplin-Hubs mit Foto + Triangle), `editorial` (Pages ohne Foto, mit/ohne Triangle), `reduced`. **Triangle-Proportionen großzügiger** (Session 14): width clamp(290px, 36vw, 580px), height clamp(140px, 16vw, 260px). Page-Title Font-Size cap clamp(1.25rem, 1.6vw, 1.55rem) für längere Page-Namen.
+- Block-Library für Pages.sections: `hero`, `bold-statement`, `text-section`, `magazine-manifest` (**Small-Caps Lead-In statt Drop-Cap** seit Session 14, Field-Rename `dropCap` → `smallCapsLeadIn`), `team-grid`, `diagonal-slider`, `projects-grid`, `stats`, `faq`, `cta`, `testimonials`, `client-logos` (**Cream-Tint-Default + Hover-Color-Reveal** seit Session 14), `problem-statement`, `services-grid`, `partnership-block`, **`dual-path`** (Session 14: zwei Spalten mit Roman-Marken + Small-Caps Lead-In, Pull-Quote unten), **`framework-3x3`** (Session 14: 3 Säulen × 3 Formate Methodik-Matrix mit Selfmade/Premium/Beides Badges, formats-Array auf 0-3 flexibel), **`pricing-tiers`** (Session 14: 1-3 Tiers, Featured-Highlight, „Punkte"-Liste statt „Inklusiv-Liste"), **`process-timeline`** (Session 14: 3-7 Steps horizontal mit Disziplin-Pfeilen, optional Loop-Indicator für zyklische Prozesse, Pricing pro Step + Optional-Badge)
+- **Geteilter Lead-In-Renderer** ([lib/leadInRenderer.tsx](../../littlelights-build/src/lib/leadInRenderer.tsx)) — wraps erste 3 Wörter in `.lead-words` Span für Small-Caps. Verwendet von DualPath und MagazineManifest.
+- **Geteilter RichText-Converter** ([lib/richTextConverters.ts](../../littlelights-build/src/lib/richTextConverters.ts)) — `internalDocToHref` resolviert interne Links auf Projects (`/projects/[slug]`) und Pages (walked parent chain via `computePagePath`). Gilt für alle 4 RichText-Components (DualPath, MagazineManifest, TextSection, FAQ).
+- **SectionDivider** automatisch zwischen adjacent **cream-cream** Blocks (Session 14 angepasst: Navy-navy braucht keinen Divider, Padding genug Trennung).
+- **CTA-Button area-accent aware** (Session 14): `var(--area-accent)` statt hardcoded Copper, Hover via Opacity. Coral auf R&S, Copper auf Agency, Slate-Blue auf Creative Studio.
 - Globals: `Header` (Mega-Menu) + `Footer` (5 Spalten mit auto-from-parent + manual-Modi) + `SiteSettings`
 - Wiederverwendbares `FooterReveal`-Pattern für alle dynamischen Pages
-- Erste komplette Sub-Page: **Über Uns** (Hero editorial + Bold + Magazine Manifest + Team Grid)
-- Legal-Pages-Infrastruktur: TextSection mit Lese-Typografie (h2/h3, Listen, Links, Blockquotes)
+- **Section-Padding einheitlich** auf clamp(64px, 9vw, 120px) — Adjacent-Sum max 240px
+- Komplette Sub-Pages: **Über Uns**, **Agency-Hub**, **Employer Branding**, **Imagefilme** (Dual-Path „Inszeniert oder Dokumentarisch" hinzugefügt 07.05.), **Werbespots & Kampagnen**, **Nachhaltigkeit**, **Branded Entertainment** (07.05.), **Reels & Stories Hub**, **R&S Workshop** (07.05.), **R&S Content-Production** (07.05.), **Legal-Pages**
+- EU AI Act Compliance: optionales `aiDisclosure`-Feld auf Projekten, Drafts in `docs/`
 
 Nächste Schritte → siehe [3.3 Design Tasks](phase3/3.3_design_tasks.md). Operativ:
 - TeamMembers in Payload befüllen (Photos + Hover-Photos + Socials)
 - Legal-Pages anlegen + Inhalte einsetzen (Drafts liegen vor: Impressum, Datenschutz, AGB)
-- Disziplin-Pages bauen (Drei-Akt-Schema WAS/WIE/WER mit Magazine-Manifest)
+- Disziplin-Pages bauen — Skeleton + Block-Inventar gelockt in [3.4 Disziplin-Pages](phase3/3.4_disziplin_pages.md). Reihenfolge: Agency-Hub heute → Agency-Sub-Pages → R&S → Creative Studio. Neue Blocks werden disziplinweise gebaut, nicht vorab.
 - Mobile-Verifikation aller neuen Patterns
 
 ### Phase 4: Build
@@ -95,12 +103,56 @@ Bereits abgeschlossen:
 - ✅ Live-Preview-URLs für Pages und Projects (mit nested-URL-Resolver)
 
 Noch ausstehend:
+- ✅ **Visibility-System auf Pages-Collection** (Session 13) — Pages haben jetzt das gleiche Draft/Private/Public-Pattern wie Projects. Auth-aware Filter über `lib/visibility.ts`: anonyme User sehen nur public, eingeloggte Admins zusätzlich private. Drafts immer ausgeschlossen (kommen über Payload-Preview). `isFeatured` aus Projects entfernt. Lokaler Backfill via SQL durchgeführt. Auf Prod muss die Schema-Migration nach Deploy mit `yes` bestätigt werden, dann manueller `UPDATE`-SQL für Bestandsdaten (Details in HANDOFF).
 - [ ] **Zweisprachigkeit DE/EN** — Localized-Felder sind im Schema vorbereitet, aber Routing/Switcher noch nicht gebaut
-- [ ] **Kontaktformular + Calendly** (nur R&S/Workshop)
+- [ ] **Kontaktformular + Calendly** (nur R&S/Workshop). Stack gelockt: **Resend** als Mail-Provider (gratis bis 3k/Monat, moderne API), API-Route `/api/contact` validiert + versendet an studio@littlelights.studio. Spam-Schutz: Honeypot-Feld + Rate-Limiting auf der Route, Cloudflare Turnstile als Option falls Volumen es erfordert. Calendly-Variante: Inline-Widget-Embed je nach CMS-Block-`variant`. Plus Success/Error-State im Formular.
 - [ ] **SEO-Implementierung** — SEO-Plugin ist installiert, aber Schema Markup, Sitemap, hreflang, 301-Redirects fehlen
 - [ ] **GEO-Optimierung** für AI-Suche
 - [ ] **Self-Hosting der Schriften** (Satoshi, Clash Display) statt Fontshare-CDN — DSGVO-Vereinfachung (kein externer Verarbeiter), Performance-Gewinn, via `next/font/local` einbinden. Aktuell läuft via api.fontshare.com, ist im Datenschutz erwähnt
 - [ ] **Markdown-Auto-Conversion im Lexical-Editor** (`MarkdownTransformersFeature`) — komfortabel für künftige Content-Edits, aktuell muss manuell im Editor formatiert werden
+- ✅ **KI-Transparenz-Feld bei Projekten** (EU AI Act Art. 50, Stichtag 02.08.2026) — optionales RichText-Feld `aiDisclosure` in der Projects-Collection, wird auf der Projekt-Detail-Seite vor den Credits gerendert wenn gefüllt. Nur befüllen wenn KI substantiell im finalen Werk. Voraussetzungen liegen in `docs/ki-inventar.md`, `docs/ki-richtlinie.md`, `docs/datenschutz-ki-section.md` (letztere geht in die Datenschutzerklärung mit Anwalts-Review)
+
+#### Agency-Hub Polish-Backlog (Stand 04.05.2026)
+
+- [x] **Pull-Quote-Spalte breiter** im Magazine Manifest (Session 9: Spalten-Verhältnis 2.1fr/1fr → 1.7fr/1fr, min-width 220px → 280px)
+- [x] **Lead-Headline-Bruch fixen** (Session 9: User direkt im CMS gepasted)
+- [x] **Services-Grid Card-Title-Konsistenz** (Session 9: h3 font-size clamp(1.25rem, 1.8vw, 1.5rem) → clamp(1.2rem, 1.65vw, 1.375rem))
+- [x] **`FeaturedProjectsClient` Big-Headline aus CMS** (Session 9: `bigHeadline`-Feld in `projects-grid`-Block, Default behält alten Text)
+- [ ] **Mobile-Verifikation Agency-Hub** — Services-Grid, Partnership-Pillars, Projects-2x3, Magazine-Manifest mit Quote auf realem Device durchgehen
+
+#### Sub-Pages-Build (Stand 05.05.2026)
+
+- [x] **Employer Branding** (`/agency/employer-branding/`) — gelockt 04.05.2026. 11 Blöcke, ~1.060 Wörter, eigene Stats (150+/24/900+/12+), FAQ-Block live, Sagmeister-Quote.
+- [x] **Imagefilme** (`/agency/imagefilme/`) — gelockt 05.05.2026. Bogen wie EB ohne Stats, Bold Statement „Marken, / die geglaubt werden." (final 06.05., greift Pain-Point direkt auf), Process 3-phasig (Briefing & Gespräch → Konzept 2-3 Richtungen → Wahl & Produktion), „Wo wir drehen" mit Kernteam-Handschrift-Aspekt, FAQ mit Budgetrahmen-Insight + Werbespot-vs-Imagefilm-Metapher (Einladung/Kennenlernen). Testimonials werden nachgetragen.
+- [x] **Werbespots & Kampagnen** (`/agency/werbespots/`) — gelockt 06.05.2026. Bewusst kürzer (~700 Wörter), ohne Stats/Process/„Wo wir drehen". Position „Story über Spektakel". Magazine-Manifest #2 als Agentur-Block (kreativer Produktionspartner, mitdenkende Umsetzung, ohne Konzept-Wettstreit). Big Headline Projects-Grid: „Werbung, die nicht laut sein muss." Projekte trägt User selbst ein.
+- [x] **Nachhaltigkeit** (`/agency/nachhaltigkeit/`) — gelockt 06.05.2026 (Session 12). Bold „Nachhaltigkeit, / ehrlich erzählt." Cases: Plastic Bank Manila + Hard Talks + Blue Plan + Sustainability Message + Strabag Sustainability Stories. Magazine #2 mit User-Insight „bewusst handeln, nicht über Nacht umdrehen — Lichtschalter abdrehen ist Symbolik, intelligente Raumsteuerung ist Wirkung." Greenwashing positiv gerahmt.
+- [x] **Reels & Stories Hub** (`/reels-stories/`) — erste Version live 06.05.2026 (Session 12). Bold „Drauflos drehen / kannst du selbst." 12 Blöcke. Workshop-First-Methodik, 4 modulare Konstellationen, Pricing teil-transparent (ab 950 € Workshop, 2.500-4.500 €/Monat Setups). Christoph Masin / JägerTEE Testimonial. Reihenfolge: Pricing nach Projekten (emotional Commitment first). Konzept-Doc: [3.5](phase3/3.5_reels_stories.md).
+- [x] **Imagefilme: Dual-Path-Block** „Inszeniert oder Dokumentarisch" (Session 14, 07.05.2026) — neuer wiederverwendbarer Block, Roman-Marken (I/II), Small-Caps Lead-In auf erste 3 Wörter, Diagonale-Brand-Anker. Cases als Inline-Disziplin-Links (interner SEO + RichText-Converter `internalDocToHref` für alle 4 RichText-Components).
+- [x] **Branded Entertainment** (`/agency/branded-entertainment/`) — gelockt 07.05.2026 (Session 14). 7 Blöcke, ~600 Wörter. Bold „Werte, / ohne zu verkaufen." mit Tagline „für Marken, die als Publisher denken." Verlagshaus-Faden durchgehend (Lego/Patagonia/Red Bull als Beispiele). Storytelling-Wurzeln-Section ohne direkte Namensnennung (Studio-„wir" inkl. Helena Flinn Trilogie als Publisher-Beleg). Cross-Listing: Plastic Bank Manila + IRR + Allianz Paralympics zusätzlich zu Imagefilm/Sustainability hier.
+- [x] **R&S Workshop-Sub-Page** (`/reels-stories/workshop/`) — gelockt 07.05.2026 (Session 14). 11 Blöcke. Bold „Vom Posten / zur Marke." Tagline „Workshop für Unternehmen, die mehr sein wollen als ein Profil." Anti-SMM-Workshop-Positionierung durch Magazine #1. Partnership-Block für 3 Säulen (vertieft gegenüber Hub: Why/Kern/Skalierungs-Kaskade implizit). 4-Karten Workshop-Ablauf. 2 Pricing-Tiers (Solo 1.500 € / Workshop+Produktion 950 € featured). FAQ + Christoph Masin Testimonial.
+- [x] **R&S Content-Production Sub-Page** (`/reels-stories/content-production/`) — gelockt 07.05.2026 (Session 14). 9 Blöcke. Bold „Strategie & Story zuerst. / Bilder folgen." Tagline „Social Media Film-Produktion mit System." Process-Timeline-Block mit 4 Bausteinen als Monats-Zyklus + Loop-Indicator + Pricing pro Baustein (Konzeption ab 500 €, Drehtag ab 900 €, Postproduktion ab 800 €/Tag oder 75-150 €/Film, Betreuung ab 450 € optional). Magazine #2 mit 4 Konstellations-Beispielen narrativ.
+- [x] **Creative Studio Hub** (`/creative-studio/`) — gelockt 07.05.2026 (Session 15). 7 Blöcke. Bold „Geschichten, / die uns wach halten." Voice-Pass section-by-section mit User. Magazine, Dual-Path (I Verlag / II Filme, Pull-Quote „Der Antrieb ist derselbe. Herzensprojekte, denen wir helfen, das Licht der Welt zu erblicken."), Projects-Grid (2-Col Layout, neu in Session 15), 1 Independent-Review-Testimonial. CTA „Habt ihr einen Stoff?" V1 bleibt.
+- [x] **Publishing-Sub** (`/publishing` + `/creative-studio/publishing`, beide URLs aktiv via Next.js-Rewrite) — gelockt 07.05.2026 (Session 15). 7 Blöcke. Bold „Ein kleiner Verlag aus Wien. / Mit Sorgfalt gebaut." Cold-Traffic-Page für Buchleser:innen (URL in jedem Buch gedruckt). Magazine erklärt Studio-Kontext + Origin (2018 Goblins) + Operation (KDP/IngramSpark) + Position. Trilogie-Showcase. **Storyworld-Section** für helenaflinn.com. **Book-Reviews-Block (neu Session 15)**: 1 Featured (Independent Review of Books) + 5 kuratierte Stimmen (Hannah Lindley, Olson-Roy/Vienna-Freud, Jordie/Family-Read-Aloud, Mike Kren, LoveReading4Kids). CTA „Schreib uns gerne." mit Storyworld-Pointer in Subline.
+- [x] **Creative Studio Filme-Sub** (`/creative-studio/short-long-films`) — gelockt 08.05.2026 (Session 16). 4 Blöcke, bewusst kurz. Bekenntnis-Page ohne konkrete Projekte. Bold „Filme, die zu uns passen. / Und wir zu ihnen." Magazine: Team (Regie/Drehbuch/Producer), Set-Erfahrung (Auftrag + eigene; Kurz/Serie/Lang), drei Wege (Förderung / Eigen-Engagement / Reife-Zeit). CTA „Schreib uns." offene Tür für Filmemacher:innen. Wird mit künftigen Filmen wachsen.
+- [ ] **Workshops & Keynotes** (`/agency/workshops/`) — **Post-Launch**: User-Entscheidung 07.05.2026, zu wenig Substanz für jetzt.
+
+#### Build-Backlog Session 9 (Stand 05.05.2026)
+
+- [x] **EB-Sub-Page bauen** — `/agency/employer-branding/` live. 11 Blöcke, alle Texte im CMS, Stats-Block + FAQ-Block ergänzt.
+- [x] **Stats-Block CMS-Felder vervollständigen** — Block-eigenes `stats[]`-Array implementiert (visible nur wenn `useGlobalStats=false`), Stats-Component zur Server-Component, lädt entweder SiteSettings oder Block-Stats. Auch in Homepage-page.tsx durchgereicht.
+- [x] **`faq`-Block bauen** — Editorial Q&A-Pattern, alles offen sichtbar (kein Akkordeon, da Magazin-Lesefluss + GEO-Indexierung priorisiert), FAQPage Schema.org JSON-LD inline gerendert. Wiederverwendbar.
+- [x] **Scroll-Performance auf EB-Page** — Hauptursache war `backdrop-filter: blur(16px)` im Nav.scrolled bei Background `.97` Alpha (Blur kaum sichtbar, GPU-teuer). Backdrop-filter raus + `will-change: transform` auf sticky Pull-Quote.
+- [x] **Projects-Grid Logic-Fix** — `manualProjects` wurde in `RenderBlocks` gar nicht durchgereicht (Bug aus Session 9). Plus `handleShuffle` rebaselined: „Neu mischen" rotiert jetzt komplett (auch Anker), wie vom User gewünscht. Sequential Resolve statt Promise.all für garantierte Order.
+
+#### Final-Pass-Items (am Ende, nicht pro Page einzeln)
+
+User-Wunsch (05.05.2026): SEO/GEO-Felder und QA-Pässe nicht pro Page individuell befüllen, sondern in einem clean Pass am Ende — alle Pages und Projects aus der Datenbank holen, dann durchgängig befüllen.
+
+- [ ] **SEO/GEO-Felder pro Page** — Title-Tag, Meta-Description, OG-Image, Alt-Texte für alle Bilder, Internal Links auf Cases. Cleaner Pass über alle Sub-Pages und Projekte am Ende.
+- [ ] **Schema Markup global** — `Organization`, `Service` pro Service-Sub-Page, `VideoObject` pro Case mit Video, `BreadcrumbList`. FAQPage ist im FAQ-Block schon enthalten.
+- [ ] **Mobile-Pass** durch alle Sub-Pages (Agency-Hub, EB, Imagefilme, weitere). Padding/Stacking-Korrekturen wo nötig.
+- [ ] **Resend-API + Form-Submit** für CTA-Form-Variant. Stack ist gelockt, Implementation steht.
+- [ ] **Restliche Agency-Sub-Pages** mit Inhalten füllen: Imagefilme (in Arbeit), Werbespots, Branded Entertainment, Nachhaltigkeit, Workshops & Keynotes
 
 ### Phase 5: Content
 **🔄 Teilweise in Arbeit — parallel zu Build**
@@ -118,6 +170,38 @@ Noch ausstehend:
 - [ ] **Team-Fotos** (Default + Hover-Variante) + Bios + Socials in CMS
 - [ ] Bildmaterial und Video-Embeds
 - [ ] Kundenlogos (SVG, farblich angepasst)
+
+### Plan: diese Woche → Subdomain-Deploy mit noindex
+
+**User-Vereinbarung 07.05.2026 (Session 14):** Ziel ist diese Woche die Page so weit zu bringen, dass nächste Woche das Team in Ruhe testen + Feedback geben kann. Erster Deploy auf eine Staging-Subdomain mit X-Robots-Tag noindex global.
+
+**Diese Woche (07.05.-10.05.2026):**
+- [x] Branded Entertainment (Agency-Sub-Page) — done Session 14
+- [x] R&S Workshop-Sub-Page — done Session 14
+- [x] R&S Content-Production-Sub-Page — done Session 14
+- [x] **Creative Studio Hub + Publishing-Sub** — gelockt Session 15 (07.05.)
+- [x] **Creative Studio Filme-Sub** — gelockt Session 16 (08.05.)
+- [x] Logo-Hover Color-Reveal — done Session 14
+- [ ] **Alle Projekte mit Content befüllen** (Videos + Fotos) — Userarbeit, großer Sicht-Durchgang
+- [ ] **Staging-Subdomain Deploy** — `staging.littlelights.studio`, X-Robots-Tag noindex global, gleiche DB wie Prod (User-Entscheidung 07.05.)
+- [ ] ~~Lean /kontakt-Page~~ — verschoben auf Post-Push, nicht launch-blockierend (User 08.05.)
+- [ ] ~~404-Page~~ — verschoben auf Post-Push, nicht launch-blockierend (User 08.05.)
+
+**Nächste Woche (Team-Feedback-Phase):**
+- [ ] **Zweisprachigkeit DE/EN** — Routing/Switcher (EN-Variante für Publishing-Sub priorisiert wegen Cold-Traffic aus Büchern)
+- [ ] **Resend-Kontaktformular** — API-Route + Spam-Schutz (CTA-Form ist seit Session 15 statisch CMS-driven, Submit-Logik fehlt noch)
+- [ ] **Self-Hosting Fonts** (Satoshi, Clash Display) via `next/font/local`
+- [ ] **SEO/GEO Final-Pass** — Title, Meta, OG-Image, Alt-Texte über alle Pages
+- [ ] **Schema Markup global** — Organization, Service, VideoObject, BreadcrumbList
+- [ ] **Mobile-Pass** durch alle neuen Sub-Pages (Branded Entertainment, R&S Workshop, R&S Content-Production, Creative Studio Hub, Publishing, Filme)
+- [ ] **Slider-Polish** — Divider verschieben sich, Animation lagged
+- [ ] **Lean /kontakt-Page** + **404-Page** (verschoben aus „diese Woche")
+- [ ] **Restliche Launch-Items** — siehe Phase 6
+
+**Post-Launch / Backlog:**
+- [ ] Workshops & Keynotes (Agency-Sub-Page) — Substanz erst aufbauen
+- [ ] Brand Documentaries als eigene Page — wenn 5+ Cases vorliegen
+- [ ] Calendly-Integration
 
 ### Phase 6: Launch
 **Ausstehend**
