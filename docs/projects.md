@@ -1,37 +1,67 @@
 # Projektdatenbank
-**Little Lights Studio | V2 nach Refinement-Pass: 24.04.2026 | 43 Projekte**
+**Little Lights Studio | Export: 09.05.2026 | 43 Projekte**
 
-Vollständiger Projektbestand nach erstem gemeinsamen Textpass (Beschreibungen, Case-Study-Content, Übersetzungen DE/EN, SEO).
+Vollständiger Export aller Projekte für Refinement-Pass (Beschreibungen, Daten, Texte, Übersetzungen, SEO).
 
 **Workflow:**
 1. Claude exportiert aus Payload → diese Datei
-2. Miso hinterlässt Kommentare & Texte inline
+2. Miso hinterlässt Kommentare & Texte inline (z.B. `> TODO: ...` oder einfach Textänderungen direkt)
 3. Gemeinsames Refinement bis alles stimmt
 4. Claude parst die Datei und schreibt alles zurück nach Payload
 
 **Konventionen für Annotations:**
 - Inline-Textänderung: direkt im Feld editieren
 - Kommentar: Blockquote mit `>` (wird beim Re-Import ignoriert)
-- `> TODO:` Marker werden beim Re-Import als Aktion interpretiert (z.B. `isCaseStudy=true`)
-
-> Allgemeines: wann immer ich einen Kommentar hinterlasse, dann bitte die Ausbesserungen / Überarbeitungen automatisch auf den deutschen, englischen und die SEO Texte übernehmen. Ich gebe dir Kontext, du kennst nun unser Voice, verfasse bitte gute Texte die einerseits unsere Leidenschaft für die Projekte darstellen (vor allem in den Case Studies), und andererseits auch zeigen wie wir Kunden konkret mit Storytelling helfen.
-> Leere Felder oder unausgefüllte Bereiche bitte selbstständig befüllen.
+- Neuer Text für leeres EN-Feld: `_(leer)_` ersetzen
 
 ---
 
 ## Reels & Stories
-_4 Projekte_
+_5 Projekte_
 
-### 1. Frequency Festival
+### 1. Arthur Real Social Media
+
+- **ID:** 88
+- **Slug:** `arthur-real-reels`
+- **Client:** Arthur Real
+- **Area:** Reels & Stories
+- **Kategorien:** reels-stories
+
+**Titel DE:** Arthur Real Social Media
+**Titel EN:** _(leer)_
+
+**Kurzbeschreibung DE:**
+Storytelling & Marken-Workshop inklusive laufender Betreuung.
+
+**Kurzbeschreibung EN:**
+_(leer)_
+
+---
+
+#### SEO
+
+**Meta-Title DE:** _(leer – bitte ergänzen)_
+**Meta-Title EN:** _(leer – bitte ergänzen)_
+
+**Meta-Description DE:** _(leer – bitte ergänzen)_
+**Meta-Description EN:** _(leer – bitte ergänzen)_
+
+> ⚠︎ SEO-Felder komplett leer.
+
+---
+
+### 2. Jägermeister Frequency
 
 - **ID:** 48
 - **Slug:** `jaegermeister-frequency`
 - **Client:** Jägermeister
-- **Externe Agentur:** SESO
 - **Area:** Reels & Stories
 - **Kategorien:** reels-stories
-- **Datum:** Mai 2023
+- **Veröffentlicht:** May 2024
+- **Zeitraum:** 2025
 - **Thumbnail:** jaegermeister-frequency-3.webp
+- **Hero-Video:** `9398f8ed-9870-4595-b0df-83220f1455df`
+- **Episoden:** 3
 
 **Titel DE:** Jägermeister Frequency
 **Titel EN:** Frequency Festival
@@ -60,15 +90,18 @@ Client: Jägermeister
 
 ---
 
-### 2. Augarten Reels
+### 3. Augarten Reels
 
 - **ID:** 47
 - **Slug:** `augarten-reels`
 - **Client:** Augarten
 - **Area:** Reels & Stories
 - **Kategorien:** reels-stories
-- **Datum:** Mai 2023
+- **Veröffentlicht:** Jan 2024
+- **Zeitraum:** 2025
 - **Thumbnail:** augarten-2.webp
+- **Hero-Video:** `8bb763c4-1003-47df-936c-79735129a815`
+- **Episoden:** 4
 
 **Titel DE:** Augarten Reels
 **Titel EN:** Augarten Reels
@@ -91,15 +124,18 @@ For the Viennese porcelain manufactory Augarten, we produced a full-spectrum bra
 
 ---
 
-### 3. Body & Mind Expert
+### 4. Body & Mind Expert
 
 - **ID:** 46
 - **Slug:** `dima-sterz-body-mind-expert`
 - **Client:** Dima Sterz
 - **Area:** Reels & Stories
 - **Kategorien:** reels-stories
-- **Datum:** Jan 2025
+- **Veröffentlicht:** Jan 2025
+- **Zeitraum:** 2025
 - **Thumbnail:** dima-sterz-2.webp
+- **Hero-Video:** `41106c4b-47ae-4e69-80a8-759d5d82eeb3`
+- **Episoden:** 3
 
 **Titel DE:** Body & Mind Expert
 **Titel EN:** Dima Sterz – Body & Mind Expert
@@ -122,22 +158,25 @@ With Dima Sterz, we produced social media formats that make his expertise as a c
 
 ---
 
-### 4. Jägertee
+### 5. Jägertee
 
 - **ID:** 45
 - **Slug:** `jaegertee`
 - **Client:** Jägertee
 - **Area:** Reels & Stories
 - **Kategorien:** reels-stories
-- **Datum:** Mai 2025
+- **Veröffentlicht:** May 2025
+- **Zeitraum:** 2025
 - **Flags:** Angepinnt
 - **Thumbnail:** jaegertee-4.webp
+- **Hero-Video:** `4475081c-8954-4576-83b3-b3fed0dfbbd1`
+- **Episoden:** 2
 
 **Titel DE:** Jägertee
 **Titel EN:** Jägertee
 
 **Kurzbeschreibung DE:**
-Für den traditionellen Wiener Teeladen JägerTEE haben wir Social-Media-Formate entwickelt, die das Fachwissen rund um Tee authentisch und nahbar vermitteln. Einminütige Langform-Clips als Basis, daraus jeweils zwei bis drei Shorts für die unterschiedlichen Plattformen. Teesorten-Features, Produkt-Stories rund um die innovativen Tea Mugs, gedreht im historischen Geschäft nahe der Wiener Staatsoper.
+Für den traditionellen Wiener Teeladen JägerTEE haben wir Social-Media-Formate entwickelt, die das Fachwissen rund um Tee authentisch und nahbar vermitteln. Bewusst einminütige Langform-Clips als Basis — Fachwissen über Tee braucht Raum, nicht Tempo. Daraus jeweils zwei bis drei Shorts für die unterschiedlichen Plattformen. Teesorten-Features, Produkt-Stories rund um die innovativen Tea Mugs, gedreht im historischen Geschäft nahe der Wiener Staatsoper.
 
 **Kurzbeschreibung EN:**
 For the traditional Viennese tea shop JägerTEE, we developed social media formats that convey tea expertise in an authentic, approachable way. One-minute long-form clips as the foundation, with two to three shorts cut from each for different platforms. Tea variety features and product stories like the innovative Tea Mugs, shot in the historic shop near Vienna State Opera.
@@ -146,7 +185,7 @@ For the traditional Viennese tea shop JägerTEE, we developed social media forma
 
 #### SEO
 
-**Meta-Title DE:** JägerTEE Wien – Social Content für traditionellen Teeladen | Little Lights Studio
+**Meta-Title DE:** JägerTEE Wien – Social Content für traditionellen Teeladen
 **Meta-Title EN:** JägerTEE Vienna – Social Content for Traditional Tea Shop | Little Lights Studio
 
 **Meta-Description DE:** Social-Media-Formate für den Wiener Teeladen JägerTEE. Langform-Clips mit Produkt- und Sortenwissen, plus Shorts für Reels und TikTok.
@@ -155,19 +194,19 @@ For the traditional Viennese tea shop JägerTEE, we developed social media forma
 ---
 
 ## Agency
-_38 Projekte_
+_37 Projekte_
 
-### 5. Win Win
+### 6. Win Win
 
 - **ID:** 87
 - **Slug:** `winwin`
 - **Client:** Österreichische Lotterien
-- **Externe Agentur:** LWND
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Aug 2025
+- **Externe Agentur:** LWND
+- **Veröffentlicht:** Aug 2025
 - **Hero-Video:** `152fa3e6-97b3-4c7f-85fc-d80976363ea4`
-- **Galerie:** 1 Bild
+- **Galerie:** 1 Bilder
 
 **Titel DE:** Win Win
 **Titel EN:** Win Win
@@ -190,16 +229,16 @@ Based on the creative concept by agency LWND, we organised and produced the shoo
 
 ---
 
-### 6. Work on Progress
+### 7. Work on Progress
 
 - **ID:** 86
 - **Slug:** `strabag-work-on-progress`
 - **Client:** Strabag
-- **Externe Agentur:** Jung von Matt Wien
 - **Area:** Agency
 - **Kategorien:** employer-branding, imagefilm
-- **Datum:** Apr 2024
-- **Thumbnail:** str-workonprogress-anna-03.webp
+- **Externe Agentur:** Jung von Matt
+- **Veröffentlicht:** Apr 2024
+- **Thumbnail:** str-workonprogress-anna-01.webp
 - **Hero-Video:** `dc94782f-5926-45c0-baea-54f455ba63dc`
 - **Episoden:** 6
 
@@ -224,14 +263,15 @@ For Strabag's "Work on Progress" claim, we partnered with Jung von Matt Wien to 
 
 ---
 
-### 7. Großbaustelle
+### 8. Großbaustelle
 
 - **ID:** 85
 - **Slug:** `strabag-grossbaustelle`
 - **Client:** Strabag
 - **Area:** Agency
 - **Kategorien:** employer-branding
-- **Datum:** Mär 2024
+- **Veröffentlicht:** Mar 2024
+- **Zeitraum:** März 2024
 - **Thumbnail:** str-grossbaustelle-01.webp
 - **Hero-Video:** `64053d0f-8d9b-4e94-8ae6-e59dff429dae`
 - **Episoden:** 7
@@ -257,15 +297,16 @@ For a Strabag major construction site in Germany, over 1,000 workers were needed
 
 ---
 
-### 8. I am Progress
+### 9. I am Progress
 
 - **ID:** 84
 - **Slug:** `strabag-i-am-progress`
 - **Client:** Strabag
-- **Externe Agentur:** Jung von Matt Wien
 - **Area:** Agency
 - **Kategorien:** imagefilm
-- **Datum:** Jun 2025
+- **Externe Agentur:** Jung von Matt Wien
+- **Veröffentlicht:** Jun 2025
+- **Zeitraum:** 2025
 - **Flags:** Case Study, Angepinnt
 - **Thumbnail:** str-iamprogress-3.webp
 - **Hero-Video:** `960587fb-f60b-47a5-b341-c486ef194682`
@@ -315,13 +356,13 @@ One hero film, seven proof clips with three cutdowns each, all in three formats 
 
 ---
 
-### 9. Floating Gardens
+### 10. Floating Gardens
 
 - **ID:** 82
 - **Slug:** `floating-gardens-strabag`
 - **Client:** Strabag
 - **Area:** Agency
-- **Datum:** Mai 2022
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** floating-gardens-strabag.webp
 
 **Titel DE:** Floating Gardens
@@ -352,17 +393,19 @@ Edit: Christopher Panzenböck
 
 ---
 
-### 10. Hard Talks
+### 11. Hard Talks
 
 - **ID:** 81
 - **Slug:** `greiner-hard-talks`
 - **Client:** Greiner
 - **Area:** Agency
-- **Datum:** Mai 2022
+- **Kategorien:** sustainability
+- **Veröffentlicht:** May 2023
+- **Flags:** Case Study
 - **Thumbnail:** gr-hard-talks-01.webp
-- **Galerie:** 1 Bild
-
-> TODO für Import: `isCaseStudy=true` setzen (Case Study Content unten bereits vorhanden).
+- **Hero-Video:** `0d3803fb-ab89-4515-8616-2b1ea20df24f`
+- **Galerie:** 3 Bilder
+- **Episoden:** 5
 
 **Titel DE:** Hard Talks
 **Titel EN:** Hard Talks
@@ -407,14 +450,13 @@ Six in-depth discussions, around 20 minutes each. Plus cutdowns for social chann
 
 ---
 
-### 11. Student Living
+### 12. Student Living
 
 - **ID:** 80
 - **Slug:** `milestone-student-living`
 - **Client:** Milestone
-- **Externe Agentur:** Blue Monkeys
 - **Area:** Agency
-- **Datum:** Mai 2018
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** brand-film-milestone.webp
 
 **Titel DE:** Student Living
@@ -449,14 +491,15 @@ Client: Milestone
 
 ---
 
-### 12. Augarten Porcelain
+### 13. Augarten Porcelain
 
 - **ID:** 79
 - **Slug:** `augarten-porcelain`
 - **Client:** Augarten
 - **Area:** Agency
-- **Datum:** Mai 2022
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** augarten-01.webp
+- **Hero-Video:** `7573d522-d562-4395-94ff-fa73801cc9fc`
 - **Galerie:** 3 Bilder
 
 **Titel DE:** Augarten Porcelain
@@ -488,15 +531,16 @@ Executive Producer: Michael Sokolar
 
 ---
 
-### 13. Influencer Challenge
+### 14. Influencer Challenge
 
 - **ID:** 78
 - **Slug:** `austrian-influencer-challenge`
 - **Client:** Österreich Werbung
 - **Area:** Agency
-- **Datum:** Mai 2021
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** oew-influencer-ali-burgenland.webp
 - **Galerie:** 3 Bilder
+- **Episoden:** 10
 
 **Titel DE:** Influencer Challenge
 **Titel EN:** Austrian Influencer Challenge
@@ -529,14 +573,14 @@ Client: Austrian Tourism
 
 ---
 
-### 14. Brand Documentary
+### 15. Brand Documentary
 
 - **ID:** 77
 - **Slug:** `sabika-brand-documentary`
 - **Client:** Sabika
 - **Area:** Agency
-- **Kategorien:** brand-documentary
-- **Datum:** Mai 2017
+- **Kategorien:** brand-documentary, imagefilm
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** sabika.webp
 
 **Titel DE:** Brand Documentary
@@ -560,17 +604,19 @@ Sabika is a jewellery company by women for women. We produced a brand documentar
 
 ---
 
-### 15. Plastic Bank Manila
+### 16. Plastic Bank Manila
 
 - **ID:** 76
 - **Slug:** `plastic-bank-manila`
 - **Client:** Greiner Packaging International
-- **Externe Agentur:** Media Brothers
 - **Area:** Agency
-- **Kategorien:** brand-documentary, sustainability
-- **Datum:** Mai 2019
+- **Kategorien:** brand-documentary, sustainability, imagefilm
+- **Veröffentlicht:** May 2023
 - **Flags:** Case Study
 - **Thumbnail:** greiner-plastic-bank.webp
+- **Hero-Video:** `c6a27ccc-8874-4dc9-9258-6f7d1b8069a4`
+- **Galerie:** 8 Bilder
+- **Episoden:** 7
 
 **Titel DE:** Plastic Bank Manila
 **Titel EN:** Plastic Bank Manila
@@ -624,15 +670,16 @@ Client: Greiner Packaging International
 
 ---
 
-### 16. Künstler-Portrait
+### 17. Künstler-Portrait
 
 - **ID:** 75
 - **Slug:** `ugo-ghini`
 - **Client:** Ugo Ghini
 - **Area:** Agency
-- **Kategorien:** brand-documentary
-- **Datum:** Mai 2021
+- **Kategorien:** brand-documentary, imagefilm
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** ugo-ghini.webp
+- **Hero-Video:** `3882e7d5-5749-4260-a3ea-54463a695683`
 
 **Titel DE:** Künstler-Portrait
 **Titel EN:** Ugo Ghini – Artist Portrait
@@ -663,18 +710,19 @@ Executive Producer: Michael Sokolar
 
 ---
 
-### 17. Get Ready for the Best
+### 18. Get Ready for the Best
 
 - **ID:** 74
 - **Slug:** `allianz-paralympics`
 - **Client:** Allianz
-- **Externe Agentur:** LWND
 - **Area:** Agency
-- **Kategorien:** brand-documentary
-- **Datum:** Mai 2023
+- **Kategorien:** brand-documentary, imagefilm
+- **Veröffentlicht:** May 2024
+- **Zeitraum:** 2024
+- **Flags:** Case Study
 - **Thumbnail:** allianz-paralympics-3.webp
-
-> TODO für Import: `isCaseStudy=true` setzen (Case Study Content unten bereits vorhanden).
+- **Galerie:** 12 Bilder
+- **Episoden:** 15
 
 **Titel DE:** Get Ready for the Best
 **Titel EN:** Get Ready for the Best
@@ -730,16 +778,16 @@ Client: Allianz Österreich
 
 ---
 
-### 18. Brand Documentary
+### 19. Brand Documentary
 
 - **ID:** 73
 - **Slug:** `irr-brand-documentary`
 - **Client:** IRR
 - **Area:** Agency
-- **Kategorien:** brand-documentary, sustainability
-- **Datum:** Mai 2020
+- **Kategorien:** brand-documentary, sustainability, imagefilm
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** irr-01.webp
-- **Galerie:** 2 Bilder
+- **Hero-Video:** `a63b2d42-c6f2-4f5a-a20b-648ead665cc6`
 
 **Titel DE:** Brand Documentary
 **Titel EN:** IRR Brand Documentary
@@ -769,18 +817,20 @@ Edit: Christopher Panzenböck
 
 ---
 
-### 19. Kinder Surprise – Mission Africa
+### 20. Mission Africa
 
 - **ID:** 72
 - **Slug:** `kinder-surprise-mission-africa`
 - **Client:** Ferrero
 - **Area:** Agency
 - **Kategorien:** branded-entertainment, animation
-- **Datum:** Mai 2017
+- **Veröffentlicht:** May 2023
 - **Flags:** Case Study
 - **Thumbnail:** ferrero-infinimix.webp
+- **Galerie:** 12 Bilder
+- **Episoden:** 3
 
-**Titel DE:** Kinder Surprise – Mission Africa
+**Titel DE:** Mission Africa
 **Titel EN:** Kinder Surprise – Mission Africa
 
 **Kurzbeschreibung DE:**
@@ -823,17 +873,19 @@ Two short films, delivered on time for the global launch. A project that shows h
 
 ---
 
-### 20. Magic Animals
+### 21. Magic Animals
 
 - **ID:** 71
 - **Slug:** `magic-animals`
 - **Client:** Ferrero
 - **Area:** Agency
 - **Kategorien:** branded-entertainment, animation
-- **Datum:** Mai 2019
+- **Veröffentlicht:** May 2023
 - **Flags:** Case Study
-- **Thumbnail:** ferrero-magic-animals-01.webp
-- **Galerie:** 1 Bild
+- **Thumbnail:** ferrero-magic-animals-03.webp
+- **Hero-Video:** `c663eab5-27e3-4f7f-9d3f-b5f65b8d4ffa`
+- **Galerie:** 7 Bilder
+- **Episoden:** 5
 
 **Titel DE:** Magic Animals
 **Titel EN:** Magic Animals
@@ -878,17 +930,19 @@ A series proving that branded content for children works when you take the audie
 
 ---
 
-### 21. Dishwasher Diaries
+### 22. Dishwasher Diaries
 
 - **ID:** 70
 - **Slug:** `dishwasher-diaries`
 - **Client:** Henkel
 - **Area:** Agency
 - **Kategorien:** werbespot, animation
-- **Datum:** Mai 2015
+- **Veröffentlicht:** May 2023
 - **Flags:** Case Study
 - **Thumbnail:** dishwasher-diaries-03.webp
-- **Galerie:** 1 Bild
+- **Hero-Video:** `a20c1143-2f10-4644-aa21-d7f880a7ccb7`
+- **Galerie:** 9 Bilder
+- **Episoden:** 11
 
 **Titel DE:** Dishwasher Diaries
 **Titel EN:** Dishwasher Diaries
@@ -933,17 +987,17 @@ Eleven episodes, twelve languages, 32 markets. Over 750 million accumulated view
 
 ---
 
-### 22. Mitsubishi x ÖHB
+### 23. Mitsubishi x ÖHB
 
 - **ID:** 69
 - **Slug:** `mitsubishi-oehb`
 - **Client:** Mitsubishi
-- **Externe Agentur:** Wirz
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Mai 2019
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** mistubishi-01.webp
-- **Galerie:** 1 Bild
+- **Hero-Video:** `7a3e7bc8-7648-4ed2-85f6-21816ba7af75`
+- **Galerie:** 1 Bilder
 
 **Titel DE:** Mitsubishi x ÖHB
 **Titel EN:** Mitsubishi x ÖHB
@@ -976,16 +1030,16 @@ Client: Mitsubishi Austria
 
 ---
 
-### 23. Sprocket
+### 24. Sprocket
 
 - **ID:** 68
 - **Slug:** `hp-sprocket`
 - **Client:** HP
-- **Externe Agentur:** Aigner und Österreicher
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Mai 2018
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** commercial-hp-sprocket.webp
+- **Hero-Video:** `15959ca6-4d8a-4465-9935-fd961e1fb4b3`
 
 **Titel DE:** Sprocket
 **Titel EN:** HP Sprocket
@@ -1021,51 +1075,6 @@ Client: HP Austria
 
 ---
 
-### 24. US Launch Campaign
-
-- **ID:** 67
-- **Slug:** `7drops-campaign`
-- **Client:** 7Drops
-- **Area:** Agency
-- **Kategorien:** werbespot
-- **Datum:** Mai 2020
-- **Thumbnail:** 7drops-t1-01.webp
-- **Galerie:** 2 Bilder
-
-**Titel DE:** US Launch Campaign
-**Titel EN:** 7Drops US Launch Campaign
-
-**Kurzbeschreibung DE:**
-7Drops ist ein Allergietest für Endverbraucher:innen. Für den US-Markenlaunch haben wir eine umfassende Kampagne entwickelt und produziert: sechs zielgruppenspezifische Spots, zwei Imagefilme und einen Explainer – ein komplettes Toolkit für die Social-Media-Kommunikation im amerikanischen Markt.
-
-**Kurzbeschreibung EN:**
-7Drops is an allergy test for end consumers. For the US market launch, we developed and produced a full campaign: six audience-targeted spots, two brand films and an explainer – a complete toolkit for social media communication in the American market.
-
----
-
-#### SEO
-
-**Meta-Title DE:** 7Drops US Launch – Social-Kampagne für Allergietest | Little Lights Studio
-**Meta-Title EN:** 7Drops US Launch – Social Campaign for Allergy Test | Little Lights Studio
-
-**Meta-Description DE:** US-Launch-Kampagne für den Allergietest 7Drops. Sechs zielgerichtete Spots, zwei Imagefilme und ein Explainer für den amerikanischen Markt.
-**Meta-Description EN:** US launch campaign for the 7Drops allergy test. Six targeted spots, two brand films and an explainer for the American market.
-
----
-
-**Credits:**
-Director: Michael Sokolar
-DOP: Thomas Loacker
-Art Director: Clemens Ritschka
-Make up: Jenny Bladek
-Editor: Christopher Panzenböck
-Motion Graphics: Felix Radinger
-Grading: Thomas Loacker
-Production Manager: Julia Wertheimer
-Client: 7Drops
-
----
-
 ### 25. Barista
 
 - **ID:** 66
@@ -1073,8 +1082,9 @@ Client: 7Drops
 - **Client:** Ströck
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Mai 2016
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** stroeck.webp
+- **Hero-Video:** `13a3e596-673d-44ae-b38c-7bfb80a2e447`
 
 **Titel DE:** Barista
 **Titel EN:** Ströck Barista
@@ -1110,12 +1120,13 @@ Client: Ströck
 - **ID:** 65
 - **Slug:** `interspar-pascarel`
 - **Client:** Interspar
-- **Externe Agentur:** Jung von Matt Wien
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Mai 2021
-- **Thumbnail:** interspar-pascarel-01.webp
-- **Galerie:** 1 Bild
+- **Externe Agentur:** Jung von Matt Donau
+- **Veröffentlicht:** May 2023
+- **Thumbnail:** interspar-pascarel-2.webp
+- **Hero-Video:** `8aeb96fc-b279-4196-a131-4a028e08aa8f`
+- **Galerie:** 1 Bilder
 
 **Titel DE:** Pascarel
 **Titel EN:** Interspar Pascarel
@@ -1155,12 +1166,14 @@ Client: Interspar
 - **ID:** 64
 - **Slug:** `allianz-bereitfuersleben-eauto`
 - **Client:** Allianz
-- **Externe Agentur:** LWND
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Mai 2022
+- **Externe Agentur:** LWND
+- **Veröffentlicht:** May 2023
+- **Zeitraum:** 2023
 - **Thumbnail:** allianz-eauto.webp
-- **Galerie:** 1 Bild
+- **Hero-Video:** `c6d848e6-30d0-4a6c-b294-cd516e902535`
+- **Galerie:** 1 Bilder
 
 **Titel DE:** #BereitFürsLeben eAuto
 **Titel EN:** Allianz #BereitFürsLeben eAuto
@@ -1202,13 +1215,16 @@ Client: Allianz Österreich
 - **ID:** 63
 - **Slug:** `allianz-bereitfuersleben-campaign`
 - **Client:** Allianz
-- **Externe Agentur:** LWND
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Mai 2024
-- **Flags:** Angepinnt, Featured (Legacy)
+- **Externe Agentur:** LWND
+- **Veröffentlicht:** May 2024
+- **Zeitraum:** 2024
+- **Flags:** Angepinnt
 - **Thumbnail:** allianz-seid-bereit-9b.webp
+- **Hero-Video:** `0631fa44-cbf7-43bb-b3c7-0df5fa4b514f`
 - **Galerie:** 2 Bilder
+- **Episoden:** 3
 
 **Titel DE:** #BereitFürsLeben Campaign
 **Titel EN:** Allianz #BereitFürsLeben Campaign
@@ -1218,8 +1234,6 @@ Client: Allianz Österreich
 
 **Kurzbeschreibung EN:**
 #BereitFürsLeben: facing everything that comes your way. Under this motto, we produced the film and photo campaign for Allianz Austria together with LWND. Three shoot days for a manifesto film, two product films and a photo shoot with five key visuals plus additional side shots. A campaign showing human values at eye level – everyday courage instead of insurance clichés.
-
-> Horizont-Artikel zur Kampagne: https://www.horizont.at/marketing/news/mut-im-alltag-allianz-oesterreich-zeigt-intime-momente-94126
 
 ---
 
@@ -1253,12 +1267,13 @@ Client: Allianz
 - **ID:** 62
 - **Slug:** `oegig-brand-campaign`
 - **Client:** öGIG
-- **Externe Agentur:** LWND
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** August 2024
+- **Veröffentlicht:** May 2024
+- **Zeitraum:** 2024
 - **Thumbnail:** oegig-01.webp
-- **Galerie:** 2 Bilder
+- **Hero-Video:** `e90eced0-b8df-4bd9-ba97-3cc97a9721e8`
+- **Episoden:** 9
 
 **Titel DE:** Brand Campaign
 **Titel EN:** öGIG Brand Campaign
@@ -1300,11 +1315,13 @@ Client: öGIG
 - **ID:** 61
 - **Slug:** `a1-xcite-xmas`
 - **Client:** A1
-- **Externe Agentur:** SESO
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Dezember 2024
+- **Veröffentlicht:** May 2024
+- **Zeitraum:** 2024
 - **Thumbnail:** a1-xcite-ad-2.webp
+- **Hero-Video:** `82bfdfd6-fa44-42bb-8ba0-77f8c39cbcb2`
+- **Episoden:** 1
 
 **Titel DE:** XCite Xmas
 **Titel EN:** A1 XCite Xmas
@@ -1348,9 +1365,11 @@ Client: A1
 - **Client:** Volksbank
 - **Area:** Agency
 - **Kategorien:** werbespot
-- **Datum:** Dezember 2024
-- **Flags:** Case Study, Featured (Legacy)
+- **Veröffentlicht:** May 2024
+- **Zeitraum:** 2024
+- **Flags:** Case Study
 - **Thumbnail:** volksbank-danke-tvc.webp
+- **Hero-Video:** `7c45bd68-a14a-407b-b537-6fa5bca37c4e`
 
 **Titel DE:** Danke
 **Titel EN:** Danke
@@ -1417,9 +1436,11 @@ Client: Volksbank
 - **Client:** Österreich Werbung
 - **Area:** Agency
 - **Kategorien:** imagefilm
-- **Datum:** Mai 2022
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** oew-convention-pov-01.webp
+- **Hero-Video:** `b07edddf-c537-4410-8849-3bd0069bc83c`
 - **Galerie:** 2 Bilder
+- **Episoden:** 3
 
 **Titel DE:** Convention POV
 **Titel EN:** Austrian Tourism POV
@@ -1460,9 +1481,11 @@ Edit: Christopher Panzenböck
 - **Client:** Greiner
 - **Area:** Agency
 - **Kategorien:** imagefilm, sustainability
-- **Datum:** Mai 2020
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** greiner-blue-plan-01.webp
+- **Hero-Video:** `aaff607b-a69a-49da-8e62-26229f0d9db2`
 - **Galerie:** 2 Bilder
+- **Episoden:** 2
 
 **Titel DE:** Blue Plan
 **Titel EN:** Greiner Blue Plan
@@ -1492,9 +1515,9 @@ The Blue Plan is Greiner's sustainability initiative. Over 50 employees across t
 - **Client:** FCP
 - **Area:** Agency
 - **Kategorien:** imagefilm, employer-branding
-- **Datum:** Mai 2023
+- **Veröffentlicht:** May 2023
 - **Thumbnail:** fcp-brand-film-01.webp
-- **Galerie:** 1 Bild
+- **Hero-Video:** `a77f8dbc-3942-4395-8b11-1cbfb394cdd1`
 
 **Titel DE:** Brand Film
 **Titel EN:** FCP Brand Film
@@ -1531,8 +1554,9 @@ Edit: Dwin Mardigian
 - **Client:** Strabag
 - **Area:** Agency
 - **Kategorien:** imagefilm
-- **Datum:** Mai 2017
+- **Veröffentlicht:** May 2018
 - **Thumbnail:** strabag-bim.5d.webp
+- **Hero-Video:** `5aaf7dc7-6251-48ab-be6f-4ed2b6f95b2e`
 
 **Titel DE:** BIM 5D
 **Titel EN:** Strabag BIM 5D
@@ -1574,10 +1598,13 @@ Executive Producer: Michael Sokolar & Toni Weiss
 - **Slug:** `7drops-brand-film`
 - **Client:** 7Drops
 - **Area:** Agency
-- **Kategorien:** imagefilm
-- **Datum:** Mai 2019
+- **Kategorien:** imagefilm, werbespot
+- **Veröffentlicht:** May 2023
+- **Zeitraum:** 2023
 - **Thumbnail:** 7drops-brand-film-01.webp
-- **Galerie:** 1 Bild
+- **Hero-Video:** `b1e6cc2d-42ca-4ab4-832f-0abb90a3a127`
+- **Galerie:** 1 Bilder
+- **Episoden:** 6
 
 **Titel DE:** Brand Film
 **Titel EN:** 7Drops Brand Film
@@ -1619,10 +1646,13 @@ Client: 7Drops
 - **Client:** Strabag
 - **Area:** Agency
 - **Kategorien:** imagefilm
-- **Datum:** Mai 2022
-- **Flags:** Case Study, Featured (Legacy)
+- **Veröffentlicht:** May 2024
+- **Zeitraum:** 2024
+- **Flags:** Case Study
 - **Thumbnail:** str-brand-film-2024-01.webp
+- **Hero-Video:** `1138757d-8328-40a6-b852-d166fbb6d942`
 - **Galerie:** 3 Bilder
+- **Episoden:** 1
 
 **Titel DE:** Brand Film
 **Titel EN:** Strabag Brand Film
@@ -1686,13 +1716,14 @@ Client: Strabag
 - **ID:** 53
 - **Slug:** `allianz-vorfreude`
 - **Client:** Allianz
-- **Externe Agentur:** LWND
 - **Area:** Agency
 - **Kategorien:** werbespot, employer-branding
-- **Datum:** Mai 2023
+- **Externe Agentur:** LWND
+- **Veröffentlicht:** May 2023
+- **Zeitraum:** 2023
 - **Thumbnail:** t23_allianz_vorsorge_00.webp
 - **Hero-Video:** `ce599024-fbce-4c4b-b50c-05777f12698a`
-- **Galerie:** 1 Bild
+- **Galerie:** 1 Bilder
 - **Episoden:** 7
 
 **Titel DE:** Vorfreude
@@ -1735,9 +1766,12 @@ Client: Allianz Österreich
 - **Client:** Greiner
 - **Area:** Agency
 - **Kategorien:** employer-branding, sustainability
-- **Datum:** Mai 2021
+- **Veröffentlicht:** May 2023
+- **Zeitraum:** 2023
 - **Thumbnail:** greiner-sustainability-01.webp
-- **Galerie:** 1 Bild
+- **Hero-Video:** `c90127a1-0246-4b57-986f-94479518f982`
+- **Galerie:** 1 Bilder
+- **Episoden:** 1
 
 **Titel DE:** Sustainability Message
 **Titel EN:** Greiner Sustainability
@@ -1767,9 +1801,12 @@ For the Greiner Sustainability Report, we produced an interview series with empl
 - **Client:** Strabag
 - **Area:** Agency
 - **Kategorien:** employer-branding, sustainability
-- **Datum:** Mai 2023
+- **Veröffentlicht:** May 2023
+- **Zeitraum:** 2023
 - **Thumbnail:** str-karriere-xkg-anna-01.webp
+- **Hero-Video:** `3cc93899-3b39-42ed-ad6d-101cc2a0cc69`
 - **Galerie:** 2 Bilder
+- **Episoden:** 3
 
 **Titel DE:** Sustainability Stories
 **Titel EN:** Strabag Sustainability Stories
@@ -1806,10 +1843,13 @@ Editors: Dwin Mardigian, Christopher Panzenböck, Relja Topic, Andreas Lobner, V
 - **Client:** Greiner
 - **Area:** Agency
 - **Kategorien:** employer-branding
-- **Datum:** Mai 2022
-- **Flags:** Case Study, Featured (Legacy)
+- **Veröffentlicht:** May 2023
+- **Zeitraum:** 2023
+- **Flags:** Case Study
 - **Thumbnail:** gr-walks-jess-01.webp
-- **Galerie:** 3 Bilder
+- **Hero-Video:** `9389dc17-b741-4861-80b6-0bb21e2ae495`
+- **Galerie:** 34 Bilder
+- **Episoden:** 11
 
 **Titel DE:** Greiner Walks
 **Titel EN:** Greiner Walks
@@ -1870,10 +1910,13 @@ Producers: Daniela Bleimuth & Julia Wertheimer
 - **Client:** Strabag
 - **Area:** Agency
 - **Kategorien:** employer-branding
-- **Datum:** Apr 2025
-- **Flags:** Case Study, Angepinnt, Featured (Legacy)
+- **Veröffentlicht:** Apr 2025
+- **Zeitraum:** 2014 - laufend
+- **Flags:** Case Study, Angepinnt
 - **Thumbnail:** marc-07.webp
-- **Galerie:** 6 Bilder
+- **Hero-Video:** `788d09c6-216f-47d3-855f-be1bc8e16b73`
+- **Galerie:** 14 Bilder
+- **Episoden:** 20
 
 **Titel DE:** Karrierestories
 **Titel EN:** Karrierestories
@@ -1929,7 +1972,7 @@ Client: Strabag
 ---
 
 ## Creative Studio
-_1 Projekt_
+_1 Projekte_
 
 ### 43. Helena Flinn Chronicles
 
@@ -1937,7 +1980,8 @@ _1 Projekt_
 - **Slug:** `helena-flinn`
 - **Client:** Little Lights Publishing
 - **Area:** Creative Studio
-- **Datum:** Dez 2024
+- **Kategorien:** creative-studio
+- **Veröffentlicht:** Dec 2024
 - **Flags:** Case Study
 - **Thumbnail:** DSCF4660-1.webp
 - **Galerie:** 8 Bilder

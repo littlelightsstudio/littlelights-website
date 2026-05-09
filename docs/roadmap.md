@@ -1,5 +1,5 @@
 # Little Lights Studio — Rebranding Roadmap
-**Letzte Aktualisierung: 8. Mai 2026 (Session 16: Filme-Sub-Page → alle Landing-Pages inhaltlich gelockt)**
+**Letzte Aktualisierung: 9. Mai 2026 (Session 18: Translation-Run autonom durchgelaufen, alle Pages + Projects DE/EN)**
 
 ---
 
@@ -187,8 +187,16 @@ Noch ausstehend:
 - [ ] ~~Lean /kontakt-Page~~ — verschoben auf Post-Push, nicht launch-blockierend (User 08.05.)
 - [ ] ~~404-Page~~ — verschoben auf Post-Push, nicht launch-blockierend (User 08.05.)
 
-**Nächste Woche (Team-Feedback-Phase):**
-- [ ] **Zweisprachigkeit DE/EN** — Routing/Switcher (EN-Variante für Publishing-Sub priorisiert wegen Cold-Traffic aus Büchern)
+**Translation-Pipeline (Session 17–18, 09.05.2026):**
+- ✅ `scripts/export-pages-to-md.py` gebaut (Session 17) — Spiegel zur Projects-Pattern, alle 20 Block-Types abgedeckt, RichText (inkl. nested Quotes/Lists) extrahiert sauber.
+- ✅ **Autonomer Translation-Run durchgelaufen (Session 18, 09.05.)** — alle 18 Pages (außer Workshops-Keynotes post-launch) und 43 Projects in DE+EN inkl. SEO + GEO-Questions. Mechanik: 2-Step-Workflow per REST PATCH (DE für SEO/geoQuestions/schemaType + EN für sections + EN-Übersetzungen). Decision-Log und Probleme in `docs/exports/translation-decisions.md` und `docs/exports/progress.md`.
+- ⚠️ **Kritischer Lerneffekt aus Session 18**: Niemals partielle `sections: [{einzelner-Block}]`-PATCHes senden — Payload behandelt sections-Array als Complete-Replace, nicht als Merge-by-ID. Beim Bug-Fix-Versuch sind Home/Agency/EB/Workshop temporär auf 1 Section kollabiert, vollständig restored aus den Initial-Snapshots. Plus: nested-array Item-IDs müssen exakt match'en zwischen DE-Snapshot und EN-Build-Body, sonst entstehen verwaiste Items.
+
+**Nächste Schritte (in Reihenfolge, ab nächster Session):**
+1. **DE/EN Routing/Switcher** — Übersetzungs-Content liegt jetzt in beiden Locales sauber vor (Session 18). Jetzt fehlt das Frontend: Locale-Detection, URL-Pattern (`/en/...` oder `?lang=`), Switcher in Header/Footer, hreflang-Tags. EN-Variante für Publishing-Sub priorisiert (Cold-Traffic aus Büchern).
+2. **Mobile-Pass** durch alle Sub-Pages (Branded Entertainment, R&S Workshop, R&S Content-Production, Creative Studio Hub, Publishing, Filme).
+
+**Danach (Team-Feedback-Phase):**
 - [ ] **Resend-Kontaktformular** — API-Route + Spam-Schutz (CTA-Form ist seit Session 15 statisch CMS-driven, Submit-Logik fehlt noch)
 - [ ] **Self-Hosting Fonts** (Satoshi, Clash Display) via `next/font/local`
 - [ ] **SEO/GEO Final-Pass** — Title, Meta, OG-Image, Alt-Texte über alle Pages

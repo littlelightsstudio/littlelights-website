@@ -49,4 +49,4 @@ Soweit wir in finalen Werken substantiell KI-generierte oder KI-manipulierte Inh
 
 ### Ihre Rechte
 
-Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch hinsichtlich der zu Ihrer Person verarbeiteten Daten. Eine Einwilligung zur Verarbeitung biometrischer Daten (z.B. Stimmsamples) können Sie jederzeit mit Wirkung für die Zukunft widerrufen. Wenden Sie sich an: studio@littlelights.studio.
+Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch hinsichtlich der zu Ihrer Person verarbeiteten Daten. Wenden Sie sich an: studio@littlelights.studio.
