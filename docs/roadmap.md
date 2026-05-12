@@ -1,5 +1,5 @@
 # Little Lights Studio — Rebranding Roadmap
-**Letzte Aktualisierung: 9. Mai 2026 (Session 18: Translation-Run autonom durchgelaufen, alle Pages + Projects DE/EN)**
+**Letzte Aktualisierung: 12. Mai 2026 (Session 22: Mobile-Hamburger-Drawer + Footer-Mobile + Discipline-Chip + Umami live; Staging seit Session 19 öffentlich auf staging.littlelights.studio)**
 
 ---
 
@@ -192,24 +192,35 @@ Noch ausstehend:
 - ✅ **Autonomer Translation-Run durchgelaufen (Session 18, 09.05.)** — alle 18 Pages (außer Workshops-Keynotes post-launch) und 43 Projects in DE+EN inkl. SEO + GEO-Questions. Mechanik: 2-Step-Workflow per REST PATCH (DE für SEO/geoQuestions/schemaType + EN für sections + EN-Übersetzungen). Decision-Log und Probleme in `docs/exports/translation-decisions.md` und `docs/exports/progress.md`.
 - ⚠️ **Kritischer Lerneffekt aus Session 18**: Niemals partielle `sections: [{einzelner-Block}]`-PATCHes senden — Payload behandelt sections-Array als Complete-Replace, nicht als Merge-by-ID. Beim Bug-Fix-Versuch sind Home/Agency/EB/Workshop temporär auf 1 Section kollabiert, vollständig restored aus den Initial-Snapshots. Plus: nested-array Item-IDs müssen exakt match'en zwischen DE-Snapshot und EN-Build-Body, sonst entstehen verwaiste Items.
 
-**Nächste Schritte (in Reihenfolge, ab nächster Session):**
-1. **DE/EN Routing/Switcher** — Übersetzungs-Content liegt jetzt in beiden Locales sauber vor (Session 18). Jetzt fehlt das Frontend: Locale-Detection, URL-Pattern (`/en/...` oder `?lang=`), Switcher in Header/Footer, hreflang-Tags. EN-Variante für Publishing-Sub priorisiert (Cold-Traffic aus Büchern).
-2. **Mobile-Pass** durch alle Sub-Pages (Branded Entertainment, R&S Workshop, R&S Content-Production, Creative Studio Hub, Publishing, Filme).
+**Erledigt seit letzter Roadmap-Aktualisierung:**
+- [x] **Staging-Deploy live** auf staging.littlelights.studio mit X-Robots-Tag noindex + Let's Encrypt (Session 19, 10.05.). Coolify-App + Postgres-Service + Bind-Mount für Media, GitHub-Repo `littlelightsstudio/littlelights-build` als Source of Truth. Beim Cutover wird `littlelights.studio` als zweite Domain auf dieselbe App geroutet (eine DB, zwei Domains).
+- [x] **404-Page** als Polaroid-Card mit Random-Bild aus `SiteSettings.notFound`-Galerie (Session 19). Headline/Body/CTA/Galerie alle CMS-driven und localized.
+- [x] **Mobile-Nav (Hamburger-Drawer)** (Session 20-22). Slide-in von rechts mit cream BG, Areas expandierbar mit Sublevel-Thumbnails, Brand-Signature mit Tap-to-Fill Gradient am Drawer-Bottom, CTA als Sticky-Footer. Hamburger als prominenter Disziplin-Color-Chip (Copper/Terracotta/Blue-Grey). Row-Split: Label-Link zur Hub-Page + Chevron-Toggle für Sublevel-Aufklappen.
+- [x] **Footer-Mobile-Layout** (Session 20-22) — 5-Spalten-Grid auf 375px war unleserlich, jetzt zwei unabhängige Flex-Stacks (links Agency + R&S, rechts Creative Studio + Über Uns + Kontakt). Footer-Bottom (Socials, Legal, Copyright) zentriert.
+- [x] **Umami Web-Analytics selfhost** (Session 20-21) auf `analytics.littlelights.studio` (Coolify-Service-Template mit bundled Postgres). Zwei Websites registriert (staging + prod), Tracking-Script in `layout.tsx` mit hostname-basiertem ID-Picker. Erste Pageviews live verifiziert.
+
+**Nächste Schritte (in Reihenfolge):**
+1. **Mobile-Pass durch alle Sub-Pages** — 35 Mobile-Screenshots in `littlelights-build/HANDOFF.md` (Session 19+) Backlog. Sections-Library auf 375px durchprüfen: Hero (Triangle-Position auf Mobile), BoldStatement, Magazine-Manifest (2-Col → Stack), Dual-Path, Services-Grid, Partnership-Block, Pricing-Tiers, Process-Timeline, Stats, FAQ, Book-Reviews, Diagonal-Slider (Touch statt Hover), Client-Logos (tap-to-reveal statt hover).
+2. **iPad Mega-Menu-Position** fixen — Items werden auf 820px-Portrait links angeschnitten (siehe iPad-07/08/09 Screenshots).
+3. **FooterReveal-Bug** auf Sub-Pages — Footer „blitzt" mid-page durch, weil nicht alle Sections opaque sind. Fix-Optionen in HANDOFF.
+4. **DE/EN Routing/Switcher** — Übersetzungs-Content liegt jetzt in beiden Locales sauber vor (Session 18). Jetzt fehlt das Frontend: Locale-Detection, URL-Pattern (`/en/...`), Switcher in Header/Footer, hreflang-Tags. Slug-Strategie gelockt: Option A (DE-Slugs für beide Locales). EN-Variante für Publishing-Sub priorisiert (Cold-Traffic aus Büchern).
 
 **Danach (Team-Feedback-Phase):**
+- [ ] **ESLint + TypeScript Build-Gates wieder aktivieren** — beim Staging-Deploy ad-hoc deaktiviert in `next.config.mjs` (`eslint.ignoreDuringBuilds`, `typescript.ignoreBuildErrors`). 5 ESLint-Errors (3× `<a>` → `<Link>`, prefer-const, unused-expression) + Payload-API-Updates in `regenerate-media/route.ts`.
 - [ ] **Resend-Kontaktformular** — API-Route + Spam-Schutz (CTA-Form ist seit Session 15 statisch CMS-driven, Submit-Logik fehlt noch)
-- [ ] **Self-Hosting Fonts** (Satoshi, Clash Display) via `next/font/local`
+- [ ] **Self-Hosting Fonts** (Satoshi, Clash Display) via `next/font/local` — DSGVO-Vereinfachung
 - [ ] **SEO/GEO Final-Pass** — Title, Meta, OG-Image, Alt-Texte über alle Pages
 - [ ] **Schema Markup global** — Organization, Service, VideoObject, BreadcrumbList
-- [ ] **Mobile-Pass** durch alle neuen Sub-Pages (Branded Entertainment, R&S Workshop, R&S Content-Production, Creative Studio Hub, Publishing, Filme)
+- [ ] **Media-Performance** — Caddy/nginx als Static-File-Server vor Payload, oder S3-Adapter mit CDN. Bisher Quick-Win nur Cache-Control-Header (max-age=2592000) via Middleware
 - [ ] **Slider-Polish** — Divider verschieben sich, Animation lagged
-- [ ] **Lean /kontakt-Page** + **404-Page** (verschoben aus „diese Woche")
+- [ ] **Lean /kontakt-Page** (404-Page ist seit Session 19 live)
 - [ ] **Restliche Launch-Items** — siehe Phase 6
 
 **Post-Launch / Backlog:**
 - [ ] Workshops & Keynotes (Agency-Sub-Page) — Substanz erst aufbauen
 - [ ] Brand Documentaries als eigene Page — wenn 5+ Cases vorliegen
 - [ ] Calendly-Integration
+- [ ] **Umami Custom-Events** — Click-Tracking auf CTAs, Form-Submits, Filter-Nutzung. Bewusst NACH 1-2 Wochen Live-Traffic, wenn klar ist welche Conversion-Punkte zählen
 
 ### Phase 6: Launch
 **Ausstehend**
