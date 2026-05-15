@@ -148,11 +148,63 @@ Noch ausstehend:
 
 User-Wunsch (05.05.2026): SEO/GEO-Felder und QA-Pässe nicht pro Page individuell befüllen, sondern in einem clean Pass am Ende — alle Pages und Projects aus der Datenbank holen, dann durchgängig befüllen.
 
-- [ ] **SEO/GEO-Felder pro Page** — Title-Tag, Meta-Description, OG-Image, Alt-Texte für alle Bilder, Internal Links auf Cases. Cleaner Pass über alle Sub-Pages und Projekte am Ende.
-- [ ] **Schema Markup global** — `Organization`, `Service` pro Service-Sub-Page, `VideoObject` pro Case mit Video, `BreadcrumbList`. FAQPage ist im FAQ-Block schon enthalten.
+- [ ] **SEO/GEO-Felder pro Page** — Title-Tag, Meta-Description, OG-Image, Alt-Texte für alle Bilder, Internal Links auf Cases. Cleaner Pass über alle Sub-Pages und Projekte am Ende. **→ Details siehe „SEO/GEO Pre-Launch Audit" unten (Session 30).**
+- [ ] **Schema Markup global** — `Organization`, `Service` pro Service-Sub-Page, `VideoObject` pro Case mit Video, `BreadcrumbList`. FAQPage ist im FAQ-Block schon enthalten. **→ Details siehe „SEO/GEO Pre-Launch Audit" unten.**
 - [ ] **Mobile-Pass** durch alle Sub-Pages (Agency-Hub, EB, Imagefilme, weitere). Padding/Stacking-Korrekturen wo nötig.
-- [ ] **Resend-API + Form-Submit** für CTA-Form-Variant. Stack ist gelockt, Implementation steht.
+- [ ] **Resend-API + Form-Submit** für CTA-Form-Variant. Stack gelockt, Resend-Domain `send.littlelights.studio` ist seit Session 30 (15.05.2026) verified. Implementation in Arbeit.
 - [ ] **Restliche Agency-Sub-Pages** mit Inhalten füllen: Imagefilme (in Arbeit), Werbespots, Branded Entertainment, Nachhaltigkeit, Workshops & Keynotes
+
+#### SEO/GEO Pre-Launch Audit (Session 30, 15.05.2026)
+
+**Status quo:** Title-Tags + Meta-Description pro Page live, Canonical, hreflang DE/EN/x-default via `buildAlternates`, dynamisches `<html lang>`, FAQPage-Schema in FAQ-Blocks gerendert, Payload SEO-Plugin auf Pages + Projects mit metaTitle/metaDescription/metaImage-Feldern. Open Graph + Twitter-Cards auf Project-Detail-Pages live, auf den meisten anderen Pages über Next-15 Auto-OG-Inheritance ebenfalls da (aber inkonsistent).
+
+**Beobachtung (Roadmap-Item):** Manche Texte (Project-Beschreibungen, Page-Lead-Copies) sind zu lang für SEO-Snippets — werden in SERP truncated. Pass am Ende: Title ≤ 60 Zeichen, Description ≤ 160 Zeichen, in CMS-Feldern hart prüfen.
+
+##### 🚨 P0 — Launch-Blocker
+
+- [ ] **P0-1 · `sitemap.xml` fehlt** — `/sitemap.xml` → 404, kein `src/app/sitemap.ts`. Fix: Next 15 App-Router-Konvention `src/app/(frontend)/sitemap.ts`, dynamisch aus Payload-Collections (Pages + Projects), beide Locales als separate Einträge + `alternates.languages` für hreflang, `lastModified` aus `updatedAt`. ~30 min.
+- [ ] **P0-2 · `robots.txt` fehlt** — `/robots.txt` → 404. Fix: `src/app/(frontend)/robots.ts` mit `disallow: ['/admin/', '/api/', '/_next/']` + `sitemap`-Verlinkung. ~10 min.
+- [ ] **P0-3 · Title-Duplikat-Bug** — Auf `/agency` (6×), `/creative-studio` (6×), `/projects` (2×), `/about` (2×) erscheint `Little Lights Studio | Little Lights Studio` im `<title>` und `og:title`. Root Cause: `payload.config.ts:105` `generateTitle` hängt Suffix an UND `layout.tsx:59` `title.template` macht das nochmal. Fix: Suffix aus `generateTitle` entfernen (Layout-Template übernimmt). Project-Detail nutzt `title.absolute` und ist korrekt — Pattern auf andere Pages übertragen. ~15 min inkl. Verify.
+- [ ] **P0-4 · Organization-Schema fehlt global** — Crawl über 13 Pages → 0 Organization-Schemas. Kritisch für **GEO/AI-Citations** (LLMs nutzen Organization-Schema für Entity-Verständnis, Google Knowledge Panel). Fix: Component `<OrganizationSchema />` in `layout.tsx`, JSON-LD serverside, Inhalt aus `SiteSettings`-Global (Name, Logo, Address, sameAs für Social-Profile). ~30 min.
+- [ ] **P0-5 · Image-Alt-Texte flächendeckend fehlend** — API-Sample 200/422 Media: **86 ohne Alt (43%)**, 16 unbrauchbar kurz (z.B. nur „OeGIG"). Komplette winwin-Gallery ohne Alt. Fix-Stufe 1: Required-Flag auf `alt`-Feld in Media-Collection (verhindert neue Lücken). Fix-Stufe 2: Backfill-Script analog zu `locale-gaps.py` → Liste fehlender Alts, manuelle Pflege oder CSV-Bulk-Import. 5 min Required, 2-4h Pflege.
+
+##### ⚠️ P1 — Vor Launch hart fixen
+
+- [ ] **P1-1 · BreadcrumbList-Schema** — Für `[...slug]` und `projects/[slug]`. Pfad aus Page-Hierarchy via existierender `computePagePath`-Logik in `richTextConverters.ts`. Bringt Breadcrumb-Pfad in SERP statt URL. ~45 min.
+- [ ] **P1-2 · VideoObject-Schema auf Project-Detail** — Projects sind primär Video-Content. VideoObject mit Bunny-Embed-URL, Thumbnail, Description, uploadDate → Video-Snippet in SERP (große Visual-Karte). Felder existieren schon: title, shortDescription, thumbnail, video-URL, createdAt. ~30 min.
+- [ ] **P1-3 · Service-Schema auf Disziplin-Hubs** — `/agency/imagefilm`, `/agency/employer-branding`, `/reels-stories/workshop` etc. CMS-Feld `serviceType` auf Pages-Collection, JSON-LD-Renderer mit `provider` (zurück auf Organization), `areaServed` (Wien/AT/DACH), `offers` wo Preise öffentlich. ~45 min.
+- [ ] **P1-4 · OG-Image-Fallback Homepage + Listing** — Homepage und `/projects` ohne `og:image` (Social-Shares zeigen leere Card). Default-OG-Image in `SiteSettings`-Global, Pages ohne `seo.ogImage` fallen darauf zurück. ~20 min.
+- [ ] **P1-5 · Twitter-Cards Konsistenz** — Project-Detail hat explizite Twitter-Cards, Homepage und `[...slug]` nicht (Auto-Inheritance funktioniert, ist aber fragil). Twitter-Block in `[...slug]/page.tsx` analog zu Project-Detail, globaler Default `twitter: { card: 'summary_large_image' }` in `layout.tsx`. ~15 min.
+- [ ] **P1-6 · 301-Redirects für alte Slugs** — Wenn auf der jetzigen Live-Seite Pages mit anderen URLs existieren (z.B. `/werbespots` → `/agency/commercial`), bricht jeder Backlink + jede gedruckte URL. Fix: `next.config.mjs` `redirects()`. Vorarbeit: Liste alter Slugs aus Wayback / alter Sitemap. 30 min wenn Liste vorhanden.
+
+##### 📋 P2 — Polish, Post-Launch akzeptabel
+
+- [ ] **P2-1 · Per-Page SEO-Coverage Script** — Audit-Script `seo-coverage.py` analog zu `locale-gaps.py`: listet Pages/Projects mit leeren SEO-Feldern (metaTitle, metaDescription, metaImage). 20 min Script + User-Pflege.
+- [ ] **P2-2 · WebSite + Search-Action-Schema** auf Homepage — potentialAction für Sitelinks-SearchBox in SERP. Eher kosmetisch. ~15 min.
+- [ ] **P2-3 · `noindex`-Header host-aware** — Verify, dass beim Prod-Cutover das Staging-noindex nicht mitkommt (Middleware oder `next.config` host-aware). ~10 min Check.
+- [ ] **P2-4 · CollectionPage-Schema** auf `/projects` mit ItemList. ~20 min.
+- [ ] **P2-5 · geoQuestions-Render-Check** — Feld existiert (Translation-Pipeline Session 18). Verifizieren ob gerendert wird; wenn nicht → in FAQPage-Block einbauen oder eigenes JSON-LD. ~30 min nach Inspektion.
+- [ ] **P2-6 · CreativeWork/Article-Schema auf Project-Detail** — Falls Case-Studies Editorial-Inhalte haben (Magazine-Manifest, Process), mit author, datePublished, image. ~20 min.
+- [ ] **P2-7 · Text-Längen-Polish** — Title-Felder ≤ 60 Zeichen, Description ≤ 160 Zeichen prüfen. SERP-Truncation vermeiden. Pflege im CMS, Script kann lange Texte flaggen.
+
+##### 🖼️ Image Performance (separates Workstream, parallel zu SEO)
+
+**User-Beobachtung Session 30:** Bilder bremsen die Seite. Aktueller Crawl-Befund: Homepage preloaded 20+ Hero-Images upfront (`<link rel="preload" as="image">`), Mischung aus PNG/JPG/WebP, kein konsistentes Responsive-Setup, Payload `/api/media/file/...` umgeht Next/Image-Pipeline (kein automatisches AVIF/WebP-Negotiation).
+
+- [ ] **IP-1 · Preload-Hygiene** — Nur LCP-Kandidat (sichtbarer Hero) preloaden, nicht 20+ Images. Spart Bandwith im Critical Path, verbessert LCP. Audit: welche Components rendern `<link rel="preload" as="image">`?
+- [ ] **IP-2 · Next.js `<Image>` durchgängig** — Statt `<img>` und API-Direct-URLs. Bringt automatisches Responsive-Sizing (srcset), Lazy-Loading, AVIF/WebP-Format-Negotiation, Width/Height-Hints (kein CLS). Aktuell sichtbar im 404-Component und potentiell anderen Stellen.
+- [ ] **IP-3 · PNG/JPG → WebP/AVIF konvertieren** — Sample-Funde: `Allianz Hero-1920x1080.png` (PNG ist für Photo-Content suboptimal), diverse `.jpg`-Files. Bulk-Konversion über Payload-Sharp-Hook oder einmaliger Script-Run.
+- [ ] **IP-4 · Responsive Image-Sizes verifizieren** — Payload `imageSizes`-Config prüfen: Werden für Hero/Thumbnail/Gallery sinnvolle Breakpoints (z.B. 400/800/1200/1920) generiert und ausgespielt? Aktuell ziehen Project-Detail OG-Bilder das volle 1920×1080.
+- [ ] **IP-5 · Lazy-Loading-Audit** — Below-the-fold Images müssen `loading="lazy"` haben. Above-the-fold (Hero) `loading="eager"` oder `priority`.
+- [ ] **IP-6 · Bunny-Video-Thumbnails optimieren** — Video-Poster-Frames (Bunny generiert die) als WebP einbinden, Größe an Container koppeln.
+- [ ] **IP-7 · Core Web Vitals-Messung** — Nach den Fixes Lighthouse + Real-User-Monitoring (Umami hat keine CWV, ggf. CrUX-Daten aus Search Console nach Launch nutzen). Ziel: LCP < 2.5s, CLS < 0.1, INP < 200ms.
+
+##### Empfohlene Implementierungs-Reihenfolge
+
+- **Pass 1 — Foundation (~2-3h):** P0-2 → P0-1 → P0-3 → P0-4 → P1-5 → P1-4 → Build + Verify
+- **Pass 2 — Content-Strukturierung (~2h):** P0-5 (Required-Flag + Backfill-Script) → P1-1 → P1-2 → P1-3
+- **Pass 3 — Pre-Launch (~1h):** P1-6 → P2-1 → P2-3 → P2-5 → P2-7
+- **Pass 4 — Post-Launch:** Search Console anmelden (beide Properties), Sitemap submitten, P2-2, P2-4, P2-6 nach Bedarf
 
 ### Phase 5: Content
 **🔄 Teilweise in Arbeit — parallel zu Build**
