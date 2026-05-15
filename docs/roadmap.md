@@ -108,7 +108,7 @@ Noch ausstehend:
 - [ ] **Kontaktformular + Calendly** (nur R&S/Workshop). Stack gelockt: **Resend** als Mail-Provider (gratis bis 3k/Monat, moderne API), API-Route `/api/contact` validiert + versendet an studio@littlelights.studio. Spam-Schutz: Honeypot-Feld + Rate-Limiting auf der Route, Cloudflare Turnstile als Option falls Volumen es erfordert. Calendly-Variante: Inline-Widget-Embed je nach CMS-Block-`variant`. Plus Success/Error-State im Formular.
 - [ ] **SEO-Implementierung** — SEO-Plugin ist installiert, hreflang + canonical seit Session 29 live (via `buildAlternates` helper, alle Page-Types). Noch offen: Schema Markup, Sitemap, 301-Redirects
 - [ ] **GEO-Optimierung** für AI-Suche
-- [ ] **Self-Hosting der Schriften** (Satoshi, Clash Display) statt Fontshare-CDN — DSGVO-Vereinfachung (kein externer Verarbeiter), Performance-Gewinn, via `next/font/local` einbinden. Aktuell läuft via api.fontshare.com, ist im Datenschutz erwähnt
+- [x] **Self-Hosting der Schriften** (Session 29, 15.05.) — Satoshi (5 Weights) + Clash Display (4 Weights) als `.woff2` in `public/fonts/`, via `next/font/local` mit CSS-Variablen `--font-satoshi` + `--font-clash` eingebunden. `styles.css` nutzt `--font-heading`/`--font-body` Aliase. Fontshare-`<link>` aus `layout.tsx` raus, kein externer Verarbeiter mehr. Datenschutz-Erklärung entsprechend angepasst. Italics werden vom Browser synthetisiert (entspricht dem vorherigen Verhalten).
 - [ ] **Markdown-Auto-Conversion im Lexical-Editor** (`MarkdownTransformersFeature`) — komfortabel für künftige Content-Edits, aktuell muss manuell im Editor formatiert werden
 - ✅ **KI-Transparenz-Feld bei Projekten** (EU AI Act Art. 50, Stichtag 02.08.2026) — optionales RichText-Feld `aiDisclosure` in der Projects-Collection, wird auf der Projekt-Detail-Seite vor den Credits gerendert wenn gefüllt. Nur befüllen wenn KI substantiell im finalen Werk. Voraussetzungen liegen in `docs/ki-inventar.md`, `docs/ki-richtlinie.md`, `docs/datenschutz-ki-section.md` (letztere geht in die Datenschutzerklärung mit Anwalts-Review)
 
@@ -210,7 +210,7 @@ Noch ausstehend:
 
 **Danach (Team-Feedback-Phase):**
 - [ ] **ESLint + TypeScript Build-Gates wieder aktivieren** — beim Staging-Deploy ad-hoc deaktiviert in `next.config.mjs` (`eslint.ignoreDuringBuilds`, `typescript.ignoreBuildErrors`). 5 ESLint-Errors (3× `<a>` → `<Link>`, prefer-const, unused-expression) + Payload-API-Updates in `regenerate-media/route.ts`.
-- [ ] **Self-Hosting Fonts** (Satoshi, Clash Display) via `next/font/local` — DSGVO-Vereinfachung
+- [x] **Self-Hosting Fonts** (Satoshi, Clash Display) via `next/font/local` — Session 29, 15.05.
 - [ ] **SEO/GEO Final-Pass** — Title, Meta, OG-Image, Alt-Texte über alle Pages
 - [ ] **Schema Markup global** — Organization, Service, VideoObject, BreadcrumbList
 - [ ] **Media-Performance** — Caddy/nginx als Static-File-Server vor Payload, oder S3-Adapter mit CDN. Bisher Quick-Win nur Cache-Control-Header (max-age=2592000) via Middleware

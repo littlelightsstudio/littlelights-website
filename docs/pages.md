@@ -545,8 +545,8 @@ Unsere Website wird auf Servern der Hetzner Online GmbH (Industriestr. 25, 91710
 Bei jedem Aufruf der Website werden automatisch übermittelte Daten erfasst (IP-Adresse, Datum und Uhrzeit, Browser-Typ, aufgerufene Seite, Referrer). Die Speicherung erfolgt für maximal 14 Tage zur Sicherstellung des Betriebs und Abwehr missbräuchlicher Zugriffe (Art. 6 Abs. 1 lit. f DSGVO).
 ## Webanalyse mit Umami
 Wir verwenden Umami, eine selbst gehostete und datenschutzfreundliche Webanalyse. Umami arbeitet ohne Cookies, anonymisiert IP-Adressen, und speichert keine personenbezogenen Daten. Es werden lediglich aggregierte Statistiken erhoben (Seitenaufrufe, Verweildauer, Browser, Land). Eine Einwilligung ist daher nicht erforderlich. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Verbesserung unseres Angebots).
-## Schriften (Fontshare)
-Wir laden die Schriften Satoshi und Clash Display über die API von Fontshare (Indian Type Foundry). Beim Aufruf der Website wird deine IP-Adresse an Fontshare-Server übermittelt. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO. Selbst-Hosting der Schriften ist geplant.
+## Schriften
+Die verwendeten Schriften Satoshi und Clash Display (Indian Type Foundry, Lizenz: Fontshare) werden direkt von unserem Server ausgeliefert. Es findet keine Übermittlung von Daten an Drittanbieter statt.
 ## Videos (Bunny.net)
 Hintergrund-Videos werden über Bunny.net (BunnyWay d.o.o., Slowenien, EU) eingebunden. Im Standard-Modus verwendet Bunny.net keine Tracking-Cookies. Beim Abspielen wird deine IP-Adresse an Bunny.net übermittelt. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.
 ## Newsletter (MailerLite)
