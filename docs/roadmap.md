@@ -1,5 +1,5 @@
 # Little Lights Studio — Rebranding Roadmap
-**Letzte Aktualisierung: 15. Mai 2026 (Session 30: helenaflinn-Migration auf Coolify + Resend-Contact-Form live auf Staging + SEO Pass 1 & 2 komplett. Production-Coolify-App `littlelights-production` als Clone vorbereitet, wartet auf DNS-Cutover. Path-Alias `/publishing` für Buch-URL im Middleware gelöst. Detail-Stand und Launch-Checklist in [`../../littlelights-build/HANDOFF.md`](../../littlelights-build/HANDOFF.md). — Session 29: Bilinguale Auslieferung DE/EN komplett im Code, Self-Hosted Fonts.)**
+**Letzte Aktualisierung: 16. Mai 2026 — 🎉 littlelights.studio ist LIVE. Cutover heute Morgen sauber durchgezogen: A-Record auf Coolify (`46.224.59.56`), www CNAME auf apex, LE-Certs für beide Hosts (R12/R13, gültig bis 14.08.2026), Smoke-Test grün inkl. Payload-Admin. Production-Coolify-App auf Manual-Deploy umgestellt (keine versehentlichen Auto-Deploys mehr). Post-Launch-Tasks und Tech-Debt-Items im [HANDOFF.md](../../littlelights-build/HANDOFF.md).**
 
 ---
 
@@ -9,10 +9,10 @@ Dieses Projekt ist mehr als eine Website — es ist ein **komplettes Rebranding*
 
 | Stream | Status | Beschreibung |
 |--------|--------|-------------|
-| **Stream 1: Website** | 🔄 In Arbeit | Analyse → Strategie → Design → Build → Launch |
+| **Stream 1: Website** | ✅ LIVE (16.05.2026) | Analyse → Strategie → Design → Build → Launch |
 | **Stream 2: Brand Collateral** | ⏳ Ausstehend | Office-Vorlagen, Visitenkarten, Präsentationen |
 | **Stream 3: Brand Guidelines** | ⏳ Ausstehend | Styleguide, Nutzungsregeln, Asset-Library |
-| **Stream 4: Infrastruktur & Hosting** | 🔄 In Arbeit | Server, DNS, Domain-Migration, Legacy-Ablösung |
+| **Stream 4: Infrastruktur & Hosting** | ✅ Produktiv | Hetzner + Coolify, DNS-Migration, Legacy-Ablösung — alles auf neuem Stack |
 
 ---
 
